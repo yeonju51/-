@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "big_local">
+        <item>서울특별시</item>
+        <item>경기도</item>
+    </string-array>
+
+    <string-array name = "small_local1">
+        <item>마포구</item>
+        <item>용산구</item>
+        <item>강남구</item>
+        <item>서초구</item>
+    </string-array>
+
+    <string-array name = "small_local2">
+        <item>고양시</item>
+        <item>파주시</item>
+        <item>수원시</item>
+        <item>화성시</item>
+    </string-array>
+</resources>
