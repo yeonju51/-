@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TridyDay"
         tools:targetApi="31">
         <activity
+            android:name=".View.Map01Activity"
+            android:exported="false" />
+        <activity
+            android:name=".View.Map02Activity"
+            android:exported="false" />
+        <activity
             android:name=".View.TripScheduleActivity"
             android:exported="false" />
         <activity
