@@ -1,4 +1,4 @@
-package com.example.tridy
+package com.example.tridyday.View
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.Travel
 import com.example.myapplication.TravelAdapter
-import com.example.tridy.databinding.FragmentHomeBinding
+import com.example.tridyday.R
+import com.example.tridyday.databinding.ActivityHomeBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,14 +17,14 @@ import com.example.tridy.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
 
-    var binding: FragmentHomeBinding?= null
+    var binding: ActivityHomeBinding?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentHomeBinding.inflate(inflater)
+        binding = ActivityHomeBinding.inflate(inflater)
 
         // Inflate the layout for this fragment
         return binding?.root

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.tridy.HomeFragment"
+        android:name="com.example.tridyday.View.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/activity_main" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/registScheduleFragment"
-        android:name="com.example.tridy.RegistScheduleFragment"
+        android:name="com.example.tridyday.View.RegistScheduleFragment"
         android:label="fragment_regist_schedule"
         tools:layout="@layout/fragment_schedule_register" >
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.tridy.MapFragment"
+        android:name="com.example.tridyday.View.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" >
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/registMapFragment"
-        android:name="com.example.tridy.RegistMapFragment"
+        android:name="com.example.tridyday.View.RegistMapFragment"
         android:label="fragment_regist_map"
         tools:layout="@layout/fragment_regist_map" >
         <action
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapDetailFragment"
-        android:name="com.example.tridy.MapDetailFragment"
+        android:name="com.example.tridyday.View.MapDetailFragment"
         android:label="fragment_map_detail"
         tools:layout="@layout/fragment_map_detail" >
         <action
@@ -91,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
-        android:name="com.example.tridy.RecommendFragment"
+        android:name="com.example.tridyday.View.RecommendFragment"
         android:label="fragment_recommend"
         tools:layout="@layout/fragment_recommend" >
         <action

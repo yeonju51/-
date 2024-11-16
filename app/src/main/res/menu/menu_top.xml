@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/scheduleFragment"
-        android:icon="@drawable/baseline_edit_calendar_24"
+        android:icon="@drawable/baseline_event_note_24"
         android:title="일정" />
     <item
         android:id="@+id/mapFragment"
-        android:icon="@drawable/navermap_default_marker_icon_blue"
+        android:icon="@drawable/baseline_map_24"
         android:title="지도" />
 </menu>

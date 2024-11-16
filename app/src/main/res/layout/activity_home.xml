@@ -75,12 +75,13 @@
 
                 <!-- 첫 번째 여행 카드 -->
                 <LinearLayout
+                    android:id="@+id/trip01"
                     android:layout_width="160dp"
                     android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
+                    android:background="@drawable/border"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:background="@drawable/border">
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -275,6 +276,7 @@
 
         <!-- 정 가운데에 위치한 + 버튼 -->
         <Button
+            android:id="@+id/PlusTrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
