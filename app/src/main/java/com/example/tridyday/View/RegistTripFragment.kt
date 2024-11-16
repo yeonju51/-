@@ -6,20 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.tridy.databinding.FragmentHomeBinding
-import com.example.tridy.databinding.FragmentRegistTripBinding
 import com.example.tridyday.R
-import com.example.tridyday.databinding.FragmentRegistTripBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 
 
 class RegistTripFragment : Fragment() {
-    // TODO: Rename and change types of parameters
 
-
-    var binding: FragmentRegistTripBinding? = null
+    var binding: FragmentTravelRegistrationBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +20,7 @@ class RegistTripFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        binding = FragmentRegistTripBinding.inflate(inflater)
+        binding = FragmentTravelRegistrationBinding.inflate(inflater)
 
         return binding?.root
     }
