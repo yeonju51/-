@@ -1,52 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <View
         android:id="@+id/scheduleRoundedRectangleView"
-        android:layout_width="600dp"
-        android:layout_height="120dp"
+        android:layout_width="292dp"
+        android:layout_height="92dp"
         android:background="@drawable/schedule_rounded_rectangle"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="29dp" />
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/txt_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="30dp"
         android:text="9 AM"
-        android:textSize="40sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="29dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="24dp" />
 
     <TextView
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="호텔 조식"
-        android:textSize="34sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="193dp"
-        tools:layout_editor_absoluteY="33dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.591"
+        tools:layout_editor_absoluteX="102dp" />
+
+    <TextView
+        android:id="@+id/txt_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:00 AM"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="298dp"
+        tools:layout_editor_absoluteY="82dp" />
 
     <TextView
         android:id="@+id/txt_start_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9:00 AM ~ 10:00 AM"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="513dp"
-        tools:layout_editor_absoluteY="100dp" />
+        android:text="~"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="281dp"
+        tools:layout_editor_absoluteY="82dp" />
+
+    <TextView
+        android:id="@+id/txt_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9:00 AM"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="219dp"
+        tools:layout_editor_absoluteY="82dp" />
 
     <Button
         android:id="@+id/btn_schedule_memo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="63dp"
+        android:layout_height="34dp"
         android:background="@drawable/memo"
-        tools:layout_editor_absoluteX="660dp"
-        tools:layout_editor_absoluteY="40dp" />
+        tools:layout_editor_absoluteX="298dp"
+        tools:layout_editor_absoluteY="29dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

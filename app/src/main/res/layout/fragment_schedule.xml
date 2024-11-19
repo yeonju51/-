@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#DDEFFF">
 
     <!-- 일정 제목 -->
 
     <!-- 버튼들을 담을 LinearLayout -->
 
+    <FrameLayout
+        android:id="@+id/frm_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_schedule"
+        android:layout_width="412dp"
+        android:layout_height="711dp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="134dp" />
+
     <TextView
-        android:id="@+id/scheduleTitle"
+        android:id="@+id/txtScheduleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="일정"
+        android:text="크리스마스 여행"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,28 +39,17 @@
 
     <LinearLayout
         android:id="@+id/buttonContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="418dp"
+        android:layout_height="65dp"
         android:orientation="horizontal"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleTitle"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintTop_toBottomOf="@+id/txtScheduleTitle"
+        app:layout_constraintVertical_bias="0.024">
 
-        <!-- "전체" 버튼 추가 -->
-        <Button
-            android:id="@+id/btn_all_schedules"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- 여행 날짜 버튼들이 동적으로 추가됩니다. -->
     </LinearLayout>
 
     <Button
@@ -56,18 +60,7 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="328dp"
-        tools:layout_editor_absoluteY="5dp" />
-
-    <FrameLayout
-        android:id="@+id/frm_frag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+        tools:layout_editor_absoluteX="312dp"
+        tools:layout_editor_absoluteY="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
