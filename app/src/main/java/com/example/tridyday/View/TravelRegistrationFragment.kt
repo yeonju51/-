@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.myapplication.databinding.FragmentTravelRegistrationBinding
+import com.example.tridyday.View.HomeFragment
+import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 import java.util.*
 
 class TravelRegistrationFragment : Fragment() {
@@ -44,10 +45,10 @@ class TravelRegistrationFragment : Fragment() {
         }
 
         // 완료 버튼
-        binding.completeButton.setOnClickListener {
+        binding.btnCompleted.setOnClickListener {
             // 입력된 데이터를 바탕으로 Travel 객체 생성
-            val title = binding.titleInput.text.toString()
-            val location = binding.locationInput.text.toString()
+            val title = binding.txtTitle.text.toString()
+            val location = binding.txtLocation.text.toString()
             val startDate = binding.startDateButton.text.toString()
             val endDate = binding.endDateButton.text.toString()
 
@@ -56,7 +57,7 @@ class TravelRegistrationFragment : Fragment() {
                 travel = Travel(title, location, startDate, endDate, "여행 배경 이미지 URL") // 실제 배경 이미지 URL 지정 필요
 
                 // 여행 등록 완료 후 MainActivity로 데이터 전달
-                (activity as? MainActivity)?.addUpcomingTravel(travel!!)
+                (activity as? HomeFragment)?.addUpcomingTravel(travel!!)
 
                 // 여행 등록 완료 메시지
                 Toast.makeText(requireContext(), "여행 등록 완료!", Toast.LENGTH_SHORT).show()

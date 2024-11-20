@@ -31,16 +31,14 @@
             android:backgroundTint="#000000"
             android:hint="제목" />
 
-        <!-- 지역 입력 -->
         <EditText
-            android:id="@+id/txt_time"
+            android:id="@+id/txt_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:backgroundTint="#000000"
             android:hint="지역" />
 
-        <!-- 시작일 선택 버튼 -->
         <Button
             android:id="@+id/start_date_button"
             android:layout_width="match_parent"

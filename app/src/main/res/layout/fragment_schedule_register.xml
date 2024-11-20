@@ -38,13 +38,11 @@
             android:backgroundTint="#000000"
             android:hint="제목" />
 
-        <EditText
-            android:id="@+id/txt_time"
+        <TimePicker
+            android:id="@+id/time_picker"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="#000000"
-            android:hint="시간" />
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
 
         <!-- 시작일 선택 버튼 -->
 
@@ -88,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btn_Completed"

@@ -51,7 +51,7 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.firebase.database)
-    implementation("com.google.firebase:firebase-database:21.0.0'")
+    implementation(libs.firebase.database.v2100)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

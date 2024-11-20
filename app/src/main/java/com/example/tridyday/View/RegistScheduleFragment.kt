@@ -18,10 +18,9 @@ class RegistScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = FragmentScheduleRegisterBinding.inflate(inflater)
 
-        // Inflate the layout for this fragment
         return binding?.root
     }
 
@@ -32,11 +31,11 @@ class RegistScheduleFragment : Fragment() {
             findNavController().navigate(R.id.action_registScheduleFragment_to_scheduleFragment)
         }
 
-        binding?.btnSpot?.setOnClickListener {    // 추천 스팟 버튼
+        binding?.btnRecommendSpot?.setOnClickListener {    // 추천 스팟 버튼
             findNavController().navigate(R.id.action_registScheduleFragment_to_recommendFragment)
         }
 
-        binding?.btnMap?.setOnClickListener {    // 위치 버튼
+        binding?.btnRegisterMap?.setOnClickListener {    // 위치 버튼
             findNavController().navigate(R.id.action_registScheduleFragment_to_registMapFragment)
         }
 

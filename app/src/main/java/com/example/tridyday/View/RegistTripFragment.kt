@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.tridyday.R
+import com.example.tridyday.R.id.action_registTripFragment_to_homeFragment
 import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 
 
@@ -28,8 +28,8 @@ class RegistTripFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.tripSet?.setOnClickListener{    // 여행 등록하면 홈으로 돌아감
-            findNavController().navigate(R.id.action_registTripFragment_to_homeFragment)
+        binding?.btnCompleted?.setOnClickListener{    // 여행 등록하면 홈으로 돌아감
+            findNavController().navigate(action_registTripFragment_to_homeFragment)
         }
     }
 
