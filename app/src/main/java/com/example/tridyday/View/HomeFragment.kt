@@ -1,52 +1,38 @@
 package com.example.tridyday.View
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.Travel
-import com.example.myapplication.TravelAdapter
 import com.example.tridyday.R
-import com.example.tridyday.databinding.ActivityHomeBinding
+import com.example.tridyday.databinding.FragmentHomeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-
-    var binding: ActivityHomeBinding?= null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = ActivityHomeBinding.inflate(inflater)
-
-        // Inflate the layout for this fragment
-        return binding?.root
-    }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentHomeBinding.bind(view)
 
-        binding?.trip01?.setOnClickListener{    // 여행 누르면 그 여행으로 이동
+        // 여행을 선택했을 때 스케줄 fragment로 이동
+        binding.trip01.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)
         }
 
-        binding?.PlusTrip?.setOnClickListener {  // 여행 추가하는 버튼 연결
+        // 여행 추가 버튼 클릭 시 등록 fragment로 이동
+        binding.PlusTrip.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_registTripFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
-
 }
 
 // MainActivity.kt

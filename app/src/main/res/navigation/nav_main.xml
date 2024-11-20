@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.tridyday.View.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/activity_main" >
+        tools:layout="@layout/fragment_home"> <!-- 변경된 부분 -->
         <action
             android:id="@+id/action_homeFragment_to_registTripFragment"
             app:destination="@id/registTripFragment" />
