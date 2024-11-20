@@ -4,69 +4,103 @@
     android:id="@+id/frag_schedule_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#DDEFFF">
 
-    <Button
-        android:id="@+id/btn_Completed"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="15dp"
-        android:text="완료"
-        app:layout_constraintBottom_toBottomOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="396dp"
+        android:layout_height="778dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp">
+
+        <!-- 여행 등록 제목 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="일정 등록"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- 제목 입력 -->
+
+        <!-- 지역 입력 -->
+
+        <EditText
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="제목" />
+
+        <EditText
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="시간" />
+
+        <!-- 시작일 선택 버튼 -->
+
+        <!-- 종료일 선택 버튼 -->
+
+        <!-- 사진 업로드 버튼 -->
+
+        <!-- 완료 버튼 -->
+        <EditText
+            android:id="@+id/txt_memo"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="메모" />
+
+        <Button
+            android:id="@+id/btn_register_map"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#ffffff"
+            android:text="위치"
+            android:textColor="#000000"
+            android:textColorLink="#ffffff" />
+
+        <Button
+            android:id="@+id/btn_recommend_spot"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#ffffff"
+            android:text="추천 스팟"
+            android:textColor="#000000"
+            android:textColorLink="#ffffff" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"/>
 
-        <TextView
-            android:id="@+id/Day_n"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="DAY1"
-            android:textAlignment="viewStart"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/btn_Completed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#ffffff"
+        android:text="완료"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="제목" />
-
-        <EditText
-            android:id="@+id/txtTime"
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="시간" />
-
-        <EditText
-            android:id="@+id/txtContent"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="내용" />
-
-        <Button
-            android:id="@+id/btn_map"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:text="위치 등록"
-            android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/btn_spot"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:text="추천 스팟 보기"
-            android:textSize="24sp" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

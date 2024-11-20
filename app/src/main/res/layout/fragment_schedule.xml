@@ -10,19 +10,37 @@
 
     <!-- 버튼들을 담을 LinearLayout -->
 
-    <FrameLayout
-        android:id="@+id/frm_frag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="418dp"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="-13dp"
+        tools:layout_editor_absoluteY="70dp">
 
-    </FrameLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_schedule_plus"
+        android:layout_width="95dp"
+        android:layout_height="67dp"
+        android:backgroundTint="#DDEFFF"
+        android:text="+"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        tools:layout_editor_absoluteX="298dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_schedule"
-        android:layout_width="412dp"
-        android:layout_height="711dp"
+        android:layout_width="391dp"
+        android:layout_height="710dp"
         tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="134dp" />
+        tools:layout_editor_absoluteY="135dp" />
 
     <TextView
         android:id="@+id/txtScheduleTitle"
@@ -37,30 +55,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="418dp"
-        android:layout_height="65dp"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScheduleTitle"
-        app:layout_constraintVertical_bias="0.024">
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_schedule_plus"
-        android:layout_width="83dp"
-        android:layout_height="54dp"
-        android:text="+"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="312dp"
-        tools:layout_editor_absoluteY="4dp" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frm_frag"
+        android:name="com.example.tridy.RegistScheduleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
