@@ -39,12 +39,6 @@
             android:backgroundTint="#000000"
             android:hint="제목" />
 
-        <TimePicker
-            android:id="@+id/time_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
-
         <!-- 시작일 선택 버튼 -->
 
         <!-- 종료일 선택 버튼 -->
@@ -52,6 +46,19 @@
         <!-- 사진 업로드 버튼 -->
 
         <!-- 완료 버튼 -->
+
+        <TimePicker
+            android:id="@+id/time_picker_start"
+            android:layout_width="278dp"
+            android:layout_height="103dp"
+            android:timePickerMode="spinner" />
+
+        <TimePicker
+            android:id="@+id/time_picker_end"
+            android:layout_width="278dp"
+            android:layout_height="103dp"
+            android:timePickerMode="spinner" />
+
         <EditText
             android:id="@+id/txt_memo"
             android:layout_width="match_parent"

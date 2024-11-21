@@ -28,15 +28,15 @@ class RegistScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.btnCompleted?.setOnClickListener {    // 일정 등록 버튼
-            findNavController().navigate(R.id.action_registScheduleFragment_to_scheduleFragment)
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
         }
 
         binding?.btnRecommendSpot?.setOnClickListener {    // 추천 스팟 버튼
-            findNavController().navigate(R.id.action_registScheduleFragment_to_recommendFragment)
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_recommendFragment)
         }
 
         binding?.btnRegisterMap?.setOnClickListener {    // 위치 버튼
-            findNavController().navigate(R.id.action_registScheduleFragment_to_registMapFragment)
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_registMapFragment)
         }
 
     }
