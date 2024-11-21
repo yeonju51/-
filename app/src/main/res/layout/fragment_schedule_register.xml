@@ -17,6 +17,11 @@
         tools:layout_editor_absoluteX="0dp">
 
         <!-- 여행 등록 제목 -->
+
+        <!-- 제목 입력 -->
+
+        <!-- 지역 입력 -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,10 +30,6 @@
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-        <!-- 제목 입력 -->
-
-        <!-- 지역 입력 -->
 
         <EditText
             android:id="@+id/txt_title"
