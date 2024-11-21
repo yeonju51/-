@@ -55,10 +55,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/frm_frag"
-        android:name="com.example.tridy.RegistScheduleFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
