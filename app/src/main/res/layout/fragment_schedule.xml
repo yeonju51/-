@@ -14,10 +14,12 @@
         android:id="@+id/buttonContainer"
         android:layout_width="418dp"
         android:layout_height="65dp"
+        android:layout_marginTop="19dp"
         android:orientation="horizontal"
         android:padding="16dp"
-        tools:layout_editor_absoluteX="-13dp"
-        tools:layout_editor_absoluteY="70dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScheduleTitle">
 
     </LinearLayout>
 
@@ -32,15 +34,16 @@
         android:textSize="48sp"
         android:textStyle="bold"
         android:typeface="monospace"
-        tools:layout_editor_absoluteX="298dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_schedule"
         android:layout_width="391dp"
         android:layout_height="710dp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="135dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
 
     <TextView
         android:id="@+id/txtScheduleTitle"
