@@ -11,7 +11,7 @@ class viewModel: ViewModel() {
 
     private val repository = Repository()
     init {
-        repository.observeSchedule(_schedule)
+        repository.observeSchedule(schedule)
     }
 
     private fun modifySchedule(index: Int) {
