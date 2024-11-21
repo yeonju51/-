@@ -13,9 +13,9 @@ import com.example.tridyday.databinding.FragmentScheduleBinding
 class ScheduleFragment : Fragment() {
 
     val schedules = arrayOf(
-        Schedule("호텔 조식", "9:00 AM", "10:00 AM", "맛있겠당"),
-        Schedule("초당 두부 마을", "10:00 AM", "11:00 AM", "순두부찌개 먹을까?"),
-        Schedule("두부 만들기 체험", "11:00 AM", "1:00 PM", "두부는 어떻게 만들지?"),
+        Schedule("호텔 조식", 9, 0, 10, 0, "맛있겠당"),
+        Schedule("초당 두부 마을", 10, 0, 11, 0, "순두부찌개 먹을까?"),
+        Schedule("두부 만들기 체험",  11, 0, 13, 0, "두부는 어떻게 만들지?"),
     )
 
     private lateinit var binding: FragmentScheduleBinding

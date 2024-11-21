@@ -24,8 +24,8 @@ class SchedulesAdapter(val schedule: Array<Schedule>) : RecyclerView.Adapter<Sch
         fun bind(schedule: Schedule) {
 
             binding.txtName.text = schedule.title
-            binding.txtStartTime.text = schedule.startTime
-            binding.txtEndTime.text = schedule.endTime
+            binding.txtStartTime.text = schedule.startHour.toString()
+            binding.txtEndTime.text = schedule.endHour.toString()
 
         }
     }
