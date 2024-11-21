@@ -91,11 +91,11 @@
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
-        android:name="com.example.tridyday.View.RecommendFragment"
+        android:name="com.example.tridy.View.RecommendFragment"
         android:label="fragment_recommend"
         tools:layout="@layout/fragment_recommend" >
         <action
             android:id="@+id/action_recommendFragment_to_registScheduleFragment"
-            app:destination="@id/registScheduleFragment" />
+            app:destination="@id/scheduleRegisterFragment" />
     </fragment>
 </navigation>

@@ -14,7 +14,9 @@ class viewModel: ViewModel() {
         repository.observeSchedule(_schedule)
     }
 
-    private fun modifySchedule(index: Int, newValue: )
+    private fun modifySchedule(index: Int) {
+
+    }
 
     fun addSchedule(title: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, memo: String) {
 
