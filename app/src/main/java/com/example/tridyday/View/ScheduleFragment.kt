@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.Model.Schedule
+import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentScheduleBinding
 
 class ScheduleFragment : Fragment() {
@@ -45,16 +47,9 @@ class ScheduleFragment : Fragment() {
 
         // + 버튼 클릭 시 ScheduleRegisterFragment로 이동
         binding.btnSchedulePlus.setOnClickListener {
-            replaceFragment(ScheduleRegisterFragment())
+            findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
         }
 
         return binding.root
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction().run {
-            replace(binding.frmFrag.id, fragment)
-            commit()
-        }
     }
 }
