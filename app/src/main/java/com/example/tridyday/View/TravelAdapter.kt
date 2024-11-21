@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.tridyday.View
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,7 +28,6 @@ class TravelAdapter(private val travels: List<Travel>) : RecyclerView.Adapter<Tr
             binding.locationTextView.text = travel.location
             binding.startDateTextView.text = travel.startDate
             binding.endDateTextView.text = travel.endDate
-            // 여행 이미지도 추가할 수 있습니다. 예: Picasso 라이브러리 사용
         }
     }
 }
