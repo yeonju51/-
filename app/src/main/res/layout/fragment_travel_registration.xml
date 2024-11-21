@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CDE3F2"
-    android:padding="16dp">
+    tools:context=".view.TravelRegistrationFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Travel Title -->
+    <EditText
+        android:id="@+id/travel_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:hint="제목"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 여행 등록 제목 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="여행 등록"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <!-- Travel Name -->
+    <EditText
+        android:id="@+id/travel_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="여행 이름"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/travel_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 제목 입력 -->
-        <EditText
-            android:id="@+id/txt_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="#000000"
-            android:hint="제목" />
+    <!-- Start Date -->
+    <Button
+        android:id="@+id/start_date_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="시작 날짜 선택"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/travel_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/txt_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="#000000"
-            android:hint="지역" />
+    <!-- End Date -->
+    <Button
+        android:id="@+id/end_date_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="종료 날짜 선택"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/start_date_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:id="@+id/start_date_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="시작일 선택"
-            android:textColor="#000000" />
+    <!-- Photo Attachment -->
+    <Button
+        android:id="@+id/photo_attachment_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="사진 첨부"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/end_date_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 종료일 선택 버튼 -->
-        <Button
-            android:id="@+id/end_date_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="종료일 선택"
-            android:textColor="#000000" />
+    <!-- Complete Button -->
+    <Button
+        android:id="@+id/complete_registration_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="완료"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/photo_attachment_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 사진 업로드 버튼 -->
-        <Button
-            android:id="@+id/upload_photo_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="사진 업로드"
-            android:textColor="#000000" />
-
-        <!-- 완료 버튼 -->
-        <Button
-            android:id="@+id/btn_Completed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="완료"
-            android:textColor="#000000" />
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

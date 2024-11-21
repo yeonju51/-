@@ -31,16 +31,7 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register) {
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "여행 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-//                // 데이터 전달 및 이동
-//                val action = ScheduleRegisterFragmentDirections
-//                    .actionScheduleRegisterFragmentToScheduleFragment(
-//                        scheduleTitle = title,
-//                        scheduleHour = selectedHour,
-//                        scheduleMinute = selectedMinute,
-//                        scheduleTime = formattedTime,
-//                        scheduleMemo = memo
-//                    )
-//                findNavController().navigate(action)
+
             }
         }
     }
