@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CDE3F2"
-    tools:context=".view.TravelRegistrationFragment">
+    tools:context="com.example.myapp.view.TravelRegistrationFragment">
 
     <!-- Travel Title -->
     <EditText

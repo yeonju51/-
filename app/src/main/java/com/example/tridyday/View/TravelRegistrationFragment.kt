@@ -38,7 +38,8 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                 title = binding.travelTitle.text.toString(),
                 startDate = binding.startDateButton.text.toString(),
                 endDate = binding.endDateButton.text.toString(),
-                photoUri = selectedImageUri.toString()
+                // selectedImageUri가 null일 경우 빈 문자열 처리
+                photoUri = selectedImageUri?.toString() ?: ""
             )
             (parentFragment as? HomeFragment)?.addTravel(travel)
             parentFragmentManager.popBackStack()
