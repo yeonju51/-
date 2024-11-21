@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.homeFragment || destination.id == R.id.registTripFragment) {
+            if(destination.id == R.id.homeFragment || destination.id == R.id.TravelRegistrationFragment) {
                 binding.botNav.visibility = View.GONE
             } else {
                 binding.botNav.visibility = View.VISIBLE
