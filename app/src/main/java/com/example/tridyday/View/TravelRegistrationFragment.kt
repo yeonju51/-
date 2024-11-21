@@ -9,10 +9,12 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.tridyday.Model.Travel  // Travel 클래스 임포트
+import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 import java.util.*
+import android.widget.Toast // Toast Import 추가
+
 
 class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registration) {
 
@@ -34,15 +36,25 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
 
         // Complete Button
         binding.completeRegistrationButton.setOnClickListener {
-            val travel = Travel(
-                title = binding.travelTitle.text.toString(),
-                startDate = binding.startDateButton.text.toString(),
-                endDate = binding.endDateButton.text.toString(),
-                // selectedImageUri가 null일 경우 빈 문자열 처리
-                photoUri = selectedImageUri?.toString() ?: ""
-            )
-            (parentFragment as? HomeFragment)?.addTravel(travel)
-            parentFragmentManager.popBackStack()
+            val title = binding.travelTitle.text.toString()
+            val location = binding.travelLocation.text.toString() // location 추가
+            val startDate = binding.startDateButton.text.toString()
+            val endDate = binding.endDateButton.text.toString()
+
+            if (title.isNotBlank() && location.isNotBlank() && startDate.isNotBlank() && endDate.isNotBlank()) {
+                val travel = Travel(
+                    title = title,
+                    location = location,  // location 전달
+                    startDate = startDate,
+                    endDate = endDate,
+                    photoUri = selectedImageUri?.toString()
+                )
+                (parentFragment as? HomeFragment)?.addTravel(travel)
+                parentFragmentManager.popBackStack()
+            } else {
+                // 경고 메시지 표시
+                Toast.makeText(requireContext(), "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
