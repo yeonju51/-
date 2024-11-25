@@ -35,7 +35,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         binding.photoAttachmentButton.setOnClickListener { pickImageFromGallery() }
 
         // Complete Button
-        binding.completeRegistrationButton.setOnClickListener {
+        binding.btnCompleted.setOnClickListener {
             val title = binding.travelTitle.text.toString()
             val location = binding.travelLocation.text.toString() // location 추가
             val startDate = binding.startDateButton.text.toString()
