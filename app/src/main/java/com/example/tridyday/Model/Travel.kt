@@ -1,9 +1,12 @@
 package com.example.tridyday.Model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Travel(
     val title: String,
-    val location: String = "",  // 기본값 추가
+    val location: String,
     val startDate: String,
-    val endDate: String,
-    val photoUri: String? = null
-)
+    val endDate: String
+) : Parcelable

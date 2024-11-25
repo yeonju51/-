@@ -9,11 +9,13 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 import java.util.*
-import android.widget.Toast // Toast Import 추가
+import android.widget.Toast
+import com.example.tridyday.Model.Travel
+
+
 
 
 class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registration) {
@@ -47,7 +49,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                     location = location,  // location 전달
                     startDate = startDate,
                     endDate = endDate,
-                    photoUri = selectedImageUri?.toString()
                 )
                 (parentFragment as? HomeFragment)?.addTravel(travel)
                 parentFragmentManager.popBackStack()

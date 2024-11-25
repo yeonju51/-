@@ -3,8 +3,10 @@ package com.example.tridyday.View
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ItemTravelBinding
+import com.example.tridyday.Model.Travel
+
+
 
 class TravelAdapter(private val travels: List<Travel>) : RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
 
@@ -18,16 +20,13 @@ class TravelAdapter(private val travels: List<Travel>) : RecyclerView.Adapter<Tr
         holder.bind(travel)
     }
 
-    override fun getItemCount(): Int {
-        return travels.size
-    }
+    override fun getItemCount(): Int = travels.size
 
     inner class TravelViewHolder(private val binding: ItemTravelBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(travel: Travel) {
             binding.titleTextView.text = travel.title
             binding.locationTextView.text = travel.location
-            binding.startDateTextView.text = travel.startDate
-            binding.endDateTextView.text = travel.endDate
+            binding.datesTextView.text = "${travel.startDate} ~ ${travel.endDate}"
         }
     }
 }
