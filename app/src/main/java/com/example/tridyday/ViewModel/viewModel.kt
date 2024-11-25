@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Schedule
 
-class viewModel: ViewModel() {
+class scheduleViewModel: ViewModel() {
     private val _schedule = MutableLiveData<MutableList<Schedule>>()
     val schedule: LiveData<MutableList<Schedule>> get() = _schedule
 

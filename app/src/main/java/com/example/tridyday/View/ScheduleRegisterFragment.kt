@@ -1,14 +1,16 @@
 package com.example.tridyday.View
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.example.tridyday.Model.Schedule
 import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 
-class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register) {
+class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), TimePicker.OnTimeChangedListener {
 
     private lateinit var binding: FragmentScheduleRegisterBinding
 
@@ -16,35 +18,44 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentScheduleRegisterBinding.inflate(layoutInflater)
 
+        // TimePicker 시작 시간 리스너 설정
+        binding.timePickerStart.setOnTimeChangedListener { _, hourOfDay, minute ->
+            // 시작 시간 처리
+            val startTime = "$hourOfDay:$minute"
+            Log.d("StartTime", "Start Time: $startTime")
+        }
+
+        // TimePicker 종료 시간 리스너 설정
+        binding.timePickerEnd.setOnTimeChangedListener { _, hourOfDay, minute ->
+            // 종료 시간 처리
+            val endTime = "$hourOfDay:$minute"
+            Log.d("EndTime", "End Time: $endTime")
+        }
+
+        // 완료 버튼 클릭 리스너 설정
         binding.btnCompleted.setOnClickListener {
             val title = binding.txtTitle.text.toString()
-            val startHour = binding.timePickerStart.hour
-            val startMinute = binding.timePickerStart.minute
-            val endHour = binding.timePickerEnd.hour
-            val endMinute = binding.timePickerEnd.minute
+            val memo = binding.txtMemo.text.toString()
 
-            val formattedStartTime = formatTime(startHour, startMinute)
-            val formattedEndTime = formatTime(endHour, endMinute)
-
-            val formattedTimeRange = "$formattedStartTime - $formattedEndTime"
-
+            // 입력값 검증
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "여행 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
+                val startTime = "${binding.timePickerStart.hour}:${binding.timePickerStart.minute}"
+                val endTime = "${binding.timePickerEnd.hour}:${binding.timePickerEnd.minute}"
+
+                // Schedule 객체 생성
+                val schedule = Schedule(title, startTime, endTime, memo)
 
             }
         }
     }
 
-    private fun formatTime(hour: Int, minute: Int): String {
-        val amPm = if (hour < 12) "AM" else "PM"
-        val displayHour = if (hour == 0) 12 else if (hour > 12) hour - 12 else hour
-        return String.format("%02d:%02d %s", displayHour, minute, amPm)
+    companion object {
+        // 필요한 컴패니언 객체 작업
     }
 
-
-    companion object {
-
+    override fun onTimeChanged(p0: TimePicker?, p1: Int, p2: Int) {
 
     }
 }
