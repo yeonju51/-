@@ -8,6 +8,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.tridyday.R
 import com.example.tridyday.databinding.ActivityMainBinding
 
+
+
 class MainActivity : AppCompatActivity() {
 
 

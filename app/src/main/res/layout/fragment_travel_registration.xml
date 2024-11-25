@@ -8,70 +8,71 @@
     android:background="#CDE3F2"
     tools:context="com.example.tridyday.View.MainActivity">
 
-    <!-- Travel Title -->
-    <EditText
-        android:id="@+id/travel_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="제목"
-        android:layout_margin="16dp"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Travel Location -->
-    <EditText
-        android:id="@+id/travel_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="여행 장소"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/travel_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <!-- Start Date -->
-    <Button
-        android:id="@+id/start_date_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="시작 날짜 선택"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/travel_location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Travel Title -->
+            <EditText
+                android:id="@+id/travel_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="제목"
+                android:layout_marginBottom="16dp" />
 
-    <!-- End Date -->
-    <Button
-        android:id="@+id/end_date_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="종료 날짜 선택"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/start_date_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Travel Location -->
+            <EditText
+                android:id="@+id/travel_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="여행 장소"
+                android:layout_marginBottom="16dp" />
 
-    <!-- Photo Attachment -->
-    <Button
-        android:id="@+id/photo_attachment_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="사진 첨부"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/end_date_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Start Date -->
+            <Button
+                android:id="@+id/start_date_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="시작 날짜 선택"
+                android:layout_marginBottom="16dp" />
 
-    <!-- Complete Button -->
-    <Button
-        android:id="@+id/complete_registration_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="완료"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/photo_attachment_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- End Date -->
+            <Button
+                android:id="@+id/end_date_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종료 날짜 선택"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Photo Attachment -->
+            <Button
+                android:id="@+id/photo_attachment_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사진 첨부"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Complete Button -->
+            <Button
+                android:id="@+id/btnCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
