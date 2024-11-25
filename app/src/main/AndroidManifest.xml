@@ -23,8 +23,12 @@
         </activity>
 
         <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="EY AIzaSyCYuoY_K5jbcKHEk9I19e4f-moMvY0HlYE" />
+            android:value="AIzaSyBQ6hR87-xJCOdkAEIT1KNBh4rWMPOW4HU" />
     </application>
 
 </manifest>
