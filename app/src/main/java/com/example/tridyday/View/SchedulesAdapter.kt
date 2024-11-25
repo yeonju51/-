@@ -9,15 +9,15 @@ import com.example.tridyday.databinding.ListSchedulesBinding
 
 class SchedulesAdapter(val schedule: Array<Schedule>) : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
-    //val viewModel: scheduleViewModel by viewModel
+//    val viewModel: scheduleViewModel by viewModel()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulesAdapter.Holder {
         val binding = ListSchedulesBinding.inflate(LayoutInflater.from(parent.context))
         return Holder(binding)
 
-        viewModel.schedule.observe(viewLifecycleOwner) {
-
-        }
+//        viewModel.schedule.observe(viewLifecycleOwner) {
+//
+//        }
     }
 
     override fun onBindViewHolder(holder: SchedulesAdapter.Holder, position: Int) {
