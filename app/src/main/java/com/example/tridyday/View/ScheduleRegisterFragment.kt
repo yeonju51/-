@@ -45,7 +45,15 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
                 val endTime = "${binding.timePickerEnd.hour}:${binding.timePickerEnd.minute}"
 
                 // Schedule 객체 생성
-                val schedule = Schedule(title, startTime, endTime, memo)
+                data class Schedule(
+                    val title: String,
+                    val startHour: Int,
+                    val startMinute: Int,
+                    val endHour: Int,
+                    val endMinute: Int,
+                    val memo: String
+                )
+
 
             }
         }

@@ -26,7 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             adapter = travelAdapter
         }
         binding.addButton.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_registTripFragment)
         }
     }
 
