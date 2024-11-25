@@ -11,13 +11,17 @@ class scheduleViewModel: ViewModel() {
 
     private val repository = Repository()
     init {
-        // repository.observeSchedule(_schedule)
+        repository.observeSchedule(_schedule)
 
     }
 
-    private fun modifySchedule(index: Int) {
-
-    }
+//    private fun modifySchedule(index: Int, newValue: Char) {
+//        _schedule.value = _schedule.value?.let {
+//            val title = newValue
+//        }
+//
+//        repository.postSchedule(_schedule.value)
+//    }
 
     fun addSchedule(title: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, memo: String) {
 

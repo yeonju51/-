@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 import com.example.tridyday.Model.Travel
 
