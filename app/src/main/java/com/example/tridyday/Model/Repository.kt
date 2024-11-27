@@ -1,37 +1,38 @@
 package com.example.tridyday.Model
 
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
 
 class Repository {
-    val database = Firebase.database
+    // FirebaseDatabase 인스턴스를 가져옴
+    val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("user")
 
-    fun observeSchedule(schedule: MutableLiveData<MutableList<Schedule>>) {
-        userRef.addValueEventListener(object : ValueEventListener {
+    fun saveSchedule(schedule: Schedule) {
+        val scheduleId = database.getReference("schedules").push().key
+        if (scheduleId != null) {
+            database.getReference("schedules").child(scheduleId).setValue(schedule)
+        }
+    }
+
+    fun getSchedules(onSchedulesReceived: (List<Schedule>) -> Unit) {
+        database.getReference("schedules").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val scheduleList = mutableListOf<Schedule>()
-                for (childSnapshot in snapshot.children) {
-                    val item = childSnapshot.getValue(Schedule::class.java)
-                    if (item != null) {
-                        scheduleList.add(item)
+                val schedules = mutableListOf<Schedule>()
+                for (data in snapshot.children) {
+                    val schedule = data.getValue(Schedule::class.java)
+                    if (schedule != null) {
+                        schedules.add(schedule)
                     }
                 }
-                schedule.postValue(scheduleList)
+                onSchedulesReceived(schedules)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // 에러 처리
+                // 실패 처리
             }
         })
-    }
-
-
-    fun postSchedule(newValue: String) {
-        userRef.setValue(newValue)
     }
 }

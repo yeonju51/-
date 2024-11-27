@@ -8,7 +8,7 @@ import com.example.tridyday.Model.Travel
 
 
 
-class TravelAdapter(private val travels: List<Travel>) : RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
+class TravelAdapter(private val travels: MutableList<Travel>) : RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelViewHolder {
         val binding = ItemTravelBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,5 +31,11 @@ class TravelAdapter(private val travels: List<Travel>) : RecyclerView.Adapter<Tr
             // 예시: "2024-11-01 ~ 2024-11-10"
             binding.datesTextView.text = "${travel.startDate} ~ ${travel.endDate}"
         }
+    }
+
+    // 데이터를 추가하고 UI 갱신
+    fun addItem(travel: Travel) {
+        travels.add(travel)
+        notifyDataSetChanged() // 데이터를 변경한 후 UI 갱신
     }
 }

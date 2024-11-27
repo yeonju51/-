@@ -1,34 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
 
-    <!-- Login Fragment -->
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.tridyday.View.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-
-    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.tridyday.View.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_registTripFragment"
-        app:destination="@id/registTripFragment" />
+            android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
+            app:destination="@id/travelRegistrationFragment" />
     </fragment>
 
-    <!-- Travel Registration Fragment -->
     <fragment
-        android:id="@+id/registTripFragment"
-        android:name="com.example.tridyday.View.RegistTripFragment"
+        android:id="@+id/travelRegistrationFragment"
+        android:name="com.example.tridyday.View.TravelRegistrationFragment"
         tools:layout="@layout/fragment_travel_registration" />
 </navigation>

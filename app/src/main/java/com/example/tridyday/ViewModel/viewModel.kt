@@ -5,14 +5,16 @@ import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Schedule
 
-class scheduleViewModel: ViewModel() {
-    private val _schedule = MutableLiveData<MutableList<Schedule>>()
-    val schedule: LiveData<MutableList<Schedule>> get() = _schedule
+class scheduleViewModel : ViewModel() {
+    private val _schedule = MutableLiveData<List<Schedule>>()
+    val schedule: LiveData<List<Schedule>> get() = _schedule
 
     private val repository = Repository()
-    init {
-        repository.observeSchedule(_schedule)
 
+    init {
+        repository.getSchedules { schedules ->
+            _schedule.postValue(schedules) // List<Schedule>을 바로 전달
+        }
     }
 
 //    private fun modifySchedule(index: Int, newValue: Char) {
