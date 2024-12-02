@@ -19,8 +19,8 @@ data class Travel(
         var locate: Locate
     ) {
         data class Locate(
-            var name: String,
             var id: String,
+            var name: String,
             var lat: Double,
             var lng: Double,
             var place: String

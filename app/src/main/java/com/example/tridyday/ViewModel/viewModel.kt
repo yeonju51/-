@@ -22,7 +22,6 @@ class ViewModel: ViewModel() {
 
     init{
         repository.observeSchedule(_schedule)
-        repository.observeLocate(_locate)
     }
 
     fun addSchedule(newSchedule: Travel.Schedule) {
@@ -56,4 +55,5 @@ class ViewModel: ViewModel() {
     fun updateTravels(newTravels: List<Travel>) {
         _travels.value = newTravels
     }
+
 }

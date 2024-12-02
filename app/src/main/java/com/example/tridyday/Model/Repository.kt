@@ -41,16 +41,6 @@ class Repository() {
     }
 
 
-    fun observeLocate(locate: MutableLiveData<Travel.Schedule.Locate>) {
-        userRef.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                locate.postValue(snapshot.value as Travel.Schedule.Locate?)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
 
     fun postLocate(newValue: Travel.Schedule.Locate) {
         userRef.setValue(newValue)

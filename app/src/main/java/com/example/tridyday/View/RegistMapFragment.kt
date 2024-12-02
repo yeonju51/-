@@ -35,9 +35,13 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentRegistMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
+
+
     private var placeID: String = ""
+    private var placeName = ""
     private var placeLat: Double = 0.0
     private var placeLng: Double = 0.0
+    private var placeLocate =""
 
     val viewModel: ViewModel by activityViewModels()
 
@@ -68,28 +72,32 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                     as AutocompleteSupportFragment
 
         // place data중 반환될 데이터 설정
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID)) //, Place.Field.LOCATION
+        autocompleteFragment.setPlaceFields(listOf(
+            Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG))
 
         // PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
 
-                Log.i( tag,"Place: ${place.id} ")   //, ${place.location}
-                //Place: ChIJ1a3vsrjjZTURMC44oCngkro lat/lng: (35.8501034,128.5206192)
+                Log.i( tag,"Place: ${place.id} ${place.latLng} ${place.name} ${place.address}")   //, ${place.location}
+                //Place: ChIJ1bj7UAChfDURKL0Z-CBw5ic lat/lng: (37.4956492,127.0281847) DF타워 대한민국 서울특별시 서초구 강남대로 369
 
                 placeID = place.id.toString()
-                //val LatLngSplit = place.location.toString().split(",")
+                placeName = place.name.toString()
+                val LatLngSplit = place.latLng.toString().split(",")
 
-                //placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
-               // placeLng = LatLngSplit[1].replace((")"), "").toDouble()
+                placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
+                placeLng = LatLngSplit[1].replace((")"), "").toDouble()
+
+                placeLocate = place.address.toString()
 
 
-                Log.i( tag, "PID: ${placeID} ") //PLAT:${placeLat} PLNG:${placeLng}
-                //PID: ChIJfyq9ioKlfDUROtia3PfRA7o PLAT:37.5267473 PLNG:127.0412988
-
-                renewal("name","Locate") // 데이터 넘어가야함
-
+                renewal(placeName,placeLocate) // 데이터로 텍스트 넘어감
+                moveMap(placeLng,placeLat)
             }
 
             override fun onError(status: Status) {
@@ -107,7 +115,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
 
                 viewModel.locate.observe(viewLifecycleOwner){
                     //읽어올 내용 binding?.txt.text = viewModel.Locate.value
-                    viewModel.setLocate("name",placeID,0.0,0.0,"위치")
+                    viewModel.setLocate(placeName,placeID,placeLat,placeLng,placeLocate)
                 }
                 findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
             }
@@ -116,9 +124,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                 builder.setTitle("")
                     .setMessage("위치가 지정되지 않았습니다.")
                     .setPositiveButton("확인",
-                        DialogInterface.OnClickListener { dialog, id ->
-                        })
-                    .setNegativeButton("취소",
                         DialogInterface.OnClickListener { dialog, id ->
                         })
                 builder.show()
@@ -166,7 +171,8 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun moveMap(latitude: Double, longitude:Double){
-        MygoogleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude,longitude)))
+        Log.i( tag,"moveMap 체크용: ${LatLng(longitude, latitude)}  ${placeLat} ${placeLng}")
+        MygoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(longitude,latitude), 16f))
     }
 
     fun markerMap(name:String, lat:Double, lng:Double){
