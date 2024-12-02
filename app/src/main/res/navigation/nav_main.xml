@@ -5,6 +5,7 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/loginFragment">
 
+    <!-- 로그인 화면 -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.tridyday.View.LoginFragment"
@@ -15,33 +16,36 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- 홈 화면 -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.tridyday.View.HomeFragment"
-        android:label="fragment_home"
+        android:label="홈 화면"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_registTripFragment"
+            android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
             app:destination="@id/travelRegistrationFragment" />
         <action
             android:id="@+id/action_homeFragment_to_scheduleFragment"
             app:destination="@id/scheduleFragment" />
     </fragment>
 
+    <!-- 여행 등록 화면 -->
     <fragment
         android:id="@+id/travelRegistrationFragment"
-        android:name="com.example.tridyday.View.RegistTripFragment"
-        android:label="fragment_regist_trip"
+        android:name="com.example.tridyday.View.TravelRegistrationFragment"
+        android:label="여행 등록 화면"
         tools:layout="@layout/fragment_travel_registration">
         <action
             android:id="@+id/action_travelRegistrationFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- 일정 화면 -->
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.example.tridyday.View.ScheduleFragment"
-        android:label="fragment_schedule"
+        android:label="일정 화면"
         tools:layout="@layout/fragment_schedule">
         <action
             android:id="@+id/action_scheduleFragment_to_mapFragment"
@@ -54,10 +58,11 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- 일정 등록 화면 -->
     <fragment
         android:id="@+id/scheduleRegisterFragment"
         android:name="com.example.tridyday.View.ScheduleRegisterFragment"
-        android:label="fragment_regist_schedule"
+        android:label="일정 등록 화면"
         tools:layout="@layout/fragment_schedule_register">
         <action
             android:id="@+id/action_scheduleRegisterFragment_to_registMapFragment"
@@ -73,10 +78,11 @@
             app:destination="@id/scheduleFragment" />
     </fragment>
 
+    <!-- 지도 화면 -->
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.tridyday.View.MapFragment"
-        android:label="fragment_map"
+        android:label="지도 화면"
         tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFragment_to_scheduleFragment"
@@ -86,30 +92,33 @@
             app:destination="@id/mapDetailFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/registMapFragment"
-        android:name="com.example.tridyday.View.RegistMapFragment"
-        android:label="fragment_regist_map"
-        tools:layout="@layout/fragment_regist_map">
-        <action
-            android:id="@+id/action_registMapFragment_to_registScheduleFragment"
-            app:destination="@id/scheduleRegisterFragment" />
-    </fragment>
-
+    <!-- 지도 세부 화면 -->
     <fragment
         android:id="@+id/mapDetailFragment"
         android:name="com.example.tridyday.View.MapFragment"
-        android:label="fragment_map_detail"
+        android:label="지도 세부 화면"
         tools:layout="@layout/fragment_map_detail">
         <action
             android:id="@+id/action_mapDetailFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
 
+    <!-- 지도 등록 화면 -->
+    <fragment
+        android:id="@+id/registMapFragment"
+        android:name="com.example.tridyday.View.RegistMapFragment"
+        android:label="지도 등록 화면"
+        tools:layout="@layout/fragment_regist_map">
+        <action
+            android:id="@+id/action_registMapFragment_to_registScheduleFragment"
+            app:destination="@id/scheduleRegisterFragment" />
+    </fragment>
+
+    <!-- 추천 화면 -->
     <fragment
         android:id="@+id/recommendFragment"
         android:name="com.example.tridy.View.RecommendFragment"
-        android:label="fragment_recommend"
+        android:label="추천 화면"
         tools:layout="@layout/fragment_recommend">
         <action
             android:id="@+id/action_recommendFragment_to_registScheduleFragment"
