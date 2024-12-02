@@ -9,10 +9,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentTravelRegistrationBinding
 import java.util.*
 
@@ -22,6 +23,8 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
     private var photoUri: Uri? = null
     private var startDate: String? = null
     private var endDate: String? = null
+
+    private val viewModel: ViewModel by viewModels()
 
     private val selectImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -35,7 +38,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTravelRegistrationBinding.bind(view)
 
-        // 시작 날짜 선택
         binding.startDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
                 val date = "$year-${month + 1}-$dayOfMonth"
@@ -44,7 +46,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
             }
         }
 
-        // 종료 날짜 선택
         binding.endDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
                 val date = "$year-${month + 1}-$dayOfMonth"
@@ -53,14 +54,12 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
             }
         }
 
-        // 사진 첨부
         binding.photoAttachmentButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
             selectImageLauncher.launch(intent)
         }
 
-        // 완료 버튼 클릭 시 Firebase에 저장
         binding.btnCompleted.setOnClickListener {
             val title = binding.travelTitle.text.toString()
             val location = binding.travelLocation.text.toString()
@@ -73,9 +72,8 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                     endDate = endDate,
                     photoUri = photoUri
                 )
-                val repository = Repository()
 
-                repository.saveTravel(travel, onSuccess = {
+                viewModel.addTravel(travel, onSuccess = {
                     Toast.makeText(requireContext(), "여행 등록 성공", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_travelRegistrationFragment_to_homeFragment)
                 }, onFailure = {

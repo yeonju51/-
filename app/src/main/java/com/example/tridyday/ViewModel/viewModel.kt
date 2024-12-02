@@ -47,4 +47,13 @@ class ViewModel: ViewModel() {
 
         repository.postLocate(newLocate)
     }
+    // 새로운 여행 데이터를 Firebase에 저장
+    fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        repository.saveTravel(travel, onSuccess, onFailure)
+    }
+
+    // 여행 데이터를 업데이트
+    fun updateTravels(newTravels: List<Travel>) {
+        _travels.value = newTravels
+    }
 }
