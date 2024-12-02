@@ -35,19 +35,19 @@ class Repository() {
         })
     }
 
-    fun saveSchedule(schedule: Schedule) {
+    fun saveSchedule(schedule: Travel.Schedule) {
         val scheduleId = scheduleRef.push().key
         if (scheduleId != null) {
             scheduleRef.child(scheduleId).setValue(schedule)
         }
     }
 
-    fun getSchedules(onSchedulesReceived: (List<Schedule>) -> Unit) {
+    fun getSchedules(onSchedulesReceived: (List<Travel.Schedule>) -> Unit) {
         scheduleRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Schedule>()
+                val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
-                    val schedule = data.getValue(Schedule::class.java)
+                    val schedule = data.getValue(Travel.Schedule::class.java)
                     if (schedule != null) {
                         schedules.add(schedule)
                     }
