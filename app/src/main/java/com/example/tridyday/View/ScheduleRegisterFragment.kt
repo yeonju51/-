@@ -27,10 +27,13 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
 
         binding.btnCompleted.setOnClickListener {
             val title = binding.txtTitle.text.toString()
+            val day = binding.txtDay.text.toString().toIntOrNull()
             val memo = binding.txtMemo.text.toString()
 
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "여행 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            } else if (day == null) {
+                Toast.makeText(requireContext(), "몇째 날인지 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 val startHour = binding.timePickerStart.hour
                 val startMinute = binding.timePickerStart.minute
@@ -40,10 +43,10 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
                 val startTime = LocalTime.of(startHour, startMinute)
                 val endTime = LocalTime.of(endHour, endMinute)
 
-                val newSchedule = Travel.Schedule(title, startTime, endTime, memo,
+                val newSchedule = Travel.Schedule(title, day, startTime, endTime, memo,
                     locate = Travel.Schedule.Locate(
                         name = "Sample Location",
-                        iD = "1234",
+                        id = "1234",
                         lat = 37.5665,
                         lng = 126.9780,
                         place = "Seoul"

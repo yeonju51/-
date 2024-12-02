@@ -8,13 +8,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="396dp"
-        android:layout_height="778dp"
+        android:layout_width="397dp"
+        android:layout_height="733dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,6 +33,14 @@
             android:layout_marginBottom="15dp"
             android:backgroundTint="#000000"
             android:hint="제목" />
+
+        <EditText
+            android:id="@+id/txt_day"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="Day" />
 
         <TimePicker
             android:id="@+id/time_picker_start"

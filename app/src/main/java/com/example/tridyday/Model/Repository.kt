@@ -1,13 +1,10 @@
 package com.example.tridyday.Model
 
 import androidx.lifecycle.MutableLiveData
-import com.example.tridyday.ViewModel.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.core.Context
-
 
 class Repository() {
     // FirebaseDatabase 인스턴스를 가져옴

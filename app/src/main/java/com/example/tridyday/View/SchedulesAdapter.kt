@@ -3,37 +3,37 @@ package com.example.tridyday.View
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tridyday.ViewModel.scheduleViewModel
+import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter(val schedule: Array<Schedule>) : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
-//    val viewModel: scheduleViewModel by viewModel()
+    private var scheduleList = mutableListOf<Travel.Schedule>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulesAdapter.Holder {
-        val binding = ListSchedulesBinding.inflate(LayoutInflater.from(parent.context))
-        return Holder(binding)
-
-//        viewModel.schedule.observe(viewLifecycleOwner) {
-//
-//        }
+    fun setSchedules(schedules: List<Travel.Schedule>) {
+        scheduleList.clear()
+        scheduleList.addAll(schedules)
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: SchedulesAdapter.Holder, position: Int) {
-        holder.bind(schedule[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val binding = ListSchedulesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Holder(binding)
+    }
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bind(scheduleList[position])
     }
 
     override fun getItemCount(): Int {
-        return schedule.size
+        return scheduleList.size
     }
 
     class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(schedule: Schedule) {
-
+        fun bind(schedule: Travel.Schedule) {
             binding.txtName.text = schedule.title
             binding.txtStartTime.text = schedule.startTime.toString()
             binding.txtEndTime.text = schedule.endTime.toString()
-
         }
     }
 }

@@ -12,6 +12,7 @@ data class Travel(
 ) {
     data class Schedule(
         var title: String,
+        var day: Int,
         var startTime: LocalTime,
         var endTime: LocalTime,
         var memo: String,
@@ -24,5 +25,11 @@ data class Travel(
             var lng: Double,
             var place: String
         )
+
+        companion object {
+            fun Locate(name: String, id: String, lat: Double, lng: Double, place: String): Travel.Schedule.Locate {
+                return Locate(name, id, lat, lng, place)
+            }
+        }
     }
 }
