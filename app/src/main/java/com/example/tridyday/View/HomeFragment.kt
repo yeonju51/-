@@ -1,6 +1,7 @@
 package com.example.tridyday.View
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,6 +36,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
 
         binding.addButton.setOnClickListener {
+            Log.d("NavigationDebug", "Current Destination: ${findNavController().currentDestination?.id}")
+
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
         }
     }
