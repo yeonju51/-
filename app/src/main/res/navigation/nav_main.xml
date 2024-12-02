@@ -21,7 +21,7 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_registTripFragment"
+            android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
             app:destination="@id/travelRegistrationFragment" />
         <action
             android:id="@+id/action_homeFragment_to_scheduleFragment"
@@ -30,8 +30,8 @@
 
     <fragment
         android:id="@+id/travelRegistrationFragment"
-        android:name="com.example.tridyday.View.RegistTripFragment"
-        android:label="fragment_regist_trip"
+        android:name="com.example.tridyday.View.TravelRegistrationFragment"
+        android:label="fragment_travel_registration"
         tools:layout="@layout/fragment_travel_registration">
         <action
             android:id="@+id/action_travelRegistrationFragment_to_homeFragment"
