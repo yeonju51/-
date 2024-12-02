@@ -31,9 +31,9 @@ class RegistScheduleFragment : Fragment() {
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
         }
 
-        binding?.btnRecommendSpot?.setOnClickListener {    // 추천 스팟 버튼
-            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_recommendFragment)
-        }
+//        binding?.btnRecommendSpot?.setOnClickListener {    // 추천 스팟 버튼
+//            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_recommendFragment)
+//        }
 
         binding?.btnRegisterMap?.setOnClickListener {    // 위치 버튼
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_registMapFragment)
