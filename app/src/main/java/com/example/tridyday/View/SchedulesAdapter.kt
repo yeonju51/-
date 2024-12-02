@@ -3,7 +3,6 @@ package com.example.tridyday.View
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tridyday.Model.Schedule
 import com.example.tridyday.ViewModel.scheduleViewModel
 import com.example.tridyday.databinding.ListSchedulesBinding
 

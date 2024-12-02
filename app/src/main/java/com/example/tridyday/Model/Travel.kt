@@ -14,5 +14,13 @@ data class Travel(
         val startTime: Int,
         val endTime: Int,
         val memo: String
-    )
+    ) {
+        data class locate(
+            val name: String,
+            val iD: String,
+            val lat: Double,
+            val lng: Double,
+            val place: String
+        )
+    }
 }

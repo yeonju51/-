@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.tridyday.Model.Schedule
 import com.example.tridyday.R
 import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 
