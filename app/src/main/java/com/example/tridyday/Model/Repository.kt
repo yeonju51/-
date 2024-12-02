@@ -1,5 +1,7 @@
 package com.example.tridyday.Model
 
+import androidx.lifecycle.MutableLiveData
+import com.example.tridyday.ViewModel.locateClass
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,5 +36,22 @@ class Repository {
                 // 실패 처리
             }
         })
+    }
+
+
+
+    fun observeLocate(locate: MutableLiveData<locateClass>) {
+        userRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                locate.postValue(snapshot.value as locateClass?)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    fun postLocate(newValue: locateClass) {
+        userRef.setValue(newValue)
     }
 }
