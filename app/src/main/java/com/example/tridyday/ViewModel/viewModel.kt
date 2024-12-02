@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 
-val UNLOCATE= locateClass("","",0.0,0.0,"")
+val UNLOCATE= Travel.Schedule.Locate("","",0.0,0.0,"")
 
 class ViewModel: ViewModel() {
     private val _schedule = MutableLiveData<MutableList<Travel.Schedule>>()
     val schedule: LiveData<MutableList<Travel.Schedule>> get() = _schedule
 
-    private val _locate = MutableLiveData<Travel.Schedule.locate>(UNLOCATE)
-    val locate: LiveData<Travel.Schedule.locate> get() = _locate
+    private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
+    val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
     private val repository = Repository()
     init{
@@ -36,12 +36,4 @@ class ViewModel: ViewModel() {
 
         repository.postLocate(newLocate)
     }
-}
-
-data class locateClass(var name: String,
-                       var id: String,
-                       var lat: Double,
-                       var lng: Double,
-                       var place: String) {
-
 }
