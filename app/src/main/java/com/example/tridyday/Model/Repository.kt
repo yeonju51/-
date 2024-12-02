@@ -77,4 +77,44 @@ class Repository() {
     fun postLocate(newValue: locateClass) {
         userRef.setValue(newValue)
     }
+
+    // 새로운 여행 데이터 저장
+    fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val travelId = travelRef.push().key
+        if (travelId != null) {
+            travelRef.child(travelId).setValue(travel)
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { onFailure(it) }
+        } else {
+            onFailure(Exception("Travel ID 생성 실패"))
+        }
+    }
+
+    // Firebase에서 여행 데이터를 실시간으로 관찰
+    fun observeTravels(travelList: MutableLiveData<MutableList<Travel>>) {
+        travelRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val travels = mutableListOf<Travel>()
+                for (data in snapshot.children) {
+                    val travel = data.getValue(Travel::class.java)
+                    if (travel != null) {
+                        travels.add(travel)
+                    }
+                }
+                travelList.value = travels // LiveData 업데이트
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // 에러 처리
+            }
+        })
+    }
+
+    // Firebase에서 특정 여행 데이터를 삭제
+    fun deleteTravel(travelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        travelRef.child(travelId).removeValue()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
+    }
 }
+

@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.database)
     implementation(libs.firebase.database.v2100)
+
+
 //    implementation(libs.places)
     implementation(libs.androidx.activity)
     implementation("com.google.android.gms:play-services-maps:19.0.0")
