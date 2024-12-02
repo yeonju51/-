@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
@@ -56,7 +57,6 @@ dependencies {
 
 
 //    implementation(libs.places)
-    implementation(libs.androidx.activity)
     implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation("com.google.android.gms:play-services-location:17.0.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

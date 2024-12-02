@@ -1,6 +1,7 @@
 package com.example.tridyday.Model
 
 import android.net.Uri
+import java.time.LocalTime
 
 data class Travel(
     var title: String,
@@ -10,17 +11,18 @@ data class Travel(
     var photoUri: Uri? = null // 사진 URI를 추가
 ) {
     data class Schedule(
-        var title: String,
-        var startTime: Int,
-        var endTime: Int,
-        var memo: String
+        val title: String,
+        val startTime: LocalTime,
+        val endTime: LocalTime,
+        val memo: String,
+        val locate: Locate
     ) {
         data class Locate(
-            var name: String,
-            var id: String,
-            var lat: Double,
-            var lng: Double,
-            var place: String
+            val name: String,
+            val iD: String,
+            val lat: Double,
+            val lng: Double,
+            val place: String
         )
     }
 }

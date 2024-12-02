@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.R
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentScheduleBinding
 
 class ScheduleFragment : Fragment() {
 
     private lateinit var binding: FragmentScheduleBinding
-
+    val viewModel1: ViewModel by activityViewModels()
+    val viewModel2: ViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +48,14 @@ class ScheduleFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel1.schedule.observe(viewLifecycleOwner) {
+            binding?.txtScheduleTitle.text = viewModel1.schedule.
+        }
     }
 }
 

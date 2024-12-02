@@ -15,6 +15,7 @@ class Repository() {
     val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
     val scheduleRef = database.getReference("schedule")
+    val locateRef = database.getReference("locate")
 
     fun observeSchedule(schedule: MutableLiveData<MutableList<Travel.Schedule>>) {
         scheduleRef.addValueEventListener(object : ValueEventListener {
@@ -35,32 +36,12 @@ class Repository() {
         })
     }
 
-    fun saveSchedule(schedule: Travel.Schedule) {
+    fun setSchedule(schedule: Travel.Schedule) {
         val scheduleId = scheduleRef.push().key
-        if (scheduleId != null) {
+        scheduleId?.let {
             scheduleRef.child(scheduleId).setValue(schedule)
         }
     }
-
-    fun getSchedules(onSchedulesReceived: (List<Travel.Schedule>) -> Unit) {
-        scheduleRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Travel.Schedule>()
-                for (data in snapshot.children) {
-                    val schedule = data.getValue(Travel.Schedule::class.java)
-                    if (schedule != null) {
-                        schedules.add(schedule)
-                    }
-                }
-                onSchedulesReceived(schedules)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("ahah")
-            }
-        })
-    }
-
 
 
     fun observeLocate(locate: MutableLiveData<Travel.Schedule.Locate>) {

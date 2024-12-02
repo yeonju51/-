@@ -8,17 +8,28 @@ import com.example.tridyday.Model.Travel
 val UNLOCATE= Travel.Schedule.Locate("","",0.0,0.0,"")
 
 class ViewModel: ViewModel() {
+
+    private val repository = Repository()
+
+    private val _travels = MutableLiveData<List<Travel>>()
+    val travels: LiveData<List<Travel>> get() = _travels
+
     private val _schedule = MutableLiveData<MutableList<Travel.Schedule>>()
     val schedule: LiveData<MutableList<Travel.Schedule>> get() = _schedule
 
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
-    private val repository = Repository()
     init{
+        repository.observeSchedule(_schedule)
         repository.observeLocate(_locate)
     }
 
+    fun addSchedule(newSchedule: Travel.Schedule) {
+        val updatedSchedule = _schedule.value ?: mutableListOf()
+        updatedSchedule.add(newSchedule)
+        _schedule.value = updatedSchedule
+    }
     fun setLocate(newName:String,
                   newID : String,
                   newLat : Double,
