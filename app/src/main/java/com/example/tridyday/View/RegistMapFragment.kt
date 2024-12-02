@@ -1,19 +1,31 @@
 package com.example.tridyday.View
 
 
-import android.content.Context
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.tridyday.R
+import com.example.tridyday.ViewModel.locateViewModel
 import com.example.tridyday.databinding.FragmentRegistMapBinding
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+
 
 
 class RegistMapFragment : Fragment(), OnMapReadyCallback {
@@ -22,7 +34,11 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentRegistMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
+    private var placeID: String = ""
+    private var placeLat: Double = 0.0
+    private var placeLng: Double = 0.0
 
+    val viewModel: locateViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -36,18 +52,78 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
-        // Inflate the layout for this fragment
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize the SDK
+        Places.initializeWithNewPlacesApiEnabled(context, "AIzaSyBQ6hR87-xJCOdkAEIT1KNBh4rWMPOW4HU")
 
-    }
+        // Initialize the AutocompleteSupportFragment.
+        val autocompleteFragment =
+            childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                    as AutocompleteSupportFragment
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+        // place data중 반환될 데이터 설정
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.LOCATION))
+
+        // PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+
+                Log.i( tag,"Place: ${place.id} ${place.location}")
+                //Place: ChIJ1a3vsrjjZTURMC44oCngkro lat/lng: (35.8501034,128.5206192)
+
+                placeID = place.id.toString()
+                val LatLngSplit = place.location.toString().split(",")
+
+                placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
+                placeLng = LatLngSplit[1].replace((")"), "").toDouble()
+
+
+                Log.i( tag, "PID: ${placeID} PLAT:${placeLat} PLNG:${placeLng}")
+                //PID: ChIJfyq9ioKlfDUROtia3PfRA7o PLAT:37.5267473 PLNG:127.0412988
+
+                renewal("name","locate") // 데이터 넘어가야함
+
+            }
+
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i( tag,"An error occurred: $status")
+            }
+        })
+
+        //지역 제한 한국으로
+        autocompleteFragment.setCountries("KR")
+
+
+        binding?.registBtn?.setOnClickListener{
+            if(placeID != "") {
+
+                viewModel.locate.observe(viewLifecycleOwner){
+                    //읽어올 내용 binding?.txt.text = viewModel.locate.value
+                    viewModel.setLocate("name",placeID,placeLat,placeLat,"위치")
+                }
+                findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
+            }
+            else{
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("")
+                    .setMessage("위치가 지정되지 않았습니다.")
+                    .setPositiveButton("확인",
+                        DialogInterface.OnClickListener { dialog, id ->
+                        })
+                    .setNegativeButton("취소",
+                        DialogInterface.OnClickListener { dialog, id ->
+                        })
+                builder.show()
+            }
+
+        }
     }
 
     override fun onDestroyView() {
@@ -100,5 +176,16 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
         // 마커를 추가하고 말풍선 표시한 것을 보여주도록 호출
         MygoogleMap.addMarker(markerOptions)?.showInfoWindow()
     }
+
+    fun renewal(name:String, locate:String){
+        if(binding != null) {
+            binding!!.placeName.text = name
+            binding!!.placeLocation.text = locate
+        }
+    }
 }
+/*
+디펜던시에 추가
+implementation(libs.places)
+ */
 
