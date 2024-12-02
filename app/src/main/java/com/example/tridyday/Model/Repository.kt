@@ -1,7 +1,7 @@
 package com.example.tridyday.Model
 
 import androidx.lifecycle.MutableLiveData
-import com.example.tridyday.ViewModel.locateClass
+import com.example.tridyday.ViewModel.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

@@ -11,18 +11,18 @@ data class Travel(
     var photoUri: Uri? = null // 사진 URI를 추가
 ) {
     data class Schedule(
-        val title: String,
-        val startTime: LocalTime,
-        val endTime: LocalTime,
-        val memo: String,
-        val locate: Locate
+        var title: String,
+        var startTime: LocalTime,
+        var endTime: LocalTime,
+        var memo: String,
+        var locate: Locate
     ) {
         data class Locate(
-            val name: String,
-            val iD: String,
-            val lat: Double,
-            val lng: Double,
-            val place: String
+            var name: String,
+            var id: String,
+            var lat: Double,
+            var lng: Double,
+            var place: String
         )
     }
 }
