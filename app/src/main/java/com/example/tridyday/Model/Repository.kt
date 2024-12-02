@@ -8,19 +8,20 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.core.Context
 
-class Repository(private val context: Context) {
+
+class Repository() {
     // FirebaseDatabase 인스턴스를 가져옴
     val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
     val scheduleRef = database.getReference("schedule")
 
-    fun observeSchedule(schedule: MutableLiveData<MutableList<Schedule>>) {
+    fun observeSchedule(schedule: MutableLiveData<MutableList<Travel.Schedule>>) {
         scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Schedule>()
+                val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
-                    val schedule = data.getValue(Schedule::class.java)
+                    val schedule = data.getValue(Travel.Schedule::class.java)
                     if (schedule != null) {
                         schedules.add(schedule)
                     }

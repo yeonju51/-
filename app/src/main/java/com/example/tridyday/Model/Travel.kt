@@ -2,8 +2,6 @@ package com.example.tridyday.Model
 
 import android.net.Uri
 
-
-
 data class Travel(
     val title: String,
     val location: String,
