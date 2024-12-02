@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tridyday.R
-import com.example.tridyday.ViewModel.locateViewModel
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentRegistMapBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,6 +28,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 
 
 
+
 class RegistMapFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
 
@@ -38,7 +39,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var placeLat: Double = 0.0
     private var placeLng: Double = 0.0
 
-    val viewModel: locateViewModel by activityViewModels()
+    val viewModel: ViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -67,27 +68,27 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                     as AutocompleteSupportFragment
 
         // place data중 반환될 데이터 설정
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.LOCATION))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID)) //, Place.Field.LOCATION
 
         // PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
 
-                Log.i( tag,"Place: ${place.id} ${place.location}")
+                Log.i( tag,"Place: ${place.id} ")   //, ${place.location}
                 //Place: ChIJ1a3vsrjjZTURMC44oCngkro lat/lng: (35.8501034,128.5206192)
 
                 placeID = place.id.toString()
-                val LatLngSplit = place.location.toString().split(",")
+                //val LatLngSplit = place.location.toString().split(",")
 
-                placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
-                placeLng = LatLngSplit[1].replace((")"), "").toDouble()
+                //placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
+               // placeLng = LatLngSplit[1].replace((")"), "").toDouble()
 
 
-                Log.i( tag, "PID: ${placeID} PLAT:${placeLat} PLNG:${placeLng}")
+                Log.i( tag, "PID: ${placeID} ") //PLAT:${placeLat} PLNG:${placeLng}
                 //PID: ChIJfyq9ioKlfDUROtia3PfRA7o PLAT:37.5267473 PLNG:127.0412988
 
-                renewal("name","locate") // 데이터 넘어가야함
+                renewal("name","Locate") // 데이터 넘어가야함
 
             }
 
@@ -105,8 +106,8 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
             if(placeID != "") {
 
                 viewModel.locate.observe(viewLifecycleOwner){
-                    //읽어올 내용 binding?.txt.text = viewModel.locate.value
-                    viewModel.setLocate("name",placeID,placeLat,placeLat,"위치")
+                    //읽어올 내용 binding?.txt.text = viewModel.Locate.value
+                    viewModel.setLocate("name",placeID,0.0,0.0,"위치")
                 }
                 findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
             }
