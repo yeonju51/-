@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentRegistMapBinding
@@ -44,6 +43,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var placeLocate =""
 
     val viewModel: ViewModel by activityViewModels()
+
 
 
     override fun onCreateView(
@@ -117,7 +117,9 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                     //읽어올 내용 binding?.txt.text = viewModel.Locate.value
                     viewModel.setLocate(placeName,placeID,placeLat,placeLng,placeLocate)
                 }
-                findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
+                //childFragmentManager.popBackStack()
+                activity?.onBackPressedDispatcher?.onBackPressed()
+                //findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
             }
             else{
                 val builder = AlertDialog.Builder(context)
@@ -128,7 +130,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                         })
                 builder.show()
             }
-
         }
     }
 
