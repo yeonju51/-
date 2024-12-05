@@ -22,6 +22,10 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(scheduleList[position])
+
+//        holder.binding.btnScheduleMemo.setOnClickListener {
+//
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -29,6 +33,7 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
     }
 
     class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(schedule: Travel.Schedule) {
             binding.txtName.text = schedule.title
             binding.txtStartTime.text = schedule.startTime.toString()

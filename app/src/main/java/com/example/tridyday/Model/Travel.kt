@@ -26,10 +26,5 @@ data class Travel(
             var place: String
         )
 
-        companion object {
-            fun Locate(name: String, id: String, lat: Double, lng: Double, place: String): Travel.Schedule.Locate {
-                return Locate(name, id, lat, lng, place)
-            }
-        }
     }
 }
