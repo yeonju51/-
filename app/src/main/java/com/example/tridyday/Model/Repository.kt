@@ -20,19 +20,6 @@ class Repository() {
         scheduleRef.setValue(newValue)
     }
 
-    fun addSchedule(schedule: Travel.Schedule) {
-        val scheduleId = scheduleRef.push().key
-        if (scheduleId != null) {
-            scheduleRef.child(scheduleId).setValue(schedule)
-                .addOnSuccessListener { Log.d("Repository", "Schedule added successfully") }
-                .addOnFailureListener { Log.e("Repository", "Failed to add schedule: ${it.message}") }
-        } else {
-            Log.e("Repository", "Failed to generate schedule ID")
-        }
-    }
-
-
-
     fun postLocate(newValue: Travel.Schedule.Locate) {
         userRef.setValue(newValue)
     }
