@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val navController = supportFragmentManager.findFragmentById(R.id.frgNav) as NavHostFragment
         binding.botNav.setupWithNavController(navController.navController)
         navController.navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.homeFragment || destination.id == R.id.travelRegistrationFragment || destination.id == R.id.loginFragment) {
+            if (destination.id == R.id.homeFragment || destination.id == R.id.travelRegistrationFragment ) {
                 binding.botNav.visibility = View.GONE
             } else {
                 binding.botNav.visibility = View.VISIBLE
