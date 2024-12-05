@@ -74,6 +74,8 @@ class Repository() {
         travelRef.child(travelId).removeValue()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }
+        // addOnFailureListener는 삭제가 실패했을 때 호출되는 리스너
+        // 삭제 작업이 실패하면, 이 리스너 내에서 onFailure(it)가 호출, it은 실패한 원인, 즉 예외를 나타냄
     }
 }
 

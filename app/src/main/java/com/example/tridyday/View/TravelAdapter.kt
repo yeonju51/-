@@ -14,6 +14,8 @@ class TravelAdapter(private val travels: MutableList<Travel>) : RecyclerView.Ada
         return TravelViewHolder(binding)
     }
 
+    // onBindViewHolder는 각 아이템을 화면에 표시할 때 호출
+    //position은 현재 항목이 리스트에서 몇 번째 항목인지 나타냄
     override fun onBindViewHolder(holder: TravelViewHolder, position: Int) {
         holder.bind(travels[position])
     }
@@ -29,6 +31,7 @@ class TravelAdapter(private val travels: MutableList<Travel>) : RecyclerView.Ada
         }
     }
 
+    // 새로운 여행 데이터(newTravels)
     fun updateTravels(newTravels: List<Travel>) {
         travels.clear()
         travels.addAll(newTravels)

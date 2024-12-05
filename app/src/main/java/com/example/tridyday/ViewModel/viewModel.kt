@@ -62,7 +62,7 @@ class ViewModel: ViewModel() {
         repository.saveTravel(travel, onSuccess, onFailure)
     }
 
-    // 여행 데이터를 업데이트
+    // LiveData를 사용하면 데이터가 변경될 때 이를 구독하고 있는 UI 컴포넌트(예: Activity, Fragment)가 자동으로 업데이트
     fun updateTravels(newTravels: List<Travel>) {
         _travels.value = newTravels
     }
