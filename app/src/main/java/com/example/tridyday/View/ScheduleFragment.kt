@@ -25,12 +25,9 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Fragment 레이아웃을 결합
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
-        // RecyclerView 설정
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
-        // binding.recSchedule.adapter = SchedulesAdapter(schedules) // 일정 리스트 Adapter 설정
 
         // 여행 일수에 맞게 Day 버튼 동적으로 추가
         val totalDays = 5 // 일단 5일 설정
@@ -55,15 +52,31 @@ class ScheduleFragment : Fragment() {
     private fun showDaySchedule(day: Int) {
         val schedulesForDay = scheduleByDay[day]
         if (schedulesForDay != null) {
-            binding.recSchedule.adapter = SchedulesAdapter(schedulesForDay)
+            binding.recSchedule.adapter?.let {
+                if (it is SchedulesAdapter) {
+                    it.setSchedules(schedulesForDay)
+                    it.notifyDataSetChanged()  // 데이터 변경 알림
+                }
+            }
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.schedule.observe(viewLifecycleOwner) {
-            // 일정 데이터를 RecyclerView에 표시하는 로직
-            // 예: binding.recSchedule.adapter = SchedulesAdapter(viewModel.schedule.value)
+        viewModel.schedule.observe(viewLifecycleOwner) { schedules ->
+            scheduleByDay.clear()
+            schedules.forEach { schedule ->
+                val day = schedule.day
+                if (scheduleByDay[day] == null) {
+                    scheduleByDay[day] = mutableListOf()
+                }
+                scheduleByDay[day]?.add(schedule)
+            }
+
+            if (scheduleByDay.isNotEmpty()) {
+                showDaySchedule(1)
+            }
         }
     }
 }

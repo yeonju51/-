@@ -13,6 +13,7 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
     fun setSchedules(schedules: List<Travel.Schedule>) {
         scheduleList.clear()
         scheduleList.addAll(schedules)
+        notifyDataSetChanged()  // 데이터 변경 후 RecyclerView에 알림
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -22,10 +23,6 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(scheduleList[position])
-
-//        holder.binding.btnScheduleMemo.setOnClickListener {
-//
-//        }
     }
 
     override fun getItemCount(): Int {

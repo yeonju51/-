@@ -10,18 +10,28 @@
 
     <!-- 버튼들을 담을 LinearLayout -->
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="418dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="19dp"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/rec_schedule"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScheduleTitle">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/btn_schedule_plus"
@@ -39,9 +49,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_schedule"
-        android:layout_width="391dp"
-        android:layout_height="710dp"
+        android:layout_width="417dp"
+        android:layout_height="542dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
 

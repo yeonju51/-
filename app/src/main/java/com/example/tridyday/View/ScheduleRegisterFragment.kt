@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
@@ -47,16 +46,6 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
                 }
 
                 viewModel.setSchedule(title, day, startTime, endTime, memo)
-
-
-//                viewModel.schedule.observe(viewLifecycleOwner) { result ->
-//                    if (result.isNotEmpty()) {
-//                        Toast.makeText(requireContext(), "스케줄이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-//                        findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
-//                    } else {
-//                        Toast.makeText(requireContext(), "스케줄 등록에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
 
             }
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
