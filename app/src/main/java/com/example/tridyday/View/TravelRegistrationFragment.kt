@@ -40,6 +40,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
 
         binding.startDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
+                // Kotlin 문자열 템플릿
                 val date = "$year-${month + 1}-$dayOfMonth"
                 startDate = date
                 binding.startDateButton.text = date
@@ -80,7 +81,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                     Toast.makeText(requireContext(), "등록 실패: ${it.message}", Toast.LENGTH_SHORT).show()
                 })
             } else {
-                Toast.makeText(requireContext(), "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -91,6 +92,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+        // 날짜를 선택한 후 호출되는 콜백, 선택된 연도, 월, 날짜를 전달
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
             onDateSet(selectedYear, selectedMonth, selectedDay)
         }, year, month, day).show()
