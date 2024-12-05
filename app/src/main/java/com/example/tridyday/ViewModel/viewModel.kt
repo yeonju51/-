@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
+import com.example.tridyday.Model.Travel.Schedule.Locate
+import java.time.LocalTime
 
 val UNLOCATE= Travel.Schedule.Locate("","",0.0,0.0,"")
 
@@ -20,13 +22,24 @@ class ViewModel: ViewModel() {
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
-    init{
-        repository.observeSchedule(_schedule)
+    fun setSchedule(newTitle: String,
+                    newDay: Int,
+                    newStartTime: LocalTime,
+                    newEndTime: LocalTime,
+                    newMemo: String) {
+        val currentLocate = _locate.value ?: UNLOCATE
+
+        val newSchedule = Travel.Schedule(
+            title = newTitle,
+            day = newDay,
+            startTime = newStartTime,
+            endTime = newEndTime,
+            memo = newMemo,
+            locate = currentLocate
+        )
+        repository.postSchedule(newSchedule)
     }
 
-    fun addSchedule(newSchedule: Travel.Schedule) {
-        repository.setSchedule(newSchedule)
-    }
     fun setLocate(newName:String,
                   newID : String,
                   newLat : Double,

@@ -32,37 +32,41 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
 
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "여행 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             } else if (day == null) {
                 Toast.makeText(requireContext(), "몇째 날인지 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             } else {
-                val startHour = binding.timePickerStart.hour
-                val startMinute = binding.timePickerStart.minute
-                val endHour = binding.timePickerEnd.hour
-                val endMinute = binding.timePickerEnd.minute
 
-                val startTime = LocalTime.of(startHour, startMinute)
-                val endTime = LocalTime.of(endHour, endMinute)
+                val startTime = LocalTime.of(binding.timePickerStart.hour, binding.timePickerStart.minute)
+                val endTime = LocalTime.of(binding.timePickerEnd.hour, binding.timePickerEnd.minute)
 
-                val newSchedule = Travel.Schedule(title, day, startTime, endTime, memo,
-                    locate = Travel.Schedule.Locate(
-                        name = "Sample Location",
-                        id = "1234",
-                        lat = 37.5665,
-                        lng = 126.9780,
-                        place = "Seoul"
-                    )
-                )
+                if (endTime.isBefore(startTime) || endTime == startTime) {
+                    Toast.makeText(requireContext(), "종료 시간이 시작 시간보다 늦어야 합니다.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
 
-                viewModel.addSchedule(newSchedule)
+                viewModel.setSchedule(title, day, startTime, endTime, memo)
 
-                // 완료 후 돌아가기
-                findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
+
+//                viewModel.schedule.observe(viewLifecycleOwner) { result ->
+//                    if (result.isNotEmpty()) {
+//                        Toast.makeText(requireContext(), "스케줄이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+//                        findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
+//                    } else {
+//                        Toast.makeText(requireContext(), "스케줄 등록에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+
             }
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
+
+            //
         }
     }
 
-    override fun onTimeChanged(p0: TimePicker?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+    override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        //
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.tridyday.Model
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -14,29 +16,18 @@ class Repository() {
     val scheduleRef = database.getReference("schedule")
     val locateRef = database.getReference("locate")
 
-    fun observeSchedule(schedule: MutableLiveData<MutableList<Travel.Schedule>>) {
-        scheduleRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Travel.Schedule>()
-                for (data in snapshot.children) {
-                    val schedule = data.getValue(Travel.Schedule::class.java)
-                    if (schedule != null) {
-                        schedules.add(schedule)
-                    }
-                }
-                schedule.value = schedules
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("hmm..")
-            }
-        })
+    fun postSchedule(newValue: Travel.Schedule) {
+        scheduleRef.setValue(newValue)
     }
 
-    fun setSchedule(schedule: Travel.Schedule) {
+    fun addSchedule(schedule: Travel.Schedule) {
         val scheduleId = scheduleRef.push().key
-        scheduleId?.let {
+        if (scheduleId != null) {
             scheduleRef.child(scheduleId).setValue(schedule)
+                .addOnSuccessListener { Log.d("Repository", "Schedule added successfully") }
+                .addOnFailureListener { Log.e("Repository", "Failed to add schedule: ${it.message}") }
+        } else {
+            Log.e("Repository", "Failed to generate schedule ID")
         }
     }
 

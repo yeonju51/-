@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.777"
-        tools:layout_editor_absoluteX="217dp" />
+        tools:layout_editor_absoluteX="215dp" />
 
     <ImageButton
         android:id="@+id/btn_schedule_memo"
