@@ -25,9 +25,7 @@ class ViewModel: ViewModel() {
     }
 
     fun addSchedule(newSchedule: Travel.Schedule) {
-        val updatedSchedule = _schedule.value ?: mutableListOf()
-        updatedSchedule.add(newSchedule)
-        _schedule.value = updatedSchedule
+        repository.setSchedule(newSchedule)
     }
     fun setLocate(newName:String,
                   newID : String,

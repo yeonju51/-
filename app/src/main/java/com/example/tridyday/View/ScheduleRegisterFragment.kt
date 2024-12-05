@@ -23,7 +23,7 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentScheduleRegisterBinding.inflate(layoutInflater)
+        binding = FragmentScheduleRegisterBinding.bind(view)
 
         binding.btnCompleted.setOnClickListener {
             val title = binding.txtTitle.text.toString()
@@ -56,7 +56,7 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register), 
                 viewModel.addSchedule(newSchedule)
 
                 // 완료 후 돌아가기
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
             }
         }
     }

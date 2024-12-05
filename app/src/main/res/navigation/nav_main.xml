@@ -63,9 +63,6 @@
             android:id="@+id/action_scheduleRegisterFragment_to_registMapFragment"
             app:destination="@id/registMapFragment" />
         <action
-            android:id="@+id/action_scheduleRegisterFragment_to_recommendFragment"
-            app:destination="@id/recommendFragment" />
-        <action
             android:id="@+id/action_scheduleRegisterFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
         <action
@@ -106,13 +103,4 @@
             app:destination="@id/mapFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/recommendFragment"
-        android:name="com.example.tridy.View.RecommendFragment"
-        android:label="fragment_recommend"
-        tools:layout="@layout/fragment_recommend">
-        <action
-            android:id="@+id/action_recommendFragment_to_registScheduleFragment"
-            app:destination="@id/scheduleRegisterFragment" />
-    </fragment>
 </navigation>

@@ -13,7 +13,6 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
     fun setSchedules(schedules: List<Travel.Schedule>) {
         scheduleList.clear()
         scheduleList.addAll(schedules)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
