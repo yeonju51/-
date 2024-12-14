@@ -1,4 +1,4 @@
-package com.example.tridyday.view
+package com.example.tridyday.View
 
 import android.os.Bundle
 import android.view.View

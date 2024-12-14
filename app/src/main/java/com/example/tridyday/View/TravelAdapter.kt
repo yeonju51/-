@@ -1,4 +1,4 @@
-package com.example.tridyday.view
+package com.example.tridyday.View
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
