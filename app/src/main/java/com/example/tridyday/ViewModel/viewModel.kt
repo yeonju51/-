@@ -16,29 +16,49 @@ class ViewModel: ViewModel() {
     private val _travels = MutableLiveData<List<Travel>>()
     val travels: LiveData<List<Travel>> get() = _travels
 
-    private val _schedule = MutableLiveData<MutableList<Travel.Schedule>>()
-    val schedule: LiveData<MutableList<Travel.Schedule>> get() = _schedule
+    private val _schedules = MutableLiveData<MutableList<Travel.Schedule>>()
+    val schedules: LiveData<MutableList<Travel.Schedule>> get() = _schedules
+
+    init {
+        repository.observeSchedule(_schedules)
+    }
 
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
-    fun setSchedule(newTitle: String,
-                    newDay: Int,
-                    newStartTime: LocalTime,
-                    newEndTime: LocalTime,
-                    newMemo: String) {
-        val currentLocate = _locate.value ?: UNLOCATE
-
-        val newSchedule = Travel.Schedule(
-            title = newTitle,
-            day = newDay,
-            startTime = newStartTime,
-            endTime = newEndTime,
-            memo = newMemo,
-            locate = currentLocate
-        )
-        repository.postSchedule(newSchedule)
+    fun setSchedule(schedule: Travel.Schedule) {
+        _schedules.value?.add(schedule)  // 새로운 일정을 추가
+        _schedules.value = _schedules.value  // LiveData를 갱신
     }
+
+//    fun addSchedule(schedule: Travel.Schedule) {
+//        _schedules.value?.apply {
+//            add(schedule)
+//            _schedules.value = this
+//        }
+//    }
+
+//    fun updateSchedule(index: Int, newSchedule: Travel.Schedule) {
+//        _schedules.value?.apply {
+//            if (index in indices) {
+//                this[index] = newSchedule
+//                _schedules.value = this
+//            }
+//        }
+//    }
+//
+//    fun removeSchedule(index: Int) {
+//        _schedules.value?.apply {
+//            if (index in indices) {
+//                removeAt(index)
+//                _schedules.value = this
+//            }
+//        }
+//    }
+//
+//    fun getSchedule(index: Int): Travel.Schedule? {
+//        return _schedules.value?.getOrNull(index)
+//    }
 
     fun setLocate(newName:String,
                   newID : String,

@@ -1,7 +1,5 @@
 package com.example.tridyday.Model
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -9,15 +7,42 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 class Repository() {
-    // FirebaseDatabase 인스턴스를 가져옴
     val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
-    val scheduleRef = database.getReference("schedule")
+    val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
 
-    fun postSchedule(newValue: Travel.Schedule) {
-        scheduleRef.setValue(newValue)
+    fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val scheduleId = scheduleRef.push().key
+        if (scheduleId != null) {
+            travelRef.child("schedules").child(scheduleId).setValue(newValue)
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { onFailure(it) }
+        } else {
+            onFailure(Exception("Schedule ID 생성 실패"))
+        }
+    }
+
+    // Schedule 데이터 실시간 관찰
+    fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
+        scheduleRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val schedules = mutableListOf<Travel.Schedule>()
+                for (data in snapshot.children) {
+                    val schedule = data.getValue(Travel.Schedule::class.java)
+                    if (schedule != null) {
+                        schedules.add(schedule)
+                    }
+                }
+                scheduleList.value = schedules // LiveData 업데이트
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // 에러 처리 (로그 출력 또는 UI 알림)
+                println("Error observing schedules: ${error.message}")
+            }
+        })
     }
 
     fun postLocate(newValue: Travel.Schedule.Locate) {

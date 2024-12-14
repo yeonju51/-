@@ -64,7 +64,7 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.schedule.observe(viewLifecycleOwner) { schedules ->
+        viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
             scheduleByDay.clear()
             schedules.forEach { schedule ->
                 val day = schedule.day
