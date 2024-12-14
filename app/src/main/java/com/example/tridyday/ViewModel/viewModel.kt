@@ -1,5 +1,7 @@
 package com.example.tridyday.ViewModel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -69,6 +71,12 @@ class ViewModel : ViewModel() {
 //    fun getSchedule(index: Int): Travel.Schedule? {
 //        return _schedules.value?.getOrNull(index)
 //    }
+    val travelDaysLiveData = MutableLiveData<Int>()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun fetchTravelDays(travelId: String) {
+        repository.getTravelDays(travelId, travelDaysLiveData)
+    }
 
     fun setLocate(newName:String,
                   newID : String,
