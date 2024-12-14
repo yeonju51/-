@@ -1,4 +1,4 @@
-package com.example.tridyday.View
+package com.example.tridyday.view
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -55,10 +55,11 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         }
 
         binding.photoAttachmentButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.type = "image/*"
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
             selectImageLauncher.launch(intent)
         }
+
 
         binding.btnCompleted.setOnClickListener {
             val title = binding.travelTitle.text.toString()
