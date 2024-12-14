@@ -8,7 +8,7 @@ data class Travel(
     var location: String = "",
     var startDate: String? = null,
     var endDate: String? = null,
-    var photoUri: Uri? = null // 사진 URI를 추가
+    var photoUri: String? = null // 사진 URI를 추가
 ) {
     data class Schedule(
         var title: String,

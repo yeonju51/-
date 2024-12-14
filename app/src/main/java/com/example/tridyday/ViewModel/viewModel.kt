@@ -9,7 +9,6 @@ import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 
 val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
-val UNTRAVEL = Travel("","","","",null)
 
 class ViewModel : ViewModel() {
 

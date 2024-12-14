@@ -71,7 +71,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                     location = location,
                     startDate = startDate,
                     endDate = endDate,
-                    photoUri = photoUri
+                    photoUri = photoUri.toString()
                 )
 
                 viewModel.addTravel(travel, onSuccess = {
