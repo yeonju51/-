@@ -1,9 +1,10 @@
-package com.example.tridyday.view
+package com.example.tridyday.View
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
@@ -27,6 +28,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // LiveData 관찰하여 RecyclerView 업데이트
         viewModel.travels.observe(viewLifecycleOwner) { travels ->
             adapter.updateTravels(travels)
+        }
+        binding.addButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
         }
     }
 }
