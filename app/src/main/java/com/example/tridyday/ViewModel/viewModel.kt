@@ -31,6 +31,17 @@ class ViewModel : ViewModel() {
         _schedules.value = _schedules.value  // LiveData를 갱신
     }
 
+    // 여행 데이터 추가
+    fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        repository.saveTravel(travel, {
+            // 성공 시 _travels 업데이트
+            val currentTravels = _travels.value?.toMutableList() ?: mutableListOf()
+            currentTravels.add(travel)
+            _travels.value = currentTravels
+            onSuccess()
+        }, onFailure)
+    }
+
 //    fun addSchedule(schedule: Travel.Schedule) {
 //        _schedules.value?.apply {
 //            add(schedule)

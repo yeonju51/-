@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CDE3F2"
-    tools:context="com.example.tridyday.View.HomeFragment">
+    tools:context="com.example.tridyday.view.HomeFragment">
 
     <!-- Top Bar -->
     <LinearLayout
