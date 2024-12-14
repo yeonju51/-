@@ -40,7 +40,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
 
         binding.startDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
-                // Kotlin 문자열 템플릿
                 val date = "$year-${month + 1}-$dayOfMonth"
                 startDate = date
                 binding.startDateButton.text = date
@@ -58,7 +57,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         binding.photoAttachmentButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
-            // 이미지 선택을 실행하는 역할
             selectImageLauncher.launch(intent)
         }
 
@@ -88,14 +86,11 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
     }
 
     private fun showDatePickerDialog(onDateSet: (Int, Int, Int) -> Unit) {
-        // Calendar 객체를 생성하는 메서드
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        // 날짜를 선택한 후 호출되는 콜백, 선택된 연도, 월, 날짜를 전달
-        //  DatePickerDialog에서 날짜를 선택할 때 전달 받은 값들을 onDateSet 함수에 넘김
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
             onDateSet(selectedYear, selectedMonth, selectedDay)
         }, year, month, day).show()
