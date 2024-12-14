@@ -46,7 +46,7 @@ class Repository() {
     }
 
     fun postLocate(newValue: Travel.Schedule.Locate) {
-        userRef.setValue(newValue)
+        locateRef.setValue(newValue)
     }
 
     // 새로운 여행 데이터 저장
