@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
-import java.time.LocalTime
 
 val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
 

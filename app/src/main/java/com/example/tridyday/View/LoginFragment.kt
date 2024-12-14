@@ -1,4 +1,4 @@
-package com.example.tridyday.View
+package com.example.tridyday.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

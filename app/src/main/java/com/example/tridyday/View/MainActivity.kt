@@ -1,4 +1,4 @@
-package com.example.tridyday.View
+package com.example.tridyday.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
