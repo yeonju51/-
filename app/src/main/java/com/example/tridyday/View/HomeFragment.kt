@@ -24,10 +24,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.adventureRecyclerView.adapter = adapter
 
-        // LiveData 관찰하여 RecyclerView 갱신
-        viewModel.travelList.observe(viewLifecycleOwner) { travels ->
+        // LiveData 관찰하여 RecyclerView 업데이트
+        viewModel.travels.observe(viewLifecycleOwner) { travels ->
             adapter.updateTravels(travels)
         }
     }
 }
-
