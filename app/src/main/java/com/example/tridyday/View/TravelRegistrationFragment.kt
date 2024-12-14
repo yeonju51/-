@@ -1,4 +1,4 @@
-package com.example.tridyday.view
+package com.example.tridyday.View
 
 import android.app.DatePickerDialog
 import android.content.Intent
