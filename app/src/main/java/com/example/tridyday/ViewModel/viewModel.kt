@@ -34,12 +34,14 @@ class ViewModel : ViewModel() {
     }
 
     val travelDaysLiveData = MutableLiveData<Int>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchTravelDays(travelId: String) {
         repository.getTravelDays(travelId, travelDaysLiveData)
     }
 
-    // 여행 데이터 추가
+    // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
             // 성공 시 _travels 업데이트
@@ -50,7 +52,6 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
-
     fun setLocate(
         newName: String,
         newID: String,
@@ -58,9 +59,7 @@ class ViewModel : ViewModel() {
         newLng: Double,
         newPlace: String
     ) {
-
         val newLocate = _locate.value?.let {
-
             it.name = newName
             it.id = newID
             it.lat = newLat
@@ -68,7 +67,6 @@ class ViewModel : ViewModel() {
             it.place = newPlace
             _locate.value
         } ?: UNLOCATE
-
         repository.postLocate(newLocate)
     }
 }
