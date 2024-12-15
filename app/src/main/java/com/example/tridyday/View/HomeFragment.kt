@@ -27,6 +27,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 putString("travelTitle", travel.title)
                 putString("travelLocation", travel.location)
             }
+
+            //맵프래그먼트에서 Travel ID 를 받을예정
+            viewModel.sendSelTravel(1)
             // 수정된 부분: ScheduleFragment로 이동
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment, bundle)
         }

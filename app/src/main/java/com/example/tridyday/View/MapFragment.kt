@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -38,6 +41,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
 
+    val viewModel: ViewModel by activityViewModels()
+    private var selTravel: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +54,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView = binding!!.map01
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        selTravel = viewModel.recvSelTravel()
 
         // Inflate the layout for this fragment
         return binding?.root

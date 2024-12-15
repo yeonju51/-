@@ -71,4 +71,13 @@ class ViewModel : ViewModel() {
 
         repository.postLocate(newLocate)
     }
+
+    private var selTravel = 0
+
+    fun sendSelTravel(sel: Int){
+        selTravel = sel
+    }
+    fun recvSelTravel():Int {
+        return selTravel
+    }
 }
