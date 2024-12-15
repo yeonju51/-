@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentHomeBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -27,7 +29,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 putString("travelTitle", travel.title)
                 putString("travelLocation", travel.location)
             }
-            // 수정된 부분: ScheduleFragment로 이동
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment, bundle)
         }
         binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -35,12 +36,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // LiveData 관찰하여 RecyclerView 업데이트
         viewModel.travels.observe(viewLifecycleOwner) { travels ->
-            adapter.updateTravels(travels)
+            adapter.updateTravels(travels.map { travel ->
+                // 날짜 포맷팅
+                travel.copy(
+                    startDate = formatDate(travel.startDate),
+                    endDate = formatDate(travel.endDate)
+                )
+            })
         }
 
         // Add 버튼 클릭 시 TravelRegistrationFragment로 이동
         binding.addButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
+        }
+    }
+
+    private fun formatDate(date: String?): String {
+        if (date.isNullOrEmpty()) return ""
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+            val parsedDate = inputFormat.parse(date)
+            outputFormat.format(parsedDate ?: date)
+        } catch (e: Exception) {
+            date ?: ""
         }
     }
 }
