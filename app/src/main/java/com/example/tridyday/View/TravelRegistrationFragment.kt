@@ -21,8 +21,6 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
 
     private lateinit var binding: FragmentTravelRegistrationBinding
     private var photoUri: Uri? = null
-    private var startDate: String? = null
-    private var endDate: String? = null
 
     private val viewModel: ViewModel by viewModels()
 
@@ -41,7 +39,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         binding.startDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
                 val date = "$year-${month + 1}-$dayOfMonth"
-                startDate = date
+                viewModel.setStartDate(date)
                 binding.startDateButton.text = date
             }
         }
@@ -49,7 +47,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         binding.endDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
                 val date = "$year-${month + 1}-$dayOfMonth"
-                endDate = date
+                viewModel.setEndDate(date)
                 binding.endDateButton.text = date
             }
         }
@@ -60,18 +58,17 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
             selectImageLauncher.launch(intent)
         }
 
-
         binding.btnCompleted.setOnClickListener {
             val title = binding.travelTitle.text.toString()
             val location = binding.travelLocation.text.toString()
 
-            if (title.isNotEmpty() && location.isNotEmpty() && startDate != null && endDate != null) {
+            if (title.isNotEmpty() && location.isNotEmpty() && viewModel.startDate.value != null && viewModel.endDate.value != null) {
                 val travel = Travel(
                     title = title,
                     location = location,
-                    startDate = startDate,
-                    endDate = endDate,
-                    photoUri = photoUri.toString()
+                    startDate = viewModel.startDate.value,
+                    endDate = viewModel.endDate.value,
+                    photoUri = photoUri?.toString() ?: ""
                 )
 
                 viewModel.addTravel(travel, onSuccess = {

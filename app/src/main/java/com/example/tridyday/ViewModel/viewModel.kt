@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
 
@@ -68,5 +70,34 @@ class ViewModel : ViewModel() {
             _locate.value
         } ?: UNLOCATE
         repository.postLocate(newLocate)
+    }
+
+    // startDate, endDate를 저장할 MutableLiveData
+    private val _startDate = MutableLiveData<String>()
+    val startDate: LiveData<String> get() = _startDate
+
+    private val _endDate = MutableLiveData<String>()
+    val endDate: LiveData<String> get() = _endDate
+
+    // 날짜를 ViewModel에서 처리하기 위해 startDate 값을 설정
+    fun setStartDate(date: String) {
+        _startDate.value = date
+    }
+
+    // 날짜를 ViewModel에서 처리하기 위해 endDate 값을 설정
+    fun setEndDate(date: String) {
+        _endDate.value = date
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun calculateTravelDays(): Int {
+        val start = _startDate.value?.let { LocalDate.parse(it) }
+        val end = _endDate.value?.let { LocalDate.parse(it) }
+
+        return if (start != null && end != null) {
+            ChronoUnit.DAYS.between(start, end).toInt()
+        } else {
+            0
+        }
     }
 }
