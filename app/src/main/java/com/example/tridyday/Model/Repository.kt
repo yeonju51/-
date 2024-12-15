@@ -60,9 +60,17 @@ class Repository() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
-                    val schedule = data.getValue(Travel.Schedule::class.java)
-                    if (schedule != null) {
-                        schedules.add(schedule)
+                    try {
+                        val schedule = data.getValue(Travel.Schedule::class.java)
+                        if (schedule != null) {
+                            schedules.add(schedule)
+                        } else {
+                            // 데이터 매핑 실패 시 로그 출력
+                            println("Failed to parse schedule: ${data.value}")
+                        }
+                    } catch (e: Exception) {
+                        // 매핑 중 예외 발생 시 로그 출력
+                        println("Error parsing schedule: ${e.message}")
                     }
                 }
                 scheduleList.value = schedules
@@ -73,7 +81,6 @@ class Repository() {
             }
         })
     }
-
 
     // 위치 정보 업데이트
     fun postLocate(newValue: Travel.Schedule.Locate) {
