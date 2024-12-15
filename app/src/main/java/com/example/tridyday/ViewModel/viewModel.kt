@@ -33,10 +33,26 @@ class ViewModel : ViewModel() {
         _schedules.value = _schedules.value  // LiveData를 갱신
     }
 
-    val travelDaysLiveData = MutableLiveData<Int>()
+    private val _travelDaysLiveData = MutableLiveData<Int>()
+    val travelDaysLiveData: LiveData<Int> get() = _travelDaysLiveData
+
+    private val _dayButtonsLiveData = MutableLiveData<List<Int>>()
+    val dayButtonsLiveData: LiveData<List<Int>> get() = _dayButtonsLiveData
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchTravelDays(travelId: String) {
-        repository.getTravelDays(travelId, travelDaysLiveData)
+        // Repository에서 travelDays 값을 가져와서 업데이트
+        repository.getTravelDays(_travelDaysLiveData)
+    }
+
+    fun generateDayButtons() {
+        // travelDaysLiveData의 값이 변경되면 이를 가공하여 버튼 리스트를 생성
+        val totalDays = _travelDaysLiveData.value ?: 0
+        if (totalDays > 0) {
+            _dayButtonsLiveData.value = (1..totalDays).toList()
+        } else {
+            _dayButtonsLiveData.value = emptyList() // 값이 없으면 빈 리스트 전달
+        }
     }
 
     // 여행 데이터 추가
