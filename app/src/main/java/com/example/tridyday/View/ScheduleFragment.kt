@@ -65,6 +65,10 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 전달된 데이터 가져오기
+        val travelTitle = arguments?.getString("travelTitle")
+        val travelLocation = arguments?.getString("travelLocation")
+
 
         viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
             scheduleByDay.clear()

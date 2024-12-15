@@ -22,12 +22,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // RecyclerView 설정
         adapter = TravelAdapter(mutableListOf()) { travel ->
-            // 클릭된 여행 데이터를 Bundle에 담아 이동
+            // 클릭된 여행 데이터를 Bundle에 담아 ScheduleFragment로 이동
             val bundle = Bundle().apply {
                 putString("travelTitle", travel.title)
                 putString("travelLocation", travel.location)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_scheduleRegisterFragment, bundle)
+            // 수정된 부분: ScheduleFragment로 이동
+            findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment, bundle)
         }
         binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.adventureRecyclerView.adapter = adapter

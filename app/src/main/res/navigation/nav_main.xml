@@ -5,6 +5,7 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/loginFragment">
 
+    <!-- LoginFragment -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.tridyday.View.LoginFragment"
@@ -15,20 +16,27 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- HomeFragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.tridyday.View.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
+        <!-- TravelRegistrationFragment로 이동 -->
         <action
             android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
             app:destination="@id/travelRegistrationFragment" />
+        <!-- ScheduleRegisterFragment로 이동 -->
         <action
             android:id="@+id/action_homeFragment_to_scheduleRegisterFragment"
-            app:destination="@id/scheduleRegisterFragment"
-            />
+            app:destination="@id/scheduleRegisterFragment" />
+        <!-- ScheduleFragment로 이동 (새로 추가) -->
+        <action
+            android:id="@+id/action_homeFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
     </fragment>
 
+    <!-- TravelRegistrationFragment -->
     <fragment
         android:id="@+id/travelRegistrationFragment"
         android:name="com.example.tridyday.View.TravelRegistrationFragment"
@@ -39,6 +47,7 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- ScheduleFragment -->
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.example.tridyday.View.ScheduleFragment"
@@ -55,6 +64,7 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- ScheduleRegisterFragment -->
     <fragment
         android:id="@+id/scheduleRegisterFragment"
         android:name="com.example.tridyday.View.ScheduleRegisterFragment"
@@ -71,6 +81,7 @@
             app:destination="@id/scheduleFragment" />
     </fragment>
 
+    <!-- MapFragment -->
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.tridyday.View.MapFragment"
@@ -84,6 +95,7 @@
             app:destination="@id/mapDetailFragment" />
     </fragment>
 
+    <!-- RegistMapFragment -->
     <fragment
         android:id="@+id/registMapFragment"
         android:name="com.example.tridyday.View.RegistMapFragment"
@@ -94,6 +106,7 @@
             app:destination="@id/scheduleRegisterFragment" />
     </fragment>
 
+    <!-- MapDetailFragment -->
     <fragment
         android:id="@+id/mapDetailFragment"
         android:name="com.example.tridyday.View.MapFragment"
