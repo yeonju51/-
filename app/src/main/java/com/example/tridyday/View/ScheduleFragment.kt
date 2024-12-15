@@ -22,7 +22,7 @@ class ScheduleFragment : Fragment() {
     val viewModel: ViewModel by activityViewModels()
 
     private val schedules = mutableListOf<Travel.Schedule>()
-
+    
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +34,13 @@ class ScheduleFragment : Fragment() {
         val scheduleAdapter = SchedulesAdapter(schedules)
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
         binding.recSchedule.adapter = scheduleAdapter
+
+        viewModel.travels.observe(viewLifecycleOwner) { travels ->
+            // 여행 리스트가 변경되면 첫 번째 여행 제목을 txtScheduleTitle에 설정
+            if (travels.isNotEmpty()) {
+                binding.txtScheduleTitle.text = travels[0].title // 첫 번째 여행의 제목을 설정
+            }
+        }
 
         // 여행 데이터 관찰 (Repository에서 데이터 가져오기)
         viewModel.observeTravels() // Repository에서 데이터를 가져오고, ViewModel에서 처리하도록 함
@@ -73,21 +80,39 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 전달된 데이터 가져오기
-        val travelTitle = arguments?.getString("travelTitle")
-        binding.txtScheduleTitle.setText(travelTitle)
+        // SharedViewModel의 데이터를 관찰
+        viewModel.selectedTravel.observe(viewLifecycleOwner) { travel ->
+            // 선택된 여행 데이터를 가져와 화면에 표시
+            schedules.clear()
+            schedules.addAll(schedules)
+            binding.recSchedule.adapter?.notifyDataSetChanged()
+        }
 
-        // 일정 정보 가져오기
-        viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
-            this.schedules.clear()
-            this.schedules.addAll(schedules)
+        // 일정 추가 버튼 클릭 이벤트
+        binding.btnSchedulePlus.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
+        }
 
-            // 일정이 존재하면 첫 번째 일정을 보여줌
-            if (this.schedules.isNotEmpty()) {
-                showDaySchedule(1)
+        // Day 버튼 동적 생성 및 클릭 이벤트
+        viewModel.selectedTravel.observe(viewLifecycleOwner) { travel ->
+
+            val totalDays = if (travel.startDate != null && travel.endDate != null) {
+                viewModel.calculateDaysBetween(travel.startDate!!, travel.endDate!!)
+            } else {
+                0
+            }
+            binding.buttonContainer.removeAllViews()
+
+            for (day in 1..totalDays) {
+                val dayButton = Button(requireContext()).apply {
+                    text = "Day $day"
+                    setOnClickListener { showDaySchedule(day) }
+                }
+                binding.buttonContainer.addView(dayButton)
             }
         }
     }

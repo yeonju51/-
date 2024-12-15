@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
@@ -31,18 +32,22 @@ class ViewModel : ViewModel() {
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
+    private val _selectedTravel = MutableLiveData<Travel>()
+    val selectedTravel: LiveData<Travel> get() = _selectedTravel
+
+    fun setSelectedTravel(travel: Travel) {
+        _selectedTravel.value = travel
+    }
+
     val travelDaysLiveData = MutableLiveData<Int>()
 
-    fun addSchedule(schedule: Travel.Schedule) {
+    fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
         repository.postSchedule(schedule, onSuccess = {
             _schedules.value?.add(schedule)
             _schedules.value = _schedules.value // LiveData 갱신
         }, onFailure = {
             Log.e("ScheduleViewModel", "스케줄 등록 실패: ${it.message}")
         })
-    }
-    fun observeSchedules() {
-        repository.observeSchedule(_schedules)
     }
 
     fun observeTravels() {
@@ -97,14 +102,10 @@ class ViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun calculateTravelDays() {
-        val start = _startDate.value?.let { LocalDate.parse(it) }
-        val end = _endDate.value?.let { LocalDate.parse(it) }
-        Log.d("ViewModel", "Start Date: $start, End Date: $end")
-        travelDaysLiveData.value = if (start != null && end != null) {
-            ChronoUnit.DAYS.between(start, end).toInt()
-        } else {
-            0
-        }
+
+    fun calculateDaysBetween(startDate: String, endDate: String): Int {
+        val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
+        val end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)
+        return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
     }
 }

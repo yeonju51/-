@@ -54,7 +54,10 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
                 locate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
             )
 
-            viewModel.addSchedule(schedule)
+            val travel = viewModel.selectedTravel.value // travel 객체를 ViewModel에서 가져옴
+            travel?.let {
+                viewModel.addSchedule(it, schedule)
+            }
 
             // 성공 메시지 후 돌아가기
             Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()

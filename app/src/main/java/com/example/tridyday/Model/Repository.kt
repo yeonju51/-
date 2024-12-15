@@ -55,7 +55,7 @@ class Repository() {
     }
 
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
-        travelRef.child("schedules").addValueEventListener(object : ValueEventListener {
+        travelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
