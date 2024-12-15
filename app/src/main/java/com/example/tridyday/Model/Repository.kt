@@ -47,7 +47,7 @@ class Repository() {
     fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val scheduleId = scheduleRef.push().key
         if (scheduleId != null) {
-            scheduleRef.child(scheduleId).setValue(newValue)
+            travelRef.child("schedules").child(scheduleId).setValue(newValue)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
         } else {
@@ -65,11 +65,9 @@ class Repository() {
                         if (schedule != null) {
                             schedules.add(schedule)
                         } else {
-                            // 데이터 매핑 실패 시 로그 출력
                             println("Failed to parse schedule: ${data.value}")
                         }
                     } catch (e: Exception) {
-                        // 매핑 중 예외 발생 시 로그 출력
                         println("Error parsing schedule: ${e.message}")
                     }
                 }

@@ -12,9 +12,9 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="411dp"
-        android:layout_height="29dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="412dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="30dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/rec_schedule"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtScheduleTitle"
