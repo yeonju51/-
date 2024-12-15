@@ -22,7 +22,7 @@ class ViewModel : ViewModel() {
 
     init {
         repository.observeSchedule(_schedules)
-        repository.observeTravels(_travels)
+        observeTravel() // Firebase의 여행 데이터를 실시간으로 관찰
     }
 
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
@@ -44,48 +44,21 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
-//    fun addSchedule(schedule: Travel.Schedule) {
-//        _schedules.value?.apply {
-//            add(schedule)
-//            _schedules.value = this
-//        }
-//    }
-
-//    fun updateSchedule(index: Int, newSchedule: Travel.Schedule) {
-//        _schedules.value?.apply {
-//            if (index in indices) {
-//                this[index] = newSchedule
-//                _schedules.value = this
-//            }
-//        }
-//    }
-//
-//    fun removeSchedule(index: Int) {
-//        _schedules.value?.apply {
-//            if (index in indices) {
-//                removeAt(index)
-//                _schedules.value = this
-//            }
-//        }
-//    }
-//
-//    fun getSchedule(index: Int): Travel.Schedule? {
-//        return _schedules.value?.getOrNull(index)
-//    }
-    val travelDaysLiveData = MutableLiveData<Int>()
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun fetchTravelDays(travelId: String) {
-        repository.getTravelDays(travelId, travelDaysLiveData)
+    private fun observeTravel() {
+        repository.observeTravel { travelList ->
+            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영
+        }
     }
 
-    fun setLocate(newName:String,
-                  newID : String,
-                  newLat : Double,
-                  newLng: Double,
-                  newPlace:String){
+    fun setLocate(
+        newName: String,
+        newID: String,
+        newLat: Double,
+        newLng: Double,
+        newPlace: String
+    ) {
 
-        val newLocate = _locate.value?.let{
+        val newLocate = _locate.value?.let {
 
             it.name = newName
             it.id = newID
@@ -98,4 +71,3 @@ class ViewModel : ViewModel() {
         repository.postLocate(newLocate)
     }
 }
-

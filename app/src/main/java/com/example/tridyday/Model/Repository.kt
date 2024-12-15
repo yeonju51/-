@@ -1,17 +1,14 @@
 package com.example.tridyday.Model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 
 class Repository() {
     val database = FirebaseDatabase.getInstance()
+    val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
@@ -47,39 +44,6 @@ class Repository() {
             }
         })
     }
-
-    // travelDays를 계산하여 반환하는 함수
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTravelDays(travelId: String, liveData: MutableLiveData<Int>) {
-        travelRef.child(travelId).get()
-            .addOnSuccessListener { snapshot ->
-                val travel = snapshot.getValue(Travel::class.java)
-                if (travel != null) {
-                    val startDate = travel.startDate
-                    val endDate = travel.endDate
-
-                    if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
-                        try {
-                            val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
-                            val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-                            val days = ChronoUnit.DAYS.between(start, end).toInt() // 날짜 차이 계산
-                            liveData.value = days // LiveData 업데이트
-                        } catch (e: Exception) {
-                            liveData.value = 0 // 날짜 파싱 에러 처리
-                        }
-                    } else {
-                        liveData.value = 0 // 날짜가 없으면 0
-                    }
-                } else {
-                    liveData.value = 0 // 데이터가 없으면 0
-                }
-            }
-            .addOnFailureListener { exception ->
-                liveData.value = 0 // 실패 시 0
-                println("Error fetching travel days: ${exception.message}")
-            }
-    }
-
 
     fun postLocate(newValue: Travel.Schedule.Locate) {
         locateRef.setValue(newValue)

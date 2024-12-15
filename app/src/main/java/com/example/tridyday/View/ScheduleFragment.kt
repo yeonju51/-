@@ -30,18 +30,15 @@ class ScheduleFragment : Fragment() {
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
 
         // 여행 일수에 맞게 Day 버튼 동적으로 추가
-        viewModel.travelDaysLiveData.observe(viewLifecycleOwner) { totalDays ->
-            if (totalDays > 0) {
-                for (day in 1..totalDays) {
-                    val dayButton = Button(requireContext()).apply {
-                        text = "Day $day"
-                        setOnClickListener {
-                            showDaySchedule(day)
-                        }
-                    }
-                    binding.buttonContainer.addView(dayButton)
+        val totalDays = 5 // 일단 5일 설정
+        for (day in 1..totalDays) {
+            val dayButton = Button(requireContext()).apply {
+                text = "Day $day"
+                setOnClickListener {
+                    showDaySchedule(day)
                 }
             }
+            binding.buttonContainer.addView(dayButton)
         }
 
         // + 버튼 클릭 시 ScheduleRegisterFragment로 이동

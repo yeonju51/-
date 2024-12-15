@@ -1,4 +1,4 @@
-package com.example.tridyday.View
+package com.example.tridyday.view
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -71,7 +71,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                     location = location,
                     startDate = startDate,
                     endDate = endDate,
-                    photoUri = photoUri.toString()
+                    photoUri = photoUri
                 )
 
                 viewModel.addTravel(travel, onSuccess = {
