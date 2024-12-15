@@ -22,7 +22,7 @@ class ViewModel : ViewModel() {
 
     init {
         repository.observeSchedule(_schedules)
-        observeTravel() // Firebase의 여행 데이터를 실시간으로 관찰
+        repository.observeTravels(_travels) // Firebase의 여행 데이터를 실시간으로 관찰
     }
 
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
@@ -44,11 +44,6 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
-    private fun observeTravel() {
-        repository.observeTravel { travelList ->
-            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영
-        }
-    }
 
     fun setLocate(
         newName: String,
