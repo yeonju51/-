@@ -13,19 +13,19 @@ data class Travel(
     var days:Int = 0
 ) {
     data class Schedule(
-        var title: String,
-        var day: Int,
-        var startTime: LocalTime,
-        var endTime: LocalTime,
-        var memo: String,
-        var locate: Locate
+        var title: String = "",
+        var day: Int = 0,
+        var startTime: String? = null,
+        var endTime: String? = null,
+        var memo: String? = null,
+        var locate: Locate = Locate()
     ) {
         data class Locate(
-            var id: String,
-            var name: String,
-            var lat: Double,
-            var lng: Double,
-            var place: String
+            var id: String = "",
+            var name: String = "",
+            var lat: Double = 0.0,
+            var lng: Double = 0.0,
+            var place: String = ""
         )
 
     }

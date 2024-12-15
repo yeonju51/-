@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 import java.time.LocalTime
 
@@ -18,7 +18,7 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
     TimePicker.OnTimeChangedListener {
 
     private lateinit var binding: FragmentScheduleRegisterBinding
-    private val repository = Repository()
+    private val viewModel = ViewModel()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,18 +48,17 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
             val schedule = Travel.Schedule(
                 title = title,
                 day = day ?: 1,
-                startTime = startTime,
-                endTime = endTime,
+                startTime = startTime.toString(),
+                endTime = endTime.toString(),
                 memo = memo,
                 locate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
             )
 
-            repository.postSchedule(schedule, onSuccess = {
-                Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
-            }, onFailure = {
-                Toast.makeText(requireContext(), "등록 실패: ${it.message}", Toast.LENGTH_SHORT).show()
-            })
+            viewModel.addSchedule(schedule)
+
+            // 성공 메시지 후 돌아가기
+            Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
         }
     }
 

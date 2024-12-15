@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
     private var scheduleList = mutableListOf<Travel.Schedule>()
 
@@ -32,9 +32,11 @@ class SchedulesAdapter(val schedule: MutableList<Travel.Schedule>?) : RecyclerVi
     class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(schedule: Travel.Schedule) {
-            binding.txtName.text = schedule.title
-            binding.txtStartTime.text = schedule.startTime.toString()
-            binding.txtEndTime.text = schedule.endTime.toString()
+            binding.apply {
+                txtName.text = schedule.title
+                txtStartTime.text = schedule.startTime.toString()
+                txtEndTime.text = schedule.endTime.toString()
+            }
         }
     }
 }

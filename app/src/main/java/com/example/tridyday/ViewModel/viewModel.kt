@@ -25,7 +25,7 @@ class ViewModel : ViewModel() {
 
     init {
         repository.observeSchedule(_schedules)
-        repository.observeTravels(_travels) // Firebase의 여행 데이터를 실시간으로 관찰
+        repository.observeTravels(_travels)
     }
 
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
@@ -38,10 +38,20 @@ class ViewModel : ViewModel() {
 
     val travelDaysLiveData = MutableLiveData<Int>()
 
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    fun fetchTravelDays(travelId: String) {
-//        repository.getTravelDays(travelId, travelDaysLiveData)
-//    }
+    fun addSchedule(schedule: Travel.Schedule) {
+        // Repository를 통해 Firebase에 스케줄 저장
+        repository.postSchedule(schedule, onSuccess = {
+            // 성공하면 _schedules 업데이트
+            _schedules.value?.add(schedule)
+            _schedules.value = _schedules.value // LiveData 갱신
+        }, onFailure = {
+            Log.e("ScheduleViewModel", "스케줄 등록 실패: ${it.message}")
+        })
+    }
+
+    fun observeTravels() {
+        repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
+    }
 
     // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
     @RequiresApi(Build.VERSION_CODES.O)

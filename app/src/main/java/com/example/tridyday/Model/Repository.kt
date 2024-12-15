@@ -2,6 +2,7 @@ package com.example.tridyday.Model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -12,44 +13,9 @@ import java.time.temporal.ChronoUnit
 
 class Repository() {
     val database = FirebaseDatabase.getInstance()
-    val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    fun getTravelDays(travelId: String, liveData: MutableLiveData<Int>) {
-//        travelRef.child(travelId).get()
-//            .addOnSuccessListener { snapshot ->
-//                val travel = snapshot.getValue(Travel::class.java)
-//                if (travel != null) {
-//                    val startDate = travel.startDate
-//                    val endDate = travel.endDate
-//                    if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
-//                        try {
-//                            val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
-//                            val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-//
-//                            // 종료일을 포함하는 날짜 차이 계산
-//                            val days = ChronoUnit.DAYS.between(start, end.plusDays(1)).toInt()  // 종료일 포함하여 +1일 처리
-//                            liveData.value = days // LiveData 업데이트
-//                        } catch (e: Exception) {
-//                            liveData.value = 0 // 날짜 파싱 에러 처리
-//                        }
-//                    } else {
-//                        liveData.value = 0 // 날짜가 없으면 0
-//                    }
-//                } else {
-//                    liveData.value = 0 // 데이터가 없으면 0
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                liveData.value = 0 // 실패 시 0
-//                println("Error fetching travel days: ${exception.message}")
-//            }
-//    }
-
-
 
     // 여행 데이터를 저장할 때 여행 일수도 포함
     @RequiresApi(Build.VERSION_CODES.O)
@@ -89,7 +55,6 @@ class Repository() {
         }
     }
 
-    // 일정 목록 관찰
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
         scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -100,7 +65,7 @@ class Repository() {
                         schedules.add(schedule)
                     }
                 }
-                scheduleList.value = schedules // LiveData 업데이트
+                scheduleList.value = schedules
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -108,6 +73,7 @@ class Repository() {
             }
         })
     }
+
 
     // 위치 정보 업데이트
     fun postLocate(newValue: Travel.Schedule.Locate) {
