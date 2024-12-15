@@ -60,6 +60,10 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
             Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
         }
+
+        binding.btnRegisterMap.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_registMapFragment)
+        }
     }
 
     override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
