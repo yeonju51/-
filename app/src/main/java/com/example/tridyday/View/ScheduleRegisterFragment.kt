@@ -25,14 +25,6 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentScheduleRegisterBinding.bind(view)
 
-        // 전달된 데이터 받기
-        val travelTitle = arguments?.getString("travelTitle") ?: ""
-        val travelLocation = arguments?.getString("travelLocation") ?: ""
-
-        // UI에 데이터 설정
-        binding.txtTitle.setText(travelTitle)
-        binding.txtMemo.setText("여행지: $travelLocation")
-
         // 완료 버튼 클릭 이벤트
         binding.btnCompleted.setOnClickListener {
             val title = binding.txtTitle.text.toString()
