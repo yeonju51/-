@@ -1,10 +1,12 @@
 package com.example.tridyday.View
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +23,7 @@ class ScheduleFragment : Fragment() {
 
     private val scheduleByDay = mutableMapOf<Int, MutableList<Travel.Schedule>>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,19 +32,29 @@ class ScheduleFragment : Fragment() {
 
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.travelDaysLiveData.observe(viewLifecycleOwner) { totalDays ->
-            if (totalDays > 0) {
-                for (day in 1..totalDays) {
-                    val dayButton = Button(requireContext()).apply {
-                        text = "Day $day"
-                        setOnClickListener {
-                            showDaySchedule(day)
-                        }
+        viewModel.dayButtonsLiveData.observe(viewLifecycleOwner) { dayList ->
+            // 버튼을 동적으로 생성
+            binding.buttonContainer.removeAllViews() // 기존 버튼 제거
+            dayList.forEach { day ->
+                val dayButton = Button(requireContext()).apply {
+                    text = "Day $day"
+                    setOnClickListener {
+                        showDaySchedule(day)
                     }
-                    binding.buttonContainer.addView(dayButton)
                 }
+                binding.buttonContainer.addView(dayButton)
             }
         }
+
+    // 여행 데이터를 가져오는 함수
+        viewModel.travelDaysLiveData.observe(viewLifecycleOwner) { totalDays ->
+            // 데이터 변경이 감지되면 버튼 생성 요청
+            viewModel.generateDayButtons()
+        }
+
+// 여행 ID로 데이터를 초기화
+        viewModel.fetchTravelDays("yourTravelId")
+
 
         // + 버튼 클릭 시 ScheduleRegisterFragment로 이동
         binding.btnSchedulePlus.setOnClickListener {

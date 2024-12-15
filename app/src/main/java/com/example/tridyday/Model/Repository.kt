@@ -8,33 +8,34 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
 
 class Repository() {
     val database = FirebaseDatabase.getInstance()
-    val userRef = database.getReference("user")
     val travelRef = database.getReference("travel")
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getTravelDays(travelId: String, liveData: MutableLiveData<Int>) {
-        travelRef.child(travelId).get()
+    fun getTravelDays(liveData: MutableLiveData<Int>) {
+        travelRef.get()
             .addOnSuccessListener { snapshot ->
+                println("Snapshot: ${snapshot.value}") // 디버깅용 로그
                 val travel = snapshot.getValue(Travel::class.java)
                 if (travel != null) {
                     val startDate = travel.startDate
                     val endDate = travel.endDate
+                    println("StartDate: $startDate, EndDate: $endDate") // 디버깅용 로그
                     if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
                         try {
                             val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
                             val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-
-                            // 종료일을 포함하는 날짜 차이 계산
-                            val days = ChronoUnit.DAYS.between(start, end.plusDays(1)).toInt()  // 종료일 포함하여 +1일 처리
+                            val days = ChronoUnit.DAYS.between(start, end).toInt() // 날짜 차이 계산
                             liveData.value = days // LiveData 업데이트
-                        } catch (e: Exception) {
-                            liveData.value = 0 // 날짜 파싱 에러 처리
+                        } catch (e: DateTimeParseException) {
+                            println("Date parsing error: ${e.message}") // 날짜 파싱 에러
+                            liveData.value = 0
                         }
                     } else {
                         liveData.value = 0 // 날짜가 없으면 0
@@ -45,43 +46,15 @@ class Repository() {
             }
             .addOnFailureListener { exception ->
                 liveData.value = 0 // 실패 시 0
-                println("Error fetching travel days: ${exception.message}")
+                println("Error fetching travel days: ${exception.message}") // 에러 로그
             }
     }
 
 
-
-    // 여행 데이터를 저장할 때 여행 일수도 포함
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        val travelId = travelRef.push().key
-        if (travelId != null) {
-            travel.id = travelId
-
-            // 여행 일수 계산 및 저장
-            if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {
-                try {
-                    val start = LocalDate.parse(travel.startDate)
-                    val end = LocalDate.parse(travel.endDate)
-                    travel.days = ChronoUnit.DAYS.between(start, end).toInt()
-                } catch (e: Exception) {
-                    travel.days = 0 // 날짜 계산 실패 시 기본값
-                }
-            }
-
-            travelRef.child(travelId).setValue(travel)
-                .addOnSuccessListener { onSuccess() }
-                .addOnFailureListener { onFailure(it) }
-        } else {
-            onFailure(Exception("Travel ID 생성 실패"))
-        }
-    }
-
-    // 일정 저장
     fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val scheduleId = scheduleRef.push().key
         if (scheduleId != null) {
-            scheduleRef.child(scheduleId).setValue(newValue)
+            travelRef.child("schedules").child(scheduleId).setValue(newValue)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
         } else {
@@ -89,7 +62,7 @@ class Repository() {
         }
     }
 
-    // 일정 목록 관찰
+    // Schedule 데이터 실시간 관찰
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
         scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -104,17 +77,29 @@ class Repository() {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                // 에러 처리 (로그 출력 또는 UI 알림)
                 println("Error observing schedules: ${error.message}")
             }
         })
     }
 
-    // 위치 정보 업데이트
     fun postLocate(newValue: Travel.Schedule.Locate) {
         locateRef.setValue(newValue)
     }
 
-    // 여행 목록 관찰
+    // 새로운 여행 데이터 저장
+    fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val travelId = travelRef.push().key
+        if (travelId != null) {
+            travelRef.child(travelId).setValue(travel)
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { onFailure(it) }
+        } else {
+            onFailure(Exception("Travel ID 생성 실패"))
+        }
+    }
+
+    // Firebase에서 여행 데이터를 실시간으로 관찰
     fun observeTravels(travelList: MutableLiveData<MutableList<Travel>>) {
         travelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -129,15 +114,18 @@ class Repository() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                println("Error observing travels: ${error.message}")
+                // 에러 처리
             }
         })
     }
 
-    // 여행 삭제
+    // Firebase에서 특정 여행 데이터를 삭제
     fun deleteTravel(travelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         travelRef.child(travelId).removeValue()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }
+        // addOnFailureListener는 삭제가 실패했을 때 호출되는 리스너
+        // 삭제 작업이 실패하면, 이 리스너 내에서 onFailure(it)가 호출, it은 실패한 원인, 즉 예외를 나타냄
     }
 }
+
