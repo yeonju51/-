@@ -24,8 +24,9 @@
             android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
             app:destination="@id/travelRegistrationFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_scheduleFragment"
-            app:destination="@id/scheduleFragment" />
+            android:id="@+id/action_homeFragment_to_scheduleRegisterFragment"
+            app:destination="@id/scheduleRegisterFragment"
+            />
     </fragment>
 
     <fragment

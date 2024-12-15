@@ -21,7 +21,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding = FragmentHomeBinding.bind(view)
 
         // RecyclerView 설정
-        adapter = TravelAdapter(mutableListOf())
+        adapter = TravelAdapter(mutableListOf()) { travel ->
+            // 클릭된 여행 데이터를 Bundle에 담아 이동
+            val bundle = Bundle().apply {
+                putString("travelTitle", travel.title)
+                putString("travelLocation", travel.location)
+            }
+            findNavController().navigate(R.id.action_homeFragment_to_scheduleRegisterFragment, bundle)
+        }
         binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.adventureRecyclerView.adapter = adapter
 
@@ -29,6 +36,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.travels.observe(viewLifecycleOwner) { travels ->
             adapter.updateTravels(travels)
         }
+
+        // Add 버튼 클릭 시 TravelRegistrationFragment로 이동
         binding.addButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
         }
