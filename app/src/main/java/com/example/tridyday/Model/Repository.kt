@@ -17,37 +17,37 @@ class Repository() {
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTravelDays(travelId: String, liveData: MutableLiveData<Int>) {
-        travelRef.child(travelId).get()
-            .addOnSuccessListener { snapshot ->
-                val travel = snapshot.getValue(Travel::class.java)
-                if (travel != null) {
-                    val startDate = travel.startDate
-                    val endDate = travel.endDate
-                    if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
-                        try {
-                            val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
-                            val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-
-                            // 종료일을 포함하는 날짜 차이 계산
-                            val days = ChronoUnit.DAYS.between(start, end.plusDays(1)).toInt()  // 종료일 포함하여 +1일 처리
-                            liveData.value = days // LiveData 업데이트
-                        } catch (e: Exception) {
-                            liveData.value = 0 // 날짜 파싱 에러 처리
-                        }
-                    } else {
-                        liveData.value = 0 // 날짜가 없으면 0
-                    }
-                } else {
-                    liveData.value = 0 // 데이터가 없으면 0
-                }
-            }
-            .addOnFailureListener { exception ->
-                liveData.value = 0 // 실패 시 0
-                println("Error fetching travel days: ${exception.message}")
-            }
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun getTravelDays(travelId: String, liveData: MutableLiveData<Int>) {
+//        travelRef.child(travelId).get()
+//            .addOnSuccessListener { snapshot ->
+//                val travel = snapshot.getValue(Travel::class.java)
+//                if (travel != null) {
+//                    val startDate = travel.startDate
+//                    val endDate = travel.endDate
+//                    if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
+//                        try {
+//                            val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
+//                            val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
+//
+//                            // 종료일을 포함하는 날짜 차이 계산
+//                            val days = ChronoUnit.DAYS.between(start, end.plusDays(1)).toInt()  // 종료일 포함하여 +1일 처리
+//                            liveData.value = days // LiveData 업데이트
+//                        } catch (e: Exception) {
+//                            liveData.value = 0 // 날짜 파싱 에러 처리
+//                        }
+//                    } else {
+//                        liveData.value = 0 // 날짜가 없으면 0
+//                    }
+//                } else {
+//                    liveData.value = 0 // 데이터가 없으면 0
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                liveData.value = 0 // 실패 시 0
+//                println("Error fetching travel days: ${exception.message}")
+//            }
+//    }
 
 
 

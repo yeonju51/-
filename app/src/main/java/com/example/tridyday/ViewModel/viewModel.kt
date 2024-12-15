@@ -1,6 +1,7 @@
 package com.example.tridyday.ViewModel
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,10 +38,10 @@ class ViewModel : ViewModel() {
 
     val travelDaysLiveData = MutableLiveData<Int>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun fetchTravelDays(travelId: String) {
-        repository.getTravelDays(travelId, travelDaysLiveData)
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun fetchTravelDays(travelId: String) {
+//        repository.getTravelDays(travelId, travelDaysLiveData)
+//    }
 
     // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
     @RequiresApi(Build.VERSION_CODES.O)
@@ -90,11 +91,11 @@ class ViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun calculateTravelDays(): Int {
+    fun calculateTravelDays() {
         val start = _startDate.value?.let { LocalDate.parse(it) }
         val end = _endDate.value?.let { LocalDate.parse(it) }
-
-        return if (start != null && end != null) {
+        Log.d("ViewModel", "Start Date: $start, End Date: $end")
+        travelDaysLiveData.value = if (start != null && end != null) {
             ChronoUnit.DAYS.between(start, end).toInt()
         } else {
             0
