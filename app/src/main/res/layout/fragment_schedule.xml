@@ -12,8 +12,8 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="29dp"
         android:layout_marginBottom="28dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/rec_schedule"
