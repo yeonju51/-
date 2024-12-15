@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="100dp">
 
     <View
         android:id="@+id/scheduleRoundedRectangleView"
-        android:layout_width="292dp"
-        android:layout_height="92dp"
+        android:layout_width="281dp"
+        android:layout_height="84dp"
         android:background="@drawable/schedule_rounded_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,12 +21,16 @@
         android:id="@+id/txt_time"
         android:layout_width="84dp"
         android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="10dp"
         android:text="9:00 AM"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_name"
@@ -38,60 +42,64 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_schedule_memo"
-        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toEndOf="@+id/txt_time"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.562" />
+        app:layout_constraintVertical_bias="0.633" />
 
     <TextView
         android:id="@+id/txt_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
         android:text="10:00 AM"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777"
-        tools:layout_editor_absoluteX="298dp" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <TextView
         android:id="@+id/txt_start_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="7dp"
         android:text="~"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txt_end_time"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/txt_start_time"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.775" />
 
     <TextView
         android:id="@+id/txt_start_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="105dp"
+        android:layout_marginEnd="121dp"
         android:text="9:00 AM"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/scheduleRoundedRectangleView"
+        app:layout_constraintEnd_toEndOf="@+id/scheduleRoundedRectangleView"
+        app:layout_constraintStart_toStartOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777"
-        tools:layout_editor_absoluteX="215dp" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <ImageButton
         android:id="@+id/btn_schedule_memo"
         android:layout_width="41dp"
         android:layout_height="32dp"
         android:layout_marginStart="226dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/memo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/scheduleRoundedRectangleView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

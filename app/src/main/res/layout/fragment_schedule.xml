@@ -49,11 +49,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_schedule"
-        android:layout_width="417dp"
-        android:layout_height="542dp"
+        android:layout_width="362dp"
+        android:layout_height="544dp"
+        android:layout_marginBottom="4dp"
+        android:background="#EFEBEB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

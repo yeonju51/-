@@ -21,7 +21,7 @@ class ScheduleFragment : Fragment() {
     private lateinit var binding: FragmentScheduleBinding
     val viewModel: ViewModel by activityViewModels()
 
-    private val scheduleByDay = mutableMapOf<Int, MutableList<Travel.Schedule>>()
+    private val schedules = mutableListOf<Travel.Schedule>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -31,12 +31,12 @@ class ScheduleFragment : Fragment() {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
         // RecyclerView 설정
-        val scheduleAdapter = SchedulesAdapter()
+        val scheduleAdapter = SchedulesAdapter(schedules)
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
         binding.recSchedule.adapter = scheduleAdapter
 
         // 여행 데이터 관찰 (Repository에서 데이터 가져오기)
-        viewModel.observeTravels()
+        viewModel.observeTravels() // Repository에서 데이터를 가져오고, ViewModel에서 처리하도록 함
 
         // 여행 일수에 따라 버튼을 동적으로 생성
         viewModel.travelDaysLiveData.observe(viewLifecycleOwner) { totalDays ->
@@ -46,7 +46,7 @@ class ScheduleFragment : Fragment() {
                     val dayButton = Button(requireContext()).apply {
                         text = "Day $day"
                         setOnClickListener {
-                            showDaySchedule(day, scheduleAdapter)
+                            showDaySchedule(day)
                         }
                     }
                     binding.buttonContainer.addView(dayButton)
@@ -63,10 +63,13 @@ class ScheduleFragment : Fragment() {
     }
 
     // 여행 일수에 맞춰 일정을 보여주는 함수
-    private fun showDaySchedule(day: Int, scheduleAdapter: SchedulesAdapter) {
-        val schedulesForDay = scheduleByDay[day]
-        if (schedulesForDay != null) {
-            scheduleAdapter.setSchedules(schedulesForDay)
+    private fun showDaySchedule(day: Int) {
+        val schedulesForDay = schedules.filter { it.day == day }
+        if (schedulesForDay.isNotEmpty()) {
+            val adapter = binding.recSchedule.adapter
+            if (adapter is SchedulesAdapter) {
+                adapter.setSchedules(schedulesForDay)
+            }
         }
     }
 
@@ -79,19 +82,14 @@ class ScheduleFragment : Fragment() {
 
         // 일정 정보 가져오기
         viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
-            scheduleByDay.clear()
-            schedules.forEach { schedule ->
-                val day = schedule.day
-                if (scheduleByDay[day] == null) {
-                    scheduleByDay[day] = mutableListOf()
-                }
-                scheduleByDay[day]?.add(schedule)
-            }
+            this.schedules.clear()
+            this.schedules.addAll(schedules)
 
             // 일정이 존재하면 첫 번째 일정을 보여줌
-            if (scheduleByDay.isNotEmpty()) {
-                showDaySchedule(1, binding.recSchedule.adapter as SchedulesAdapter)
+            if (this.schedules.isNotEmpty()) {
+                showDaySchedule(1)
             }
         }
     }
 }
+

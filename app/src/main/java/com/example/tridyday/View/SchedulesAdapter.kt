@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter(private var schedules: MutableList<Travel.Schedule>,): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
-    private var scheduleList = mutableListOf<Travel.Schedule>()
-
-    fun setSchedules(schedules: List<Travel.Schedule>) {
-        scheduleList.clear()
-        scheduleList.addAll(schedules)
-        notifyDataSetChanged()  // 데이터 변경 후 RecyclerView에 알림
+    fun setSchedules(newSchedules: List<Travel.Schedule>) {
+        schedules = newSchedules.toMutableList()  // 새로운 데이터로 리스트 갱신
+        notifyDataSetChanged()  // RecyclerView에 데이터 변경 알림
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -22,11 +19,11 @@ class SchedulesAdapter : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(scheduleList[position])
+        holder.bind(schedules[position])
     }
 
     override fun getItemCount(): Int {
-        return scheduleList.size
+        return schedules.size
     }
 
     class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -34,6 +31,7 @@ class SchedulesAdapter : RecyclerView.Adapter<SchedulesAdapter.Holder>() {
         fun bind(schedule: Travel.Schedule) {
             binding.apply {
                 txtName.text = schedule.title
+                txtTime.text = schedule.startTime.toString()
                 txtStartTime.text = schedule.startTime.toString()
                 txtEndTime.text = schedule.endTime.toString()
             }

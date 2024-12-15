@@ -2,7 +2,6 @@ package com.example.tridyday.Model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -56,7 +55,7 @@ class Repository() {
     }
 
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
-        scheduleRef.addValueEventListener(object : ValueEventListener {
+        travelRef.child("schedules").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {

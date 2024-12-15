@@ -31,22 +31,18 @@ class ViewModel : ViewModel() {
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
-    fun setSchedule(schedule: Travel.Schedule) {
-        _schedules.value?.add(schedule)  // 새로운 일정을 추가
-        _schedules.value = _schedules.value  // LiveData를 갱신
-    }
-
     val travelDaysLiveData = MutableLiveData<Int>()
 
     fun addSchedule(schedule: Travel.Schedule) {
-        // Repository를 통해 Firebase에 스케줄 저장
         repository.postSchedule(schedule, onSuccess = {
-            // 성공하면 _schedules 업데이트
             _schedules.value?.add(schedule)
             _schedules.value = _schedules.value // LiveData 갱신
         }, onFailure = {
             Log.e("ScheduleViewModel", "스케줄 등록 실패: ${it.message}")
         })
+    }
+    fun observeSchedules() {
+        repository.observeSchedule(_schedules)
     }
 
     fun observeTravels() {
