@@ -29,7 +29,9 @@ class Repository() {
                         try {
                             val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
                             val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-                            val days = ChronoUnit.DAYS.between(start, end).toInt() // 날짜 차이 계산
+
+                            // 종료일을 포함하는 날짜 차이 계산
+                            val days = ChronoUnit.DAYS.between(start, end.plusDays(1)).toInt()  // 종료일 포함하여 +1일 처리
                             liveData.value = days // LiveData 업데이트
                         } catch (e: Exception) {
                             liveData.value = 0 // 날짜 파싱 에러 처리
@@ -47,10 +49,39 @@ class Repository() {
             }
     }
 
+
+
+    // 여행 데이터를 저장할 때 여행 일수도 포함
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val travelId = travelRef.push().key
+        if (travelId != null) {
+            travel.id = travelId
+
+            // 여행 일수 계산 및 저장
+            if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {
+                try {
+                    val start = LocalDate.parse(travel.startDate)
+                    val end = LocalDate.parse(travel.endDate)
+                    travel.days = ChronoUnit.DAYS.between(start, end).toInt()
+                } catch (e: Exception) {
+                    travel.days = 0 // 날짜 계산 실패 시 기본값
+                }
+            }
+
+            travelRef.child(travelId).setValue(travel)
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { onFailure(it) }
+        } else {
+            onFailure(Exception("Travel ID 생성 실패"))
+        }
+    }
+
+    // 일정 저장
     fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val scheduleId = scheduleRef.push().key
         if (scheduleId != null) {
-            travelRef.child("schedules").child(scheduleId).setValue(newValue)
+            scheduleRef.child(scheduleId).setValue(newValue)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
         } else {
@@ -58,7 +89,7 @@ class Repository() {
         }
     }
 
-    // Schedule 데이터 실시간 관찰
+    // 일정 목록 관찰
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
         scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -73,29 +104,17 @@ class Repository() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // 에러 처리 (로그 출력 또는 UI 알림)
                 println("Error observing schedules: ${error.message}")
             }
         })
     }
 
+    // 위치 정보 업데이트
     fun postLocate(newValue: Travel.Schedule.Locate) {
         locateRef.setValue(newValue)
     }
 
-    // 새로운 여행 데이터 저장
-    fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        val travelId = travelRef.push().key
-        if (travelId != null) {
-            travelRef.child(travelId).setValue(travel)
-                .addOnSuccessListener { onSuccess() }
-                .addOnFailureListener { onFailure(it) }
-        } else {
-            onFailure(Exception("Travel ID 생성 실패"))
-        }
-    }
-
-    // Firebase에서 여행 데이터를 실시간으로 관찰
+    // 여행 목록 관찰
     fun observeTravels(travelList: MutableLiveData<MutableList<Travel>>) {
         travelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -110,18 +129,15 @@ class Repository() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // 에러 처리
+                println("Error observing travels: ${error.message}")
             }
         })
     }
 
-    // Firebase에서 특정 여행 데이터를 삭제
+    // 여행 삭제
     fun deleteTravel(travelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         travelRef.child(travelId).removeValue()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }
-        // addOnFailureListener는 삭제가 실패했을 때 호출되는 리스너
-        // 삭제 작업이 실패하면, 이 리스너 내에서 onFailure(it)가 호출, it은 실패한 원인, 즉 예외를 나타냄
     }
 }
-

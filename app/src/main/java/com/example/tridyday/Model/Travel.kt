@@ -4,11 +4,13 @@ import android.net.Uri
 import java.time.LocalTime
 
 data class Travel(
+    var id: String? = null,
     var title: String = "",
     var location: String = "",
     var startDate: String? = null,
     var endDate: String? = null,
-    var photoUri: String? = null // 사진 URI를 추가
+    var photoUri: String? = null,
+    var days:Int = 0
 ) {
     data class Schedule(
         var title: String,
