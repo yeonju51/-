@@ -33,6 +33,12 @@ class ViewModel : ViewModel() {
         _schedules.value = _schedules.value  // LiveData를 갱신
     }
 
+    val travelDaysLiveData = MutableLiveData<Int>()
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun fetchTravelDays(travelId: String) {
+        repository.getTravelDays(travelId, travelDaysLiveData)
+    }
+
     // 여행 데이터 추가
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
