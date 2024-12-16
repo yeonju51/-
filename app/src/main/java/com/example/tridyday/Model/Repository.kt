@@ -14,7 +14,6 @@ import java.time.temporal.ChronoUnit
 class Repository() {
     val database = FirebaseDatabase.getInstance()
     val travelRef = database.getReference("travel")
-    val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
 
     private val travelList = MutableLiveData<MutableList<Travel>>()
 
@@ -45,10 +44,10 @@ class Repository() {
     }
 
     // 일정 저장
-    fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        val scheduleId = scheduleRef.push().key
+    fun postSchedule(travelId: String, newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val scheduleId = travelRef.child("schedules").push().key
         if (scheduleId != null) {
-            travelRef.child("schedules").child(scheduleId).setValue(newValue)
+            travelRef.child(travelId).child("schedules").child(scheduleId).setValue(newValue)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
         } else {

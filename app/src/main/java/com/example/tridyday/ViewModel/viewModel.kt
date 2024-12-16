@@ -32,8 +32,6 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels)
     }
 
-
-
     var selectedTravelId: String? = ""
 
     val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
@@ -41,7 +39,7 @@ class ViewModel : ViewModel() {
     }
 
     fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
-        repository.postSchedule(schedule, onSuccess = {
+        repository.postSchedule(travel.id.toString(), schedule, onSuccess = {
             _schedules.value?.add(schedule)
             _schedules.value = _schedules.value // LiveData 갱신
         }, onFailure = {

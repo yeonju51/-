@@ -12,6 +12,7 @@ data class Travel(
     var photoUri: String? = null,
     var days:Int = 0
 ) {
+
     data class Schedule(
         var title: String = "",
         var day: Int = 0,

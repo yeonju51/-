@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter(private var schedules: MutableList<Travel.Schedule>,): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter(private var schedules: List<Travel.Schedule> = emptyList()): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
     fun setSchedules(newSchedules: List<Travel.Schedule>) {
         schedules = newSchedules.toMutableList()  // 새로운 데이터로 리스트 갱신
@@ -23,12 +24,11 @@ class SchedulesAdapter(private var schedules: MutableList<Travel.Schedule>,): Re
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(schedules[position])
+        val schedule = schedules[position]
+        holder.bind(schedule)
     }
 
-    override fun getItemCount(): Int {
-        return schedules.size
-    }
+    override fun getItemCount(): Int = schedules.size
 
     class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
 

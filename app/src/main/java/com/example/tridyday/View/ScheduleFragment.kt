@@ -40,7 +40,7 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val scheduleAdapter = SchedulesAdapter(schedules)
+        val scheduleAdapter = SchedulesAdapter(mutableListOf())
         binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
         binding.recSchedule.adapter = scheduleAdapter
 
