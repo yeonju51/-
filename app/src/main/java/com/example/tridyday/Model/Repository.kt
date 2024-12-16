@@ -15,7 +15,6 @@ class Repository() {
     val database = FirebaseDatabase.getInstance()
     val travelRef = database.getReference("travel")
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
-    val locateRef = database.getReference("locate")
 
     private val travelList = MutableLiveData<MutableList<Travel>>()
 
@@ -80,11 +79,6 @@ class Repository() {
                 println("Error observing schedules: ${error.message}")
             }
         })
-    }
-
-    // 위치 정보 업데이트
-    fun postLocate(newValue: Travel.Schedule.Locate) {
-        locateRef.setValue(newValue)
     }
 
     // 여행 목록 관찰

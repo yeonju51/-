@@ -26,7 +26,28 @@ data class Travel(
             var lat: Double = 0.0,
             var lng: Double = 0.0,
             var place: String = ""
-        )
+        ){
+            fun checkLocate(): Int{
+                return if(id == "") 0 else 1
+            }
+
+            fun reset(){
+                change("","",0.0,0.0,"")
+            }
+
+            fun change(Pid:String,
+                       Pname:String,
+                       Plat:Double,
+                       Plng:Double,
+                       Pplace:String
+            ) {
+                id = Pid
+                name = Pname
+                lat = Plat
+                lng = Plng
+                place = Pplace
+            }
+        }
 
     }
 }

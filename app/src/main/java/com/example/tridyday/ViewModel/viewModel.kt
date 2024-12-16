@@ -14,7 +14,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
+//위치 등록후 스케쥴 로 넘어갈 데이터
+var newLocate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
 
 class ViewModel : ViewModel() {
 
@@ -31,8 +32,7 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels)
     }
 
-    private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
-    val locate: LiveData<Travel.Schedule.Locate> get() = _locate
+
 
     var selectedTravelId: String? = ""
 
@@ -72,22 +72,19 @@ class ViewModel : ViewModel() {
 //    }
 
     fun setLocate(
-        newName: String,
         newID: String,
+        newName: String,
         newLat: Double,
         newLng: Double,
         newPlace: String
     ) {
-        val newLocate = _locate.value?.let {
-            it.name = newName
-            it.id = newID
-            it.lat = newLat
-            it.lng = newLng
-            it.place = newPlace
-            _locate.value
-        } ?: UNLOCATE
-        repository.postLocate(newLocate)
+        newLocate.change(newID, newName, newLat, newLng, newPlace)
     }
+
+    fun returnLocate(): Travel.Schedule.Locate{
+        return newLocate
+    }
+
 
     // startDate, endDate를 저장할 MutableLiveData
     private val _startDate = MutableLiveData<String>()
