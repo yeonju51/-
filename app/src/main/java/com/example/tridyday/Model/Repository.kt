@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.tridyday.ViewModel.selectedTravelId
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,8 +14,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 class Repository() {
-    val database = FirebaseDatabase.getInstance()
-    val travelRef = database.getReference("travel")
+    val travelRef = FirebaseDatabase.getInstance().getReference("travel")
 
     private val travelList = MutableLiveData<MutableList<Travel>>()
 
@@ -62,20 +62,15 @@ class Repository() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
-                    try {
-                        val schedule = data.getValue(Travel.Schedule::class.java)
-                        if (schedule != null) {
-                            schedules.add(schedule)
-                        } else {
-                            println("Failed to parse schedule: ${data.value}")
-                        }
-                    } catch (e: Exception) {
-                        println("Error parsing schedule: ${e.message}")
+                    val schedule = data.getValue(Travel.Schedule::class.java)
+                    if (schedule != null) {
+                        schedules.add(schedule)
+                    } else {
+                        println("Failed to parse schedule: ${data.value}")
                     }
+                    scheduleList.value = schedules
                 }
-                scheduleList.value = schedules
             }
-
             override fun onCancelled(error: DatabaseError) {
                 println("Error observing schedules: ${error.message}")
             }
@@ -89,6 +84,7 @@ class Repository() {
                 val travels = mutableListOf<Travel>()
                 for (data in snapshot.children) {
                     val travel = data.getValue(Travel::class.java)
+
                     if (travel != null) {
                         travels.add(travel)
                     }

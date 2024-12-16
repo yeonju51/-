@@ -1,11 +1,17 @@
 package com.example.tridyday.View
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,28 +21,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 
-class data_schedule(){
-    var data_set:Int = 0
-    val data_num = Array<Int>(10) { 0 }
-    val data_map = Array<String>(10){"데이터 없음"}
-    val data_lat = Array<Double>(10){37.5666}
-    val data_lng = Array<Double>(10){126.979}
-
-    fun add_data(name:String, lat:Double, lng:Double){
-        data_num[data_set] = 1
-        data_map[data_set] = name
-        data_lat[data_set] = lat
-        data_lng[data_set] = lng
-        data_set++
-    }
-}
-
 class MapFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
 
     private var binding: FragmentMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
+
+    val viewModel: ViewModel by activityViewModels()
+    private var selTravel: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +42,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
+        selTravel = viewModel.recvSelTravel()
+
         // Inflate the layout for this fragment
         return binding?.root
     }
@@ -56,28 +51,38 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ds = data_schedule()
-        ds.add_data("test0", 37.4666, 126.979)    //일정 데이터 받아올 예정
-        ds.add_data("test1", 37.5666, 126.879)
-        ds.add_data("test2", 37.6666, 126.779)
-        ds.add_data("test3", 37.7666, 126.679)
-        ds.add_data("test4", 37.8666, 126.579)
-        ds.add_data("test5", 37.9666, 126.479)
-        ds.add_data("test6", 37.0666, 126.379)
-        ds.add_data("test7", 37.1666, 126.279)
+        //lateinit var scheduleList: List<Travel.Schedule>
 
+        viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
 
-        val newButton = Array(10){Button(context)}
+            Log.e("확인", " 체크 : $schedules")
 
-        for (i in 0 until ds.data_set) {
-            newButton[i].text = ds.data_map[i]
-            binding?.mySchedule?.addView(newButton[i])
-            newButton[i].setOnClickListener {
-                newButton[i].text = "클릭함" // 각 데이터의 지도위치로 연결할 예정
-                moveMap(ds.data_lat[i], ds.data_lng[i])
-                markerMap(ds.data_map[i],ds.data_lat[i],ds.data_lng[i])
+            val newButton = Array(schedules.size){Button(context)}
+
+            for (i in schedules.indices) {
+                newButton[i].setPadding(0,0,0,0)
+                newButton[i].text = (i+1).toString() + "번째 : " + schedules[i].locate.name
+
+                binding?.mySchedule?.addView(newButton[i])
+
+                newButton[i].setOnClickListener {
+                    for(j in schedules.indices){
+                        newButton[j].setBackgroundColor(Color.LTGRAY)
+                    }
+                    newButton[i].setBackgroundColor(Color.YELLOW)
+
+                    moveMap(schedules[i].locate.lat, schedules[i].locate.lng)
+                    markerMap(
+                        schedules[i].locate.name,
+                        schedules[i].locate.lat,
+                        schedules[i].locate.lng
+                    )
+                }
+
             }
         }
+
+
     }
 
     override fun onDestroyView() {

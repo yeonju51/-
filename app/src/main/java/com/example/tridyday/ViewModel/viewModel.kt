@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit
 
 //위치 등록후 스케쥴 로 넘어갈 데이터
 var newLocate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
+var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
 class ViewModel : ViewModel() {
 
@@ -78,19 +79,7 @@ class ViewModel : ViewModel() {
 //        }
 //    }
 
-    fun setLocate(
-        newID: String,
-        newName: String,
-        newLat: Double,
-        newLng: Double,
-        newPlace: String
-    ) {
-        newLocate.change(newID, newName, newLat, newLng, newPlace)
-    }
 
-    fun returnLocate(): Travel.Schedule.Locate{
-        return newLocate
-    }
 
 
     // startDate, endDate를 저장할 MutableLiveData
@@ -116,5 +105,14 @@ class ViewModel : ViewModel() {
         val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
         val end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)
         return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
+    }
+
+    private var selTravel = 0
+
+    fun sendSelTravel(sel: Int){
+        selTravel = sel
+    }
+    fun recvSelTravel():Int {
+        return selTravel
     }
 }

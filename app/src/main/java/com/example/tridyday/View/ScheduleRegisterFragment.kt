@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
-import com.example.tridyday.databinding.FragmentScheduleBinding
+import com.example.tridyday.ViewModel.newLocate
 import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 import java.time.LocalTime
 
@@ -59,13 +59,18 @@ class ScheduleRegisterFragment : Fragment(),
                 return@setOnClickListener
             }
 
+            if(newLocate.checkLocate() == 0){
+                Toast.makeText(requireContext(), "위치 등록을 해야 합니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val schedule = Travel.Schedule(
                 title = title,
                 day = day ?: 1,
                 startTime = startTime.toString(),
                 endTime = endTime.toString(),
                 memo = memo,
-                locate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
+                locate = newLocate.copy()
             )
 
             viewModel.addSchedule(schedule)
