@@ -58,6 +58,8 @@ class ScheduleFragment : Fragment() {
                     }
                     binding?.buttonContainer?.removeAllViews()
 
+                    viewModel.bringDay(totalDays)
+
                     id?.let { travelId ->
                         viewModel.observeSchedules(id, 1)
                         viewModel.schedules.observe(viewLifecycleOwner) {
@@ -92,15 +94,6 @@ class ScheduleFragment : Fragment() {
 
     }
 
-//    private fun showDaySchedule(day: Int) {
-//        val schedulesForDay = schedules.filter { it.day == day }
-//        if (schedulesForDay.isNotEmpty()) {
-//            val adapter = binding.recSchedule.adapter
-//            if (adapter is SchedulesAdapter) {
-//                adapter.setSchedules(schedulesForDay)
-//            }
-//        }
-//    }
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

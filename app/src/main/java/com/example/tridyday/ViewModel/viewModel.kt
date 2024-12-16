@@ -29,6 +29,7 @@ class ViewModel : ViewModel() {
     val schedules: LiveData<MutableList<Travel.Schedule>> get() = _schedules
 
     private lateinit var id: String
+    private var day: Int? = null
 
     init {
         repository.observeTravels(_travels)
@@ -38,8 +39,16 @@ class ViewModel : ViewModel() {
         id = travelId
     }
 
+    fun bringDay(travelDay: Int) {
+        day = travelDay
+    }
+
     fun retriveId(): String? {
         return id
+    }
+
+    fun retriveDay(): Int? {
+        return day
     }
 
     fun addSchedule(schedule: Travel.Schedule) {
@@ -51,10 +60,6 @@ class ViewModel : ViewModel() {
     fun observeTravels() {
         repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
     }
-
-//    fun observeSchedules(travelId: String) {
-//        repository.observeSchedule(travelId, _schedules)
-//    }
 
     fun observeSchedules(travelId: String, day: Int) {
         repository.observeSchedule(travelId, _schedules) { schedule ->

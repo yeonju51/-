@@ -38,15 +38,28 @@ class ScheduleRegisterFragment : Fragment(),
 
         binding = FragmentScheduleRegisterBinding.bind(view)
 
+        val travelDay = viewModel.retriveDay()
 
         // 완료 버튼 클릭 이벤트
         binding?.btnCompleted?.setOnClickListener {
             val title = binding?.txtTitle?.text.toString()
-            val day = binding?.txtDay?.text.toString().toIntOrNull()
+            val dayInput = binding?.txtDay?.text.toString()
             val memo = binding?.txtMemo?.text.toString()
 
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val day = dayInput.toIntOrNull()
+
+            if (day == null) {
+                Toast.makeText(requireContext(), "유효한 일수를 입력해주세요. (ex: 1)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (day < 1 || day > travelDay!!) {
+                Toast.makeText(requireContext(), "유효하지 않은 일수입니다. 여행 일수는 $travelDay 일까지 가능합니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -66,7 +79,7 @@ class ScheduleRegisterFragment : Fragment(),
 
             val schedule = Travel.Schedule(
                 title = title,
-                day = day ?: 1,
+                day = day,
                 startTime = startTime.toString(),
                 endTime = endTime.toString(),
                 memo = memo,
