@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.replace
+import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.ViewModel.newLocate
@@ -35,7 +37,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentRegistMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
-
 
     private var placeID: String = ""
     private var placeName = ""
@@ -115,6 +116,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
             if(placeID != "") {
                 newLocate.change(placeID,placeName,placeLat,placeLng,placeLocate)
                 Log.i(tag,"체크용 ${newLocate}")
+
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
             else{
@@ -187,6 +189,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
             binding!!.placeLocation.text = locate
         }
     }
+
 }
 /*
 디펜던시에 추가

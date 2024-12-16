@@ -31,6 +31,7 @@ class ViewModel : ViewModel() {
     }
 
 
+
     private val _selectedTravel = MutableLiveData<Travel>()
     val selectedTravel: LiveData<Travel> get() = _selectedTravel
 

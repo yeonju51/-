@@ -36,7 +36,7 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
             val day = binding.txtDay.text.toString().toIntOrNull()
             val memo = binding.txtMemo.text.toString()
 
-            Log.i(tag,"체크용 $newLocate")
+            Log.i(tag,"체크용 ${newLocate}")
 
             if (title.isBlank()) {
                 Toast.makeText(requireContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
