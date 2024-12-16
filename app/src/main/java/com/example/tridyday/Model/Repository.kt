@@ -13,8 +13,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 class Repository() {
-    val database = FirebaseDatabase.getInstance()
-    val travelRef = database.getReference("travel")
+    val travelRef = FirebaseDatabase.getInstance().getReference("travel")
 
     private val travelList = MutableLiveData<MutableList<Travel>>()
 

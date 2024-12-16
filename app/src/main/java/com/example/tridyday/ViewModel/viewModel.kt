@@ -71,19 +71,7 @@ class ViewModel : ViewModel() {
 //        }
 //    }
 
-    fun setLocate(
-        newID: String,
-        newName: String,
-        newLat: Double,
-        newLng: Double,
-        newPlace: String
-    ) {
-        newLocate.change(newID, newName, newLat, newLng, newPlace)
-    }
 
-    fun returnLocate(): Travel.Schedule.Locate{
-        return newLocate
-    }
 
 
     // startDate, endDate를 저장할 MutableLiveData
