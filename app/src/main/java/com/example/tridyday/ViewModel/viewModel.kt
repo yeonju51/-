@@ -34,6 +34,7 @@ class ViewModel : ViewModel() {
     }
 
 
+
     val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
         Log.e("ViewModel - SelectedTravel", "Current Travel ID: $selectedTravelId")
         travelList.find { it.id == selectedTravelId }

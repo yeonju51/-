@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.tridyday.ViewModel.selectedTravelId
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,28 +57,31 @@ class Repository() {
     }
 
     fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
-        travelRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Travel.Schedule>()
-                for (data in snapshot.children) {
-                    try {
-                        val schedule = data.getValue(Travel.Schedule::class.java)
-                        if (schedule != null) {
-                            schedules.add(schedule)
-                        } else {
-                            println("Failed to parse schedule: ${data.value}")
+        selectedTravelId?.let {
+            val scheduleRef = travelRef.child(it).child("schedules")
+            scheduleRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val schedules = mutableListOf<Travel.Schedule>()
+                    for (data in snapshot.children) {
+                        try {
+                            val schedule = data.getValue(Travel.Schedule::class.java)
+                            if (schedule != null) {
+                                schedules.add(schedule)
+                            } else {
+                                println("Failed to parse schedule: ${data.value}")
+                            }
+                        } catch (e: Exception) {
+                            println("Error parsing schedule: ${e.message}")
                         }
-                    } catch (e: Exception) {
-                        println("Error parsing schedule: ${e.message}")
                     }
+                    scheduleList.value = schedules
                 }
-                scheduleList.value = schedules
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                println("Error observing schedules: ${error.message}")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    println("Error observing schedules: ${error.message}")
+                }
+            })
+        }
     }
 
     // 여행 목록 관찰
