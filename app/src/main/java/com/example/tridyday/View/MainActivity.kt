@@ -25,6 +25,3 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 }
-
-//하단 네비게이션 바를 제어하는 목적의 파일
-// 하단 네비게이션 바는 **homeFragment**나 **travelRegistrationFragment**에서는 숨기고, 그 외 화면에서는 보이도록 설정

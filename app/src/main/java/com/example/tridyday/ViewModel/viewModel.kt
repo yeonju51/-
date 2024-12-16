@@ -65,6 +65,12 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
+//    private fun observeTravel() {
+//        repository.observeTravel { travelList ->
+//            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영
+//        }
+//    }
+
     fun setLocate(
         newName: String,
         newID: String,
