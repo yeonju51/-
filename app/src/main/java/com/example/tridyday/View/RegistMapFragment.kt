@@ -10,8 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.replace
+import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
+import com.example.tridyday.ViewModel.newLocate
 import com.example.tridyday.databinding.FragmentRegistMapBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,7 +37,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentRegistMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
-
 
     private var placeID: String = ""
     private var placeName = ""
@@ -112,14 +114,10 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
 
         binding?.registBtn?.setOnClickListener{
             if(placeID != "") {
+                newLocate.change(placeID,placeName,placeLat,placeLng,placeLocate)
+                Log.i(tag,"체크용 ${newLocate}")
 
-                viewModel.locate.observe(viewLifecycleOwner){
-                    //읽어올 내용 binding?.txt.text = viewModel.Locate.value
-                    viewModel.setLocate(placeName,placeID,placeLat,placeLng,placeLocate)
-                }
-                //childFragmentManager.popBackStack()
                 activity?.onBackPressedDispatcher?.onBackPressed()
-                //findNavController().navigate(R.id.action_registMapFragment_to_registScheduleFragment)
             }
             else{
                 val builder = AlertDialog.Builder(context)
@@ -191,6 +189,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
             binding!!.placeLocation.text = locate
         }
     }
+
 }
 /*
 디펜던시에 추가

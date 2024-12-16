@@ -7,14 +7,28 @@ import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ItemTravelBinding
 
 class TravelAdapter(
-    private val travels: MutableList<Travel>,
-    private val onItemClick: (Travel) -> Unit // 아이템 클릭 콜백 추가
+    private var travels: MutableList<Travel>,
+    private val onClick: (Travel) -> Unit
 ) : RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
 
+    inner class TravelViewHolder(private val binding: ItemTravelBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(travel: Travel) {
+            binding.apply {
+
+                titleTextView.text = travel.title
+                locationTextView.text = travel.location
+
+                datesTextView.text = "${travel.startDate} ~ ${travel.endDate}"
+
+                root.setOnClickListener { onClick(travel) }
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelViewHolder {
-        val binding =
-            ItemTravelBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TravelViewHolder(binding, onItemClick)
+        val binding = ItemTravelBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TravelViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TravelViewHolder, position: Int) {
@@ -27,21 +41,5 @@ class TravelAdapter(
         travels.clear()
         travels.addAll(newTravels)
         notifyDataSetChanged()
-    }
-
-    class TravelViewHolder(
-        private val binding: ItemTravelBinding,
-        private val onItemClick: (Travel) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(travel: Travel) {
-            binding.titleTextView.text = travel.title
-            binding.locationTextView.text = travel.location
-
-            // 아이템 클릭 이벤트 설정
-            binding.root.setOnClickListener {
-                onItemClick(travel)
-            }
-        }
     }
 }

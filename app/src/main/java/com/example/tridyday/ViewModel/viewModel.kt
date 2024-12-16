@@ -1,14 +1,21 @@
 package com.example.tridyday.ViewModel
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
-val UNLOCATE = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
+//위치 등록후 스케쥴 로 넘어갈 데이터
+var newLocate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
 
 class ViewModel : ViewModel() {
 
@@ -22,40 +29,32 @@ class ViewModel : ViewModel() {
 
     init {
         repository.observeSchedule(_schedules)
-        repository.observeTravels(_travels) // Firebase의 여행 데이터를 실시간으로 관찰
+        repository.observeTravels(_travels)
     }
 
-    private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
-    val locate: LiveData<Travel.Schedule.Locate> get() = _locate
+    var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
-    fun setSchedule(schedule: Travel.Schedule) {
-        _schedules.value?.add(schedule)  // 새로운 일정을 추가
-        _schedules.value = _schedules.value  // LiveData를 갱신
+    val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
+        Log.e("ViewModel - SelectedTravel", "Current Travel ID: $selectedTravelId")
+        travelList.find { it.id == selectedTravelId }
     }
 
-    private val _travelDaysLiveData = MutableLiveData<Int>()
-    val travelDaysLiveData: LiveData<Int> get() = _travelDaysLiveData
+    fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
+        Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
+        repository.postSchedule(travel.id.toString(), schedule, onSuccess = {
+            _schedules.value?.add(schedule)
+            _schedules.value = _schedules.value // LiveData 갱신
+        }, onFailure = {
+            Log.e("ScheduleViewModel", "스케줄 등록 실패: ${it.message}")
+        })
+    }
 
-    private val _dayButtonsLiveData = MutableLiveData<List<Int>>()
-    val dayButtonsLiveData: LiveData<List<Int>> get() = _dayButtonsLiveData
+    fun observeTravels() {
+        repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
+    }
 
+    // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
     @RequiresApi(Build.VERSION_CODES.O)
-    fun fetchTravelDays(travelId: String) {
-        // Repository에서 travelDays 값을 가져와서 업데이트
-        repository.getTravelDays(_travelDaysLiveData)
-    }
-
-    fun generateDayButtons() {
-        // travelDaysLiveData의 값이 변경되면 이를 가공하여 버튼 리스트를 생성
-        val totalDays = _travelDaysLiveData.value ?: 0
-        if (totalDays > 0) {
-            _dayButtonsLiveData.value = (1..totalDays).toList()
-        } else {
-            _dayButtonsLiveData.value = emptyList() // 값이 없으면 빈 리스트 전달
-        }
-    }
-
-    // 여행 데이터 추가
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
             // 성공 시 _travels 업데이트
@@ -66,26 +65,50 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
+//    private fun observeTravel() {
+//        repository.observeTravel { travelList ->
+//            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영
+//        }
+//    }
 
     fun setLocate(
-        newName: String,
         newID: String,
+        newName: String,
         newLat: Double,
         newLng: Double,
         newPlace: String
     ) {
+        newLocate.change(newID, newName, newLat, newLng, newPlace)
+    }
 
-        val newLocate = _locate.value?.let {
+    fun returnLocate(): Travel.Schedule.Locate{
+        return newLocate
+    }
 
-            it.name = newName
-            it.id = newID
-            it.lat = newLat
-            it.lng = newLng
-            it.place = newPlace
-            _locate.value
-        } ?: UNLOCATE
 
-        repository.postLocate(newLocate)
+    // startDate, endDate를 저장할 MutableLiveData
+    private val _startDate = MutableLiveData<String>()
+    val startDate: LiveData<String> get() = _startDate
+
+    private val _endDate = MutableLiveData<String>()
+    val endDate: LiveData<String> get() = _endDate
+
+    // 날짜를 ViewModel에서 처리하기 위해 startDate 값을 설정
+    fun setStartDate(date: String) {
+        _startDate.value = date
+    }
+
+    // 날짜를 ViewModel에서 처리하기 위해 endDate 값을 설정
+    fun setEndDate(date: String) {
+        _endDate.value = date
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+
+    fun calculateDaysBetween(startDate: String, endDate: String): Int {
+        val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
+        val end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)
+        return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
     }
 
     private var selTravel = 0

@@ -1,96 +1,41 @@
 package com.example.tridyday.Model
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.time.LocalDate
-import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
 
 class Repository() {
     val database = FirebaseDatabase.getInstance()
     val travelRef = database.getReference("travel")
-    val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
-    val locateRef = database.getReference("locate")
 
+    private val travelList = MutableLiveData<MutableList<Travel>>()
+
+    // 여행 데이터를 저장할 때 여행 일수도 포함
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getTravelDays(liveData: MutableLiveData<Int>) {
-        travelRef.get()
-            .addOnSuccessListener { snapshot ->
-                println("Snapshot: ${snapshot.value}") // 디버깅용 로그
-                val travel = snapshot.getValue(Travel::class.java)
-                if (travel != null) {
-                    val startDate = travel.startDate
-                    val endDate = travel.endDate
-                    println("StartDate: $startDate, EndDate: $endDate") // 디버깅용 로그
-                    if (!startDate.isNullOrEmpty() && !endDate.isNullOrEmpty()) {
-                        try {
-                            val start = LocalDate.parse(startDate) // startDate를 LocalDate로 파싱
-                            val end = LocalDate.parse(endDate) // endDate를 LocalDate로 파싱
-                            val days = ChronoUnit.DAYS.between(start, end).toInt() // 날짜 차이 계산
-                            liveData.value = days // LiveData 업데이트
-                        } catch (e: DateTimeParseException) {
-                            println("Date parsing error: ${e.message}") // 날짜 파싱 에러
-                            liveData.value = 0
-                        }
-                    } else {
-                        liveData.value = 0 // 날짜가 없으면 0
-                    }
-                } else {
-                    liveData.value = 0 // 데이터가 없으면 0
-                }
-            }
-            .addOnFailureListener { exception ->
-                liveData.value = 0 // 실패 시 0
-                println("Error fetching travel days: ${exception.message}") // 에러 로그
-            }
-    }
-
-
-    fun postSchedule(newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        val scheduleId = scheduleRef.push().key
-        if (scheduleId != null) {
-            travelRef.child("schedules").child(scheduleId).setValue(newValue)
-                .addOnSuccessListener { onSuccess() }
-                .addOnFailureListener { onFailure(it) }
-        } else {
-            onFailure(Exception("Schedule ID 생성 실패"))
-        }
-    }
-
-    // Schedule 데이터 실시간 관찰
-    fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
-        scheduleRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val schedules = mutableListOf<Travel.Schedule>()
-                for (data in snapshot.children) {
-                    val schedule = data.getValue(Travel.Schedule::class.java)
-                    if (schedule != null) {
-                        schedules.add(schedule)
-                    }
-                }
-                scheduleList.value = schedules // LiveData 업데이트
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 에러 처리 (로그 출력 또는 UI 알림)
-                println("Error observing schedules: ${error.message}")
-            }
-        })
-    }
-
-    fun postLocate(newValue: Travel.Schedule.Locate) {
-        locateRef.setValue(newValue)
-    }
-
-    // 새로운 여행 데이터 저장
     fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val travelId = travelRef.push().key
         if (travelId != null) {
+            travel.id = travelId
+
+            // 여행 일수 계산 및 저장
+            if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {
+                try {
+                    val start = LocalDate.parse(travel.startDate)
+                    val end = LocalDate.parse(travel.endDate)
+                    travel.days = ChronoUnit.DAYS.between(start, end).toInt()
+                } catch (e: Exception) {
+                    travel.days = 0 // 날짜 계산 실패 시 기본값
+                }
+            }
+
             travelRef.child(travelId).setValue(travel)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
@@ -99,7 +44,44 @@ class Repository() {
         }
     }
 
-    // Firebase에서 여행 데이터를 실시간으로 관찰
+    // 일정 저장
+    fun postSchedule(travelId: String, newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        Log.e("SelectedTravel", "Current Travel ID: $travelId")
+        val scheduleRef = travelRef.child(travelId).child("schedules")
+        val scheduleId = scheduleRef.push().key
+        scheduleId?.let {nonNullableIndex ->
+            scheduleRef.child(nonNullableIndex).setValue(newValue)
+        } ?: run {
+            Log.e("Repository", "fail")
+        }
+    }
+
+    fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
+        travelRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val schedules = mutableListOf<Travel.Schedule>()
+                for (data in snapshot.children) {
+                    try {
+                        val schedule = data.getValue(Travel.Schedule::class.java)
+                        if (schedule != null) {
+                            schedules.add(schedule)
+                        } else {
+                            println("Failed to parse schedule: ${data.value}")
+                        }
+                    } catch (e: Exception) {
+                        println("Error parsing schedule: ${e.message}")
+                    }
+                }
+                scheduleList.value = schedules
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("Error observing schedules: ${error.message}")
+            }
+        })
+    }
+
+    // 여행 목록 관찰
     fun observeTravels(travelList: MutableLiveData<MutableList<Travel>>) {
         travelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -114,18 +96,16 @@ class Repository() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // 에러 처리
+                println("Error observing travels: ${error.message}")
             }
         })
     }
 
-    // Firebase에서 특정 여행 데이터를 삭제
+
+    // 여행 삭제
     fun deleteTravel(travelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         travelRef.child(travelId).removeValue()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }
-        // addOnFailureListener는 삭제가 실패했을 때 호출되는 리스너
-        // 삭제 작업이 실패하면, 이 리스너 내에서 onFailure(it)가 호출, it은 실패한 원인, 즉 예외를 나타냄
     }
 }
-
