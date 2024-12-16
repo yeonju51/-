@@ -1,22 +1,17 @@
 package com.example.tridyday.ViewModel
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 //위치 등록후 스케쥴 로 넘어갈 데이터
 var newLocate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
-var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
 class ViewModel : ViewModel() {
 
@@ -78,15 +73,6 @@ class ViewModel : ViewModel() {
             onSuccess()
         }, onFailure)
     }
-
-//    private fun observeTravel() {
-//        repository.observeTravel { travelList ->
-//            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영
-//        }
-//    }
-
-
-
 
     // startDate, endDate를 저장할 MutableLiveData
     private val _startDate = MutableLiveData<String>()

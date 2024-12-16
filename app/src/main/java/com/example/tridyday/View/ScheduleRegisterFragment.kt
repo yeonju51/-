@@ -58,7 +58,7 @@ class ScheduleRegisterFragment : Fragment(),
                 return@setOnClickListener
             }
 
-            if (day < 1 || day > travelDay!!) {
+            if (day < 1 || day > travelDay?:1) {
                 Toast.makeText(requireContext(), "유효하지 않은 일수입니다. 여행 일수는 $travelDay 일까지 가능합니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

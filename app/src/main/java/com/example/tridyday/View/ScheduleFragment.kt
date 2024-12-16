@@ -2,22 +2,18 @@ package com.example.tridyday.View
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentScheduleBinding
-import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 
 class ScheduleFragment : Fragment() {
 
@@ -60,8 +56,10 @@ class ScheduleFragment : Fragment() {
 
                     viewModel.bringDay(totalDays)
 
+                    currentDay = 1
+
                     id?.let { travelId ->
-                        viewModel.observeSchedules(id, 1)
+                        viewModel.observeSchedules(id, currentDay)
                         viewModel.schedules.observe(viewLifecycleOwner) {
                             binding?.recSchedule?.adapter?.notifyDataSetChanged()
                         }
@@ -79,6 +77,7 @@ class ScheduleFragment : Fragment() {
                                     }
                                 }
                                 binding?.recSchedule?.adapter = scheduleAdapter
+
                             }
                         }
                         binding?.buttonContainer?.addView(dayButton)

@@ -3,20 +3,18 @@ package com.example.tridyday.Model
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.tridyday.ViewModel.selectedTravelId
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 class Repository() {
-    val travelRef = FirebaseDatabase.getInstance().getReference("travel")
-
-    private val travelList = MutableLiveData<MutableList<Travel>>()
+    val database get() = Firebase.database
+    val travelRef = database.getReference("travel")
 
     // 여행 데이터를 저장할 때 여행 일수도 포함
     @RequiresApi(Build.VERSION_CODES.O)
