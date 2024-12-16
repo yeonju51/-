@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -29,6 +28,10 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
+
+        binding.btnSchedulePlus.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
+        }
 
         return binding.root
     }
