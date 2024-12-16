@@ -2,8 +2,11 @@ package com.example.tridyday.View
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,43 +19,60 @@ import com.example.tridyday.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
-    private val viewModel: ViewModel by viewModels()
-    private lateinit var adapter: TravelAdapter
+    private var binding: FragmentHomeBinding? = null
+    private val viewModel: ViewModel by activityViewModels()
+//    private lateinit var adapter: TravelAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+
+        return binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
 
-        // RecyclerView 설정
-        adapter = TravelAdapter(mutableListOf()) { travel ->
-            // 선택한 여행 데이터를 SharedViewModel에 설정
-            viewModel.selectedTravelId = travel.id
-            Log.e("HomeFrag", "Current Travel ID: ${travel.id}")
-            // ScheduleFragment로 이동
-            findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)
+        binding?.adventureRecyclerView?.layoutManager = LinearLayoutManager(context)
+
+        viewModel.travels.observe(viewLifecycleOwner) {
+            binding?.adventureRecyclerView?.adapter?.notifyDataSetChanged()
         }
 
-        binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.adventureRecyclerView.adapter = adapter
+        val adapter = TravelAdapter(viewModel.travels)
+        adapter.setOnClickListener(object: TravelAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int, id: String) {
+                viewModel.bringId(id)
+                findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)
+            }
+        })
 
-        // LiveData 관찰하여 RecyclerView 업데이트
-        viewModel.travels.observe(viewLifecycleOwner) { travels ->
-            adapter.updateTravels(travels.map { travel ->
-                // 날짜 포맷팅
-                travel.copy(
-                    startDate = formatDate(travel.startDate),
-                    endDate = formatDate(travel.endDate)
-                )
-            })
-        }
+        binding?.adventureRecyclerView?.adapter = adapter
+
+//        // LiveData 관찰하여 RecyclerView 업데이트
+//        viewModel.travels.observe(viewLifecycleOwner) { travels ->
+//            adapter.updateTravels(travels.map { travel ->
+//                // 날짜 포맷팅
+//                travel.copy(
+//                    startDate = formatDate(travel.startDate),
+//                    endDate = formatDate(travel.endDate)
+//                )
+//            })
+//        }
 
         // Add 버튼 클릭 시 TravelRegistrationFragment로 이동
-        binding.addButton.setOnClickListener {
+        binding?.addButton?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun formatDate(date: String?): String {

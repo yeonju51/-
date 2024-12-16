@@ -1,29 +1,45 @@
 package com.example.tridyday.View
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.databinding.ItemTravelBinding
 
 class TravelAdapter(
-    private var travels: MutableList<Travel>,
-    private val onClick: (Travel) -> Unit
+    val travels: LiveData<MutableList<Travel>>
 ) : RecyclerView.Adapter<TravelAdapter.TravelViewHolder>() {
 
     inner class TravelViewHolder(private val binding: ItemTravelBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(travel: Travel) {
-            binding.apply {
+        fun bind(travel: Travel?) {
+            travel?.let {
+                binding.titleTextView.text = it.title
+                binding.locationTextView.text = it.location
+                binding.datesTextView.text = "${it.startDate} ~ ${it.endDate}"
 
-                titleTextView.text = travel.title
-                locationTextView.text = travel.location
+                val id = travel.id
 
-                datesTextView.text = "${travel.startDate} ~ ${travel.endDate}"
-
-                root.setOnClickListener { onClick(travel) }
+                binding.root.setOnClickListener {
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION && itemClickListener != null) {
+                        itemClickListener.onItemClick(itemView, pos, id)
+                    }
+                }
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View, position: Int, id: String)
+    }
+
+    private lateinit var itemClickListener: OnItemClickListener
+
+    fun setOnClickListener(onItemClickListener: OnItemClickListener) {
+        itemClickListener = onItemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelViewHolder {
@@ -32,14 +48,14 @@ class TravelAdapter(
     }
 
     override fun onBindViewHolder(holder: TravelViewHolder, position: Int) {
-        holder.bind(travels[position])
+        holder.bind(travels.value?.getOrNull(position))
     }
 
-    override fun getItemCount(): Int = travels.size
+    override fun getItemCount(): Int = travels.value?.size ?: 0
 
-    fun updateTravels(newTravels: List<Travel>) {
-        travels.clear()
-        travels.addAll(newTravels)
-        notifyDataSetChanged()
-    }
+//    fun updateTravels(newTravels: List<Travel>) {
+//        travels.clear()
+//        travels.addAll(newTravels)
+//        notifyDataSetChanged()
+//    }
 }

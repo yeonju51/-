@@ -27,30 +27,37 @@ class ViewModel : ViewModel() {
     private val _schedules = MutableLiveData<MutableList<Travel.Schedule>>()
     val schedules: LiveData<MutableList<Travel.Schedule>> get() = _schedules
 
+    private lateinit var id: String
+
     init {
-        repository.observeSchedule(_schedules)
         repository.observeTravels(_travels)
     }
 
-    var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
-
     val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
-        Log.e("ViewModel - SelectedTravel", "Current Travel ID: $selectedTravelId")
-        travelList.find { it.id == selectedTravelId }
+        Log.e("ViewModel - SelectedTravel", "Current Travel ID: $id")
+        travelList.find { it.id == id }
     }
 
-    fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
-        Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
-        repository.postSchedule(travel.id.toString(), schedule, onSuccess = {
-            _schedules.value?.add(schedule)
-            _schedules.value = _schedules.value // LiveData 갱신
-        }, onFailure = {
-            Log.e("ScheduleViewModel", "스케줄 등록 실패: ${it.message}")
-        })
+    fun bringId(travelId: String) {
+        id = travelId
+    }
+
+    fun retriveId(): String? {
+        return id
+    }
+
+    fun addSchedule(schedule: Travel.Schedule) {
+        // Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
+        val nonNullId = id ?: "null"
+        repository.postSchedule(nonNullId, schedule)
     }
 
     fun observeTravels() {
         repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
+    }
+
+    fun observeSchedules(travelId: String) {
+        repository.observeSchedule(travelId, _schedules)
     }
 
     // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장

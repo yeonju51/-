@@ -11,35 +11,17 @@ import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter(private var schedules: List<Travel.Schedule> = emptyList()): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter(val schedules: LiveData<MutableList<Travel.Schedule>>): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
 
-    fun setSchedules(newSchedules: List<Travel.Schedule>) {
-        schedules = newSchedules.toMutableList()  // 새로운 데이터로 리스트 갱신
-        notifyDataSetChanged()  // RecyclerView에 데이터 변경 알림
-    }
+    inner class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(schedule: Travel.Schedule?) {
+            schedule?.let {
+                binding.txtName.text = it.title
+                binding.txtTime.text = it.startTime.toString()
+                binding.txtStartTime.text = it.startTime.toString()
+                binding.txtEndTime.text = it.endTime.toString()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ListSchedulesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
-    }
-
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        val schedule = schedules[position]
-        holder.bind(schedule)
-    }
-
-    override fun getItemCount(): Int = schedules.size
-
-    class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(schedule: Travel.Schedule) {
-            binding.apply {
-                txtName.text = schedule.title
-                txtTime.text = schedule.startTime.toString()
-                txtStartTime.text = schedule.startTime.toString()
-                txtEndTime.text = schedule.endTime.toString()
-
-                btnScheduleMemo.setOnClickListener {
+                binding.btnScheduleMemo.setOnClickListener {
                     // 팝업을 띄우는 함수 호출
                     showMemoPopup(schedule)
                 }
@@ -68,7 +50,19 @@ class SchedulesAdapter(private var schedules: List<Travel.Schedule> = emptyList(
                 builder.create().show()
             }
         }
-
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val binding = ListSchedulesBinding.inflate(LayoutInflater.from(parent.context))
+        return Holder(binding)
+    }
+
+    override fun getItemCount(): Int = schedules.value?.size ?: 0
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bind(schedules.value?.getOrNull(position))
+    }
+
 }
+
 

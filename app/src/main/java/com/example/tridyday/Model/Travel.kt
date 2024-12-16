@@ -4,7 +4,7 @@ import android.net.Uri
 import java.time.LocalTime
 
 data class Travel(
-    var id: String? = null,
+    var id: String = "",
     var title: String = "",
     var location: String = "",
     var startDate: String? = null,

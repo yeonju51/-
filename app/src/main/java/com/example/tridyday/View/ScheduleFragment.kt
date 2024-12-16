@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,71 +16,81 @@ import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentScheduleBinding
+import com.example.tridyday.databinding.FragmentScheduleRegisterBinding
 
 class ScheduleFragment : Fragment() {
 
-    private lateinit var binding: FragmentScheduleBinding
-    private val viewModel: ViewModel by activityViewModels()
-    private val schedules = mutableListOf<Travel.Schedule>()
+    var binding: FragmentScheduleBinding? = null
+    val viewModel: ViewModel by activityViewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
-        binding.btnSchedulePlus.setOnClickListener {
-            findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
-        }
-
-        return binding.root
+        return binding?.root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val scheduleAdapter = SchedulesAdapter(mutableListOf())
-        binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
-        binding.recSchedule.adapter = scheduleAdapter
+        val id = viewModel.retriveId()
 
-        viewModel.selectedTravel.observe(viewLifecycleOwner) { selectedTravel ->
-            // selectedTravel이 변경될 때 UI를 업데이트합니다.
-            if (selectedTravel != null) {
-                binding.txtScheduleTitle.text = selectedTravel.title
-                schedules.clear()
-                schedules.addAll(schedules)
-                scheduleAdapter.notifyDataSetChanged()
+        val scheduleAdapter = SchedulesAdapter(viewModel.schedules)
+        binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
 
-                val totalDays = if (selectedTravel.startDate != null && selectedTravel.endDate != null) {
-                    viewModel.calculateDaysBetween(selectedTravel.startDate!!, selectedTravel.endDate!!)
-                } else {
-                    0
-                }
-                binding.buttonContainer.removeAllViews()
+        if (id != null) {
+            viewModel.travels.observe(viewLifecycleOwner) { travels ->
+                val travel = travels.find { it.id == id }
 
-                for (day in 1..totalDays) {
-                    val dayButton = Button(requireContext()).apply {
-                        text = "Day $day"
-                        setOnClickListener { showDaySchedule(day) }
+                if (travel != null) {
+                    binding?.txtScheduleTitle?.text = travel.title
+
+                    val totalDays = if (travel.startDate != null && travel.endDate != null) {
+                        viewModel.calculateDaysBetween(travel.startDate!!, travel.endDate!!)
+                    } else {
+                        0
                     }
-                    binding.buttonContainer.addView(dayButton)
-                }
-            } else {
-                // 선택된 여행이 없다면, 에러 처리나 기본 UI 처리
-            }
-        };
-    }
+                    binding?.buttonContainer?.removeAllViews()
 
-    private fun showDaySchedule(day: Int) {
-        val schedulesForDay = schedules.filter { it.day == day }
-        if (schedulesForDay.isNotEmpty()) {
-            val adapter = binding.recSchedule.adapter
-            if (adapter is SchedulesAdapter) {
-                adapter.setSchedules(schedulesForDay)
+                    for (day in 1..totalDays) {
+                        val dayButton = Button(requireContext()).apply {
+                            text = "Day $day"
+    //                        setOnClickListener { showDaySchedule(day) }
+                        }
+                        binding?.buttonContainer?.addView(dayButton)
+                    }
+                }
+
+                id?.let { travelId ->
+                    viewModel.observeSchedules(id)
+                    viewModel.schedules.observe(viewLifecycleOwner) {
+                        binding?.recSchedule?.adapter?.notifyDataSetChanged()
+                    }
+                }
+                binding?.recSchedule?.adapter = scheduleAdapter
+            }
+
+            binding?.btnSchedulePlus?.setOnClickListener {
+                findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
             }
         }
+
     }
 
+//    private fun showDaySchedule(day: Int) {
+//        val schedulesForDay = schedules.filter { it.day == day }
+//        if (schedulesForDay.isNotEmpty()) {
+//            val adapter = binding.recSchedule.adapter
+//            if (adapter is SchedulesAdapter) {
+//                adapter.setSchedules(schedulesForDay)
+//            }
+//        }
+//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

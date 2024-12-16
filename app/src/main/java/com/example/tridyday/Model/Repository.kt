@@ -45,7 +45,7 @@ class Repository() {
     }
 
     // 일정 저장
-    fun postSchedule(travelId: String, newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun postSchedule(travelId: String, newValue: Travel.Schedule) {
         Log.e("SelectedTravel", "Current Travel ID: $travelId")
         val scheduleRef = travelRef.child(travelId).child("schedules")
         val scheduleId = scheduleRef.push().key
@@ -56,8 +56,9 @@ class Repository() {
         }
     }
 
-    fun observeSchedule(scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
-        travelRef.addValueEventListener(object : ValueEventListener {
+    fun observeSchedule(travelId: String, scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
+        val scheduleRef = travelRef.child(travelId).child("schedules")
+        scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
