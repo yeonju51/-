@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#DDEFFF">
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="105dp"
+        android:layout_height="54dp"
+        android:text="뒤로"
+        android:textColor="#000000"
+        android:backgroundTint="#DDEFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="397dp"
@@ -14,14 +24,15 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="104dp"
+            android:layout_height="53dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:text="일정 등록"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -33,7 +44,8 @@
             android:layout_height="64dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="#000000"
-            android:hint="제목" />
+            android:hint="제목"
+            android:gravity="center" />
 
         <EditText
             android:id="@+id/txt_day"
@@ -41,7 +53,8 @@
             android:layout_height="64dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="#000000"
-            android:hint="Day" />
+            android:hint="Day"
+            android:gravity="center" />
 
         <TimePicker
             android:id="@+id/time_picker_start"
@@ -61,7 +74,8 @@
             android:layout_height="128dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="#000000"
-            android:hint="메모" />
+            android:hint="메모"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/btn_register_map"
@@ -70,16 +84,6 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="#ffffff"
             android:text="위치"
-            android:textColor="#000000"
-            android:textColorLink="#ffffff" />
-
-        <Button
-            android:id="@+id/btn_recommend_spot"
-            android:layout_width="338dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="#ffffff"
-            android:text="추천 스팟"
             android:textColor="#000000"
             android:textColorLink="#ffffff" />
 

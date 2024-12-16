@@ -96,6 +96,10 @@ class ScheduleRegisterFragment : Fragment(),
         binding?.btnRegisterMap?.setOnClickListener {
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_registMapFragment)
         }
+
+        binding?.btnBack?.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
+        }
     }
 
     override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
