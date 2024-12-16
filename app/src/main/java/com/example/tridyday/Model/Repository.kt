@@ -14,7 +14,6 @@ class Repository() {
     val database = FirebaseDatabase.getInstance()
     val travelRef = database.getReference("travel")
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
-    val locateRef = database.getReference("locate")
 
     // 여행 데이터를 저장할 때 여행 일수도 포함
     @RequiresApi(Build.VERSION_CODES.O)
@@ -77,11 +76,6 @@ class Repository() {
                 println("Error observing schedules: ${error.message}")
             }
         })
-    }
-
-    // 위치 정보 업데이트
-    fun postLocate(newValue: Travel.Schedule.Locate) {
-        locateRef.setValue(newValue)
     }
 
     // 여행 목록 관찰
