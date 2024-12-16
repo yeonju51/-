@@ -55,13 +55,10 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
                 locate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
             )
 
-            Log.i("확인","스케쥴 레지스트 프래그먼트 57 ${viewModel.selectedTravel}")
-
 
             viewModel.selectedTravel.observe(viewLifecycleOwner) { selectedTravel ->
                 val travel = selectedTravel // travel 객체를 ViewModel에서 가져옴
                 travel?.let {
-                    Log.i("확인","스케쥴 레지스트 프래그먼트 59 ${selectedTravel}")
                     viewModel.addSchedule(it, schedule)
                 }
             }

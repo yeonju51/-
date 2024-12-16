@@ -90,7 +90,6 @@ class Repository() {
                     val travel = data.getValue(Travel::class.java)
 
                     if (travel != null) {
-                        Log.e("확인", "travel 옵저브 ${travel!!.id} ,, ${travel}")
                         travels.add(travel)
                     }
                 }
