@@ -4,8 +4,10 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.example.tridyday.Model.Repository
 import com.example.tridyday.Model.Travel
 import java.time.LocalDate
@@ -32,10 +34,11 @@ class ViewModel : ViewModel() {
     private val _locate = MutableLiveData<Travel.Schedule.Locate>(UNLOCATE)
     val locate: LiveData<Travel.Schedule.Locate> get() = _locate
 
-    private val _selectedTravel = MutableLiveData<Travel>()
-    val selectedTravel: LiveData<Travel> get() = _selectedTravel
+    var selectedTravelId: String? = ""
 
-    var selectedTravelId: String? = null // 선택된 Travel의 ID
+    val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
+        travelList.find { it.id == selectedTravelId }
+    }
 
     fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
         repository.postSchedule(schedule, onSuccess = {

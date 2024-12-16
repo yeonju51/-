@@ -2,6 +2,7 @@ package com.example.tridyday.Model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -16,12 +17,14 @@ class Repository() {
     val scheduleRef = FirebaseDatabase.getInstance().getReference("schedules")
     val locateRef = database.getReference("locate")
 
+    private val travelList = MutableLiveData<MutableList<Travel>>()
+
     // 여행 데이터를 저장할 때 여행 일수도 포함
     @RequiresApi(Build.VERSION_CODES.O)
     fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val travelId = travelRef.push().key
         if (travelId != null) {
-            val travel = travel.copy(id = travelId)
+            travel.id = travelId
 
             // 여행 일수 계산 및 저장
             if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {
@@ -103,6 +106,7 @@ class Repository() {
             }
         })
     }
+
 
     // 여행 삭제
     fun deleteTravel(travelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {

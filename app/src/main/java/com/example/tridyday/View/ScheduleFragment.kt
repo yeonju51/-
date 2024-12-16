@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,48 +29,46 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
-        val travelId = viewModel.selectedTravelId // 선택된 여행 ID 가져오기
-
-        // RecyclerView 설정
-        val scheduleAdapter = SchedulesAdapter(schedules)
-        binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
-        binding.recSchedule.adapter = scheduleAdapter
-
-        // 여행 데이터를 관찰하여 화면 업데이트
-        viewModel.selectedTravel.observe(viewLifecycleOwner) { travel ->
-            binding.txtScheduleTitle.text = travel.title // 여행 제목 설정
-            schedules.clear()
-            schedules.addAll(schedules)
-            scheduleAdapter.notifyDataSetChanged()
-        }
-
-        // 여행 일수에 따라 버튼 동적 생성
-        viewModel.selectedTravel.observe(viewLifecycleOwner) { travel ->
-            val totalDays = if (travel.startDate != null && travel.endDate != null) {
-                viewModel.calculateDaysBetween(travel.startDate!!, travel.endDate!!)
-            } else {
-                0
-            }
-            binding.buttonContainer.removeAllViews()
-
-            for (day in 1..totalDays) {
-                val dayButton = Button(requireContext()).apply {
-                    text = "Day $day"
-                    setOnClickListener { showDaySchedule(day) }
-                }
-                binding.buttonContainer.addView(dayButton)
-            }
-        }
-
-        // + 버튼 클릭 시 ScheduleRegisterFragment로 이동
-        binding.btnSchedulePlus.setOnClickListener {
-            findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
-        }
 
         return binding.root
     }
 
-    // 특정 Day에 해당하는 일정만 보여주는 함수
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val scheduleAdapter = SchedulesAdapter(schedules)
+        binding.recSchedule.layoutManager = LinearLayoutManager(requireContext())
+        binding.recSchedule.adapter = scheduleAdapter
+
+        viewModel.selectedTravel.observe(viewLifecycleOwner) { selectedTravel ->
+            // selectedTravel이 변경될 때 UI를 업데이트합니다.
+            if (selectedTravel != null) {
+                binding.txtScheduleTitle.text = selectedTravel.title
+                schedules.clear()
+                schedules.addAll(schedules)
+                scheduleAdapter.notifyDataSetChanged()
+
+                val totalDays = if (selectedTravel.startDate != null && selectedTravel.endDate != null) {
+                    viewModel.calculateDaysBetween(selectedTravel.startDate!!, selectedTravel.endDate!!)
+                } else {
+                    0
+                }
+                binding.buttonContainer.removeAllViews()
+
+                for (day in 1..totalDays) {
+                    val dayButton = Button(requireContext()).apply {
+                        text = "Day $day"
+                        setOnClickListener { showDaySchedule(day) }
+                    }
+                    binding.buttonContainer.addView(dayButton)
+                }
+            } else {
+                // 선택된 여행이 없다면, 에러 처리나 기본 UI 처리
+            }
+        };
+    }
+
     private fun showDaySchedule(day: Int) {
         val schedulesForDay = schedules.filter { it.day == day }
         if (schedulesForDay.isNotEmpty()) {
@@ -79,4 +78,5 @@ class ScheduleFragment : Fragment() {
             }
         }
     }
+
 }

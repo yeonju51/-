@@ -71,3 +71,4 @@ class SchedulesAdapter(private var schedules: MutableList<Travel.Schedule>,): Re
 
     }
 }
+
