@@ -56,18 +56,19 @@ class ScheduleFragment : Fragment() {
 
                     viewModel.bringDay(totalDays)
 
-                    currentDay = 1
-
-                    id?.let { travelId ->
-                        viewModel.observeSchedules(id, currentDay)
-                        viewModel.schedules.observe(viewLifecycleOwner) {
-                            binding?.recSchedule?.adapter?.notifyDataSetChanged()
-                        }
-                    }
-
                     for (day in 1..totalDays) {
                         val dayButton = Button(requireContext()).apply {
                             text = "Day $day"
+
+                            currentDay = 1
+
+                            id?.let { travelId ->
+                                viewModel.observeSchedules(id, currentDay)
+                                viewModel.schedules.observe(viewLifecycleOwner) {
+                                    binding?.recSchedule?.adapter?.notifyDataSetChanged()
+                                }
+                            }
+
                             setOnClickListener {
                                 currentDay = day
                                 id?.let { travelId ->

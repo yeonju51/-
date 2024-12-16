@@ -27,8 +27,7 @@ class SchedulesAdapter(schedules: LiveData<MutableList<Travel.Schedule>>): Recyc
             schedule?.let {
                 binding.txtName.text = it.title
                 binding.txtTime.text = it.startTime.toString()
-                binding.txtStartTime.text = it.startTime.toString()
-                binding.txtEndTime.text = it.endTime.toString()
+                binding.txtFullTime.text = "${it.startTime} ~ ${it.endTime}"
 
                 binding.btnScheduleMemo.setOnClickListener {
                     // 팝업을 띄우는 함수 호출
