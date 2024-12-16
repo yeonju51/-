@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
+import com.example.tridyday.ViewModel.selectedTravelId
 import com.example.tridyday.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,7 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // RecyclerView 설정
         adapter = TravelAdapter(mutableListOf()) { travel ->
             // 선택한 여행 데이터를 SharedViewModel에 설정
-            viewModel.selectedTravelId = travel.id
+            selectedTravelId = travel.id
             Log.e("HomeFrag", "Current Travel ID: ${travel.id}")
             // ScheduleFragment로 이동
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)

@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit
 
 //위치 등록후 스케쥴 로 넘어갈 데이터
 var newLocate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
+var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
 class ViewModel : ViewModel() {
 
@@ -32,7 +33,6 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels)
     }
 
-    var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
     val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
         Log.e("ViewModel - SelectedTravel", "Current Travel ID: $selectedTravelId")

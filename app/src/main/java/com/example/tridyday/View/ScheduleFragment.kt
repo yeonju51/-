@@ -2,6 +2,7 @@ package com.example.tridyday.View
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ class ScheduleFragment : Fragment() {
         viewModel.selectedTravel.observe(viewLifecycleOwner) { selectedTravel ->
             // selectedTravel이 변경될 때 UI를 업데이트합니다.
             if (selectedTravel != null) {
+
                 binding.txtScheduleTitle.text = selectedTravel.title
                 schedules.clear()
                 schedules.addAll(schedules)

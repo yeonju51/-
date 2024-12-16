@@ -2,6 +2,7 @@ package com.example.tridyday.View
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TimePicker
 import android.widget.Toast
@@ -54,10 +55,17 @@ class ScheduleRegisterFragment : Fragment(R.layout.fragment_schedule_register),
                 locate = Travel.Schedule.Locate("", "", 0.0, 0.0, "")
             )
 
-            val travel = viewModel.selectedTravel.value // travel 객체를 ViewModel에서 가져옴
-            travel?.let {
-                viewModel.addSchedule(it, schedule)
+            Log.i("확인","스케쥴 레지스트 프래그먼트 57 ${viewModel.selectedTravel}")
+
+
+            viewModel.selectedTravel.observe(viewLifecycleOwner) { selectedTravel ->
+                val travel = selectedTravel // travel 객체를 ViewModel에서 가져옴
+                travel?.let {
+                    Log.i("확인","스케쥴 레지스트 프래그먼트 59 ${selectedTravel}")
+                    viewModel.addSchedule(it, schedule)
+                }
             }
+
 
             // 성공 메시지 후 돌아가기
             Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()
