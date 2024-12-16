@@ -32,13 +32,15 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels)
     }
 
-    var selectedTravelId: String? = ""
+    var selectedTravelId: String? = "-OEC94JfCWPl9Uf0Uwz_" // 문제 1
 
     val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
+        Log.e("ViewModel - SelectedTravel", "Current Travel ID: $selectedTravelId")
         travelList.find { it.id == selectedTravelId }
     }
 
     fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
+        Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
         repository.postSchedule(travel.id.toString(), schedule, onSuccess = {
             _schedules.value?.add(schedule)
             _schedules.value = _schedules.value // LiveData 갱신
@@ -63,7 +65,6 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
-<<<<<<< HEAD
 //    private fun observeTravel() {
 //        repository.observeTravel { travelList ->
 //            _travels.postValue(travelList) // Firebase의 변경 사항을 즉시 UI에 반영

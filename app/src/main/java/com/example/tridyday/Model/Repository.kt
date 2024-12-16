@@ -1,6 +1,7 @@
 package com.example.tridyday.Model
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,13 +46,13 @@ class Repository() {
 
     // 일정 저장
     fun postSchedule(travelId: String, newValue: Travel.Schedule, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        val scheduleId = travelRef.child("schedules").push().key
-        if (scheduleId != null) {
-            travelRef.child(travelId).child("schedules").child(scheduleId).setValue(newValue)
-                .addOnSuccessListener { onSuccess() }
-                .addOnFailureListener { onFailure(it) }
-        } else {
-            onFailure(Exception("Schedule ID 생성 실패"))
+        Log.e("SelectedTravel", "Current Travel ID: $travelId")
+        val scheduleRef = travelRef.child(travelId).child("schedules")
+        val scheduleId = scheduleRef.push().key
+        scheduleId?.let {nonNullableIndex ->
+            scheduleRef.child(nonNullableIndex).setValue(newValue)
+        } ?: run {
+            Log.e("Repository", "fail")
         }
     }
 

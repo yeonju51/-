@@ -1,6 +1,7 @@
 package com.example.tridyday.View
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,7 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         adapter = TravelAdapter(mutableListOf()) { travel ->
             // 선택한 여행 데이터를 SharedViewModel에 설정
             viewModel.selectedTravelId = travel.id
-
+            Log.e("HomeFrag", "Current Travel ID: ${travel.id}")
             // ScheduleFragment로 이동
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)
         }
