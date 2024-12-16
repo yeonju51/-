@@ -56,16 +56,16 @@ class Repository() {
         }
     }
 
-    fun observeSchedule(travelId: String, scheduleList: MutableLiveData<MutableList<Travel.Schedule>>) {
+    fun observeSchedule(travelId: String, scheduleList: MutableLiveData<MutableList<Travel.Schedule>>, filter: (Travel.Schedule) -> Boolean = { true }) {
         val scheduleRef = travelRef.child(travelId).child("schedules")
         scheduleRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val schedules = mutableListOf<Travel.Schedule>()
                 for (data in snapshot.children) {
                     val schedule = data.getValue(Travel.Schedule::class.java)
-                    if (schedule != null) {
+                    if (schedule != null && filter(schedule)) { // 필터 적용
                         schedules.add(schedule)
-                    } else {
+                    } else if (schedule == null) {
                         println("Failed to parse schedule: ${data.value}")
                     }
                     scheduleList.value = schedules

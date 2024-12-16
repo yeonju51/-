@@ -24,6 +24,8 @@ class ScheduleFragment : Fragment() {
     var binding: FragmentScheduleBinding? = null
     val viewModel: ViewModel by activityViewModels()
 
+    private var currentDay = 1
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,22 +58,31 @@ class ScheduleFragment : Fragment() {
                     }
                     binding?.buttonContainer?.removeAllViews()
 
+                    id?.let { travelId ->
+                        viewModel.observeSchedules(id, 1)
+                        viewModel.schedules.observe(viewLifecycleOwner) {
+                            binding?.recSchedule?.adapter?.notifyDataSetChanged()
+                        }
+                    }
+
                     for (day in 1..totalDays) {
                         val dayButton = Button(requireContext()).apply {
                             text = "Day $day"
-    //                        setOnClickListener { showDaySchedule(day) }
+                            setOnClickListener {
+                                currentDay = day
+                                id?.let { travelId ->
+                                    viewModel.observeSchedules(id, currentDay)
+                                    viewModel.schedules.observe(viewLifecycleOwner) {
+                                        binding?.recSchedule?.adapter?.notifyDataSetChanged()
+                                    }
+                                }
+                                binding?.recSchedule?.adapter = scheduleAdapter
+                            }
                         }
                         binding?.buttonContainer?.addView(dayButton)
                     }
                 }
 
-                id?.let { travelId ->
-                    viewModel.observeSchedules(id)
-                    viewModel.schedules.observe(viewLifecycleOwner) {
-                        binding?.recSchedule?.adapter?.notifyDataSetChanged()
-                    }
-                }
-                binding?.recSchedule?.adapter = scheduleAdapter
             }
 
             binding?.btnSchedulePlus?.setOnClickListener {

@@ -34,11 +34,6 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels)
     }
 
-    val selectedTravel: LiveData<Travel?> = _travels.map { travelList ->
-        Log.e("ViewModel - SelectedTravel", "Current Travel ID: $id")
-        travelList.find { it.id == id }
-    }
-
     fun bringId(travelId: String) {
         id = travelId
     }
@@ -57,8 +52,14 @@ class ViewModel : ViewModel() {
         repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
     }
 
-    fun observeSchedules(travelId: String) {
-        repository.observeSchedule(travelId, _schedules)
+//    fun observeSchedules(travelId: String) {
+//        repository.observeSchedule(travelId, _schedules)
+//    }
+
+    fun observeSchedules(travelId: String, day: Int) {
+        repository.observeSchedule(travelId, _schedules) { schedule ->
+            schedule.day == day
+        }
     }
 
     // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
