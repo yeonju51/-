@@ -11,7 +11,16 @@ import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.databinding.ListSchedulesBinding
 
-class SchedulesAdapter(val schedules: LiveData<MutableList<Travel.Schedule>>): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+class SchedulesAdapter(schedules: LiveData<MutableList<Travel.Schedule>>): RecyclerView.Adapter<SchedulesAdapter.Holder>() {
+
+    private var sortedSchedules: List<Travel.Schedule> = emptyList()
+
+    init {
+        schedules.observeForever { scheduleList ->
+            sortedSchedules = scheduleList.sortedBy { it.startTime }
+            notifyDataSetChanged()
+        }
+    }
 
     inner class Holder(private val binding: ListSchedulesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(schedule: Travel.Schedule?) {
@@ -57,10 +66,10 @@ class SchedulesAdapter(val schedules: LiveData<MutableList<Travel.Schedule>>): R
         return Holder(binding)
     }
 
-    override fun getItemCount(): Int = schedules.value?.size ?: 0
+    override fun getItemCount(): Int = sortedSchedules.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(schedules.value?.getOrNull(position))
+        holder.bind(sortedSchedules.getOrNull(position))
     }
 
 }

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
 import com.example.tridyday.ViewModel.ViewModel
-import com.example.tridyday.ViewModel.selectedTravelId
 import com.example.tridyday.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
