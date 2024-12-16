@@ -21,7 +21,7 @@ class Repository() {
     fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val travelId = travelRef.push().key
         if (travelId != null) {
-            travel.id = travelId
+            val travel = travel.copy(id = travelId)
 
             // 여행 일수 계산 및 저장
             if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {

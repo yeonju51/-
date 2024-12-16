@@ -28,11 +28,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // RecyclerView 설정
         adapter = TravelAdapter(mutableListOf()) { travel ->
             // 선택한 여행 데이터를 SharedViewModel에 설정
-            viewModel.setSelectedTravel(travel)
+            viewModel.selectedTravelId = travel.id
 
             // ScheduleFragment로 이동
             findNavController().navigate(R.id.action_homeFragment_to_scheduleFragment)
         }
+
         binding.adventureRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.adventureRecyclerView.adapter = adapter
 

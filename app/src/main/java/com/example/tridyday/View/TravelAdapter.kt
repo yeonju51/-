@@ -15,14 +15,12 @@ class TravelAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(travel: Travel) {
             binding.apply {
-                // 제목과 위치 설정
+
                 titleTextView.text = travel.title
                 locationTextView.text = travel.location
 
-                // 날짜 설정 (시작일 ~ 종료일)
                 datesTextView.text = "${travel.startDate} ~ ${travel.endDate}"
 
-                // 클릭 이벤트 설정
                 root.setOnClickListener { onClick(travel) }
             }
         }

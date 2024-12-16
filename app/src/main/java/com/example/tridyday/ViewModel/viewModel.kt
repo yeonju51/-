@@ -35,11 +35,7 @@ class ViewModel : ViewModel() {
     private val _selectedTravel = MutableLiveData<Travel>()
     val selectedTravel: LiveData<Travel> get() = _selectedTravel
 
-    fun setSelectedTravel(travel: Travel) {
-        _selectedTravel.value = travel
-    }
-
-    val travelDaysLiveData = MutableLiveData<Int>()
+    var selectedTravelId: String? = null // 선택된 Travel의 ID
 
     fun addSchedule(travel: Travel, schedule: Travel.Schedule) {
         repository.postSchedule(schedule, onSuccess = {
