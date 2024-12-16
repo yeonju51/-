@@ -90,9 +90,6 @@
         <action
             android:id="@+id/action_mapFragment_to_scheduleFragment"
             app:destination="@id/scheduleFragment" />
-        <action
-            android:id="@+id/action_mapFragment_to_mapDetailFragment"
-            app:destination="@id/mapDetailFragment" />
     </fragment>
 
     <!-- RegistMapFragment -->
@@ -107,14 +104,5 @@
     </fragment>
 
     <!-- MapDetailFragment -->
-    <fragment
-        android:id="@+id/mapDetailFragment"
-        android:name="com.example.tridyday.View.MapFragment"
-        android:label="fragment_map_detail"
-        tools:layout="@layout/fragment_map_detail">
-        <action
-            android:id="@+id/action_mapDetailFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-    </fragment>
 
 </navigation>
