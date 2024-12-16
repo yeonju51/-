@@ -1,11 +1,14 @@
 package com.example.tridyday.View
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.tridyday.ViewModel.ViewModel
@@ -57,10 +60,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val newButton = Array(schedules.size){Button(context)}
 
             for (i in schedules.indices) {
-                newButton[i].text = schedules[i].locate.name
+                newButton[i].setPadding(0,0,0,0)
+                newButton[i].text = (i+1).toString() + "번째 : " + schedules[i].locate.name
+
                 binding?.mySchedule?.addView(newButton[i])
+
                 newButton[i].setOnClickListener {
-                    newButton[i].text = "클릭함" // 각 데이터의 지도위치로 연결할 예정
+                    for(j in schedules.indices){
+                        newButton[j].setBackgroundColor(Color.LTGRAY)
+                    }
+                    newButton[i].setBackgroundColor(Color.YELLOW)
+
                     moveMap(schedules[i].locate.lat, schedules[i].locate.lng)
                     markerMap(
                         schedules[i].locate.name,
@@ -68,6 +78,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         schedules[i].locate.lng
                     )
                 }
+
             }
         }
 
