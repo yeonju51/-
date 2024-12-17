@@ -48,13 +48,10 @@ class ViewModel : ViewModel() {
 
     fun addSchedule(schedule: Travel.Schedule) {
         // Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
-        val nonNullId = id ?: "null"
+        val nonNullId = id
         repository.postSchedule(nonNullId, schedule)
     }
 
-    fun observeTravels() {
-        repository.observeTravels(_travels) // Repository에서 데이터를 가져와서 LiveData 업데이트
-    }
 
     fun observeSchedules(travelId: String, day: Int) {
         repository.observeSchedule(travelId, _schedules) { schedule ->
@@ -63,7 +60,6 @@ class ViewModel : ViewModel() {
     }
 
     // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
-    @RequiresApi(Build.VERSION_CODES.O)
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
             // 성공 시 _travels 업데이트
@@ -90,8 +86,6 @@ class ViewModel : ViewModel() {
     fun setEndDate(date: String) {
         _endDate.value = date
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
 
     fun calculateDaysBetween(startDate: String, endDate: String): Int {
         val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
