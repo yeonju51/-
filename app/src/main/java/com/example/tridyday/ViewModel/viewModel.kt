@@ -60,7 +60,7 @@ class ViewModel : ViewModel() {
         }
     }
 
-    // 여행 데이터를 추가
+    // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
             // 성공 시 _travels 업데이트

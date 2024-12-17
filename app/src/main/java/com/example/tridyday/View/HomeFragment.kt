@@ -23,7 +23,6 @@ class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
     private val viewModel: ViewModel by activityViewModels()
-//    private lateinit var adapter: TravelAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
