@@ -2,18 +2,13 @@ package com.example.tridyday.View
 
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.replace
-import com.example.tridyday.Model.Travel
 import com.example.tridyday.R
-import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.ViewModel.newLocate
 import com.example.tridyday.databinding.FragmentRegistMapBinding
 import com.google.android.gms.common.api.Status
@@ -38,13 +33,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
 
-    private var placeID: String = ""
-    private var placeName = ""
-    private var placeLat: Double = 0.0
-    private var placeLng: Double = 0.0
-    private var placeLocate =""
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,8 +50,14 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var placeID = ""
+        var placeName = ""
+        var placeLat = 0.0
+        var placeLng = 0.0
+        var placeLocate =""
+
         // Initialize the SDK
-        Places.initializeWithNewPlacesApiEnabled(context, "AIzaSyBQ6hR87-xJCOdkAEIT1KNBh4rWMPOW4HU")
+        context?.let { Places.initializeWithNewPlacesApiEnabled(it, "AIzaSyBQ6hR87-xJCOdkAEIT1KNBh4rWMPOW4HU") }
 
         // Initialize the AutocompleteSupportFragment.
         val autocompleteFragment =
@@ -84,14 +78,15 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                 Log.i( tag,"Place: ${place.id} ${place.latLng} ${place.name} ${place.address}")   //, ${place.location}
                 //Place: ChIJ1bj7UAChfDURKL0Z-CBw5ic lat/lng: (37.4956492,127.0281847) DF타워 대한민국 서울특별시 서초구 강남대로 369
 
-                placeID = place.id.toString()
-                placeName = place.name.toString()
-                val LatLngSplit = place.latLng.toString().split(",")
+                place.id?.let{placeID = it }
+                place.name?.let{placeName = it}
+                place.latLng?.let {
+                    val LatLngSplit = it.toString().split(",")
 
-                placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
-                placeLng = LatLngSplit[1].replace((")"), "").toDouble()
-
-                placeLocate = place.address.toString()
+                    placeLat = LatLngSplit[0].replace(("lat/lng: ("), "").toDouble()
+                    placeLng = LatLngSplit[1].replace((")"), "").toDouble()
+                }
+                place.address?.let{placeLocate = it}
 
 
                 renewal(placeName,placeLocate) // 데이터로 텍스트 넘어감
@@ -101,7 +96,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
 
             override fun onError(status: Status) {
                 // TODO: Handle the error.
-                Log.i( tag,"An error occurred: $status")
+                Log.e( tag,"An error occurred: $status")
             }
         })
 
@@ -120,9 +115,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("")
                     .setMessage("위치가 지정되지 않았습니다.")
-                    .setPositiveButton("확인",
-                        DialogInterface.OnClickListener { dialog, id ->
-                        })
+                    .setPositiveButton("확인") { dialog, id -> }
                 builder.show()
             }
         }
@@ -167,7 +160,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun moveMap(latitude: Double, longitude:Double){
-        Log.i( tag,"moveMap 체크용: ${LatLng(longitude, latitude)}  ${placeLat} ${placeLng}")
         MygoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(longitude,latitude), 16f))
     }
 
