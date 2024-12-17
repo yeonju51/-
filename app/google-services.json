@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "398141289",
+    "firebase_url": "https://tridy-664db-default-rtdb.firebaseio.com",
+    "project_id": "tridy-664db",
+    "storage_bucket": "tridy-664db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398141289:android:f5365eac8ab2eaa351fff8",
+        "android_client_info": {
+          "package_name": "com.example.tridyday"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKKgGwPasjbbyK6EK4MXi7eh3NFOIqN3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

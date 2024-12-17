@@ -1,0 +1,112 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_schedule_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDEFFF">
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="105dp"
+        android:layout_height="54dp"
+        android:text="뒤로"
+        android:textColor="#000000"
+        android:backgroundTint="#DDEFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="397dp"
+        android:layout_height="733dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="104dp"
+            android:layout_height="53dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="일정 등록"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="제목"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/txt_day"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="Day"
+            android:gravity="center" />
+
+        <TimePicker
+            android:id="@+id/time_picker_start"
+            android:layout_width="278dp"
+            android:layout_height="103dp"
+            android:timePickerMode="spinner" />
+
+        <TimePicker
+            android:id="@+id/time_picker_end"
+            android:layout_width="278dp"
+            android:layout_height="103dp"
+            android:timePickerMode="spinner" />
+
+        <EditText
+            android:id="@+id/txt_memo"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#000000"
+            android:hint="메모"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/btn_register_map"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#ffffff"
+            android:text="위치"
+            android:textColor="#000000"
+            android:textColorLink="#ffffff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_Completed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#ffffff"
+        android:text="완료"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

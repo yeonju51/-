@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/loginFragment">
+
+    <!-- LoginFragment -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.tridyday.View.LoginFragment"
+        android:label="로그인"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!-- HomeFragment -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.tridyday.View.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <!-- TravelRegistrationFragment로 이동 -->
+        <action
+            android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
+            app:destination="@id/travelRegistrationFragment" />
+        <!-- ScheduleRegisterFragment로 이동 -->
+        <action
+            android:id="@+id/action_homeFragment_to_scheduleRegisterFragment"
+            app:destination="@id/scheduleRegisterFragment" />
+        <!-- ScheduleFragment로 이동 (새로 추가) -->
+        <action
+            android:id="@+id/action_homeFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
+
+    <!-- TravelRegistrationFragment -->
+    <fragment
+        android:id="@+id/travelRegistrationFragment"
+        android:name="com.example.tridyday.View.TravelRegistrationFragment"
+        android:label="fragment_travel_registration"
+        tools:layout="@layout/fragment_travel_registration">
+        <action
+            android:id="@+id/action_travelRegistrationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!-- ScheduleFragment -->
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.tridyday.View.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule">
+        <action
+            android:id="@+id/action_scheduleFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleRegisterFragment"
+            app:destination="@id/scheduleRegisterFragment" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!-- ScheduleRegisterFragment -->
+    <fragment
+        android:id="@+id/scheduleRegisterFragment"
+        android:name="com.example.tridyday.View.ScheduleRegisterFragment"
+        android:label="fragment_regist_schedule"
+        tools:layout="@layout/fragment_schedule_register">
+        <action
+            android:id="@+id/action_scheduleRegisterFragment_to_registMapFragment"
+            app:destination="@id/registMapFragment" />
+        <action
+            android:id="@+id/action_scheduleRegisterFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_scheduleRegisterFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
+
+    <!-- MapFragment -->
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.tridyday.View.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_mapFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
+
+    <!-- RegistMapFragment -->
+    <fragment
+        android:id="@+id/registMapFragment"
+        android:name="com.example.tridyday.View.RegistMapFragment"
+        android:label="fragment_regist_map"
+        tools:layout="@layout/fragment_regist_map">
+        <action
+            android:id="@+id/action_registMapFragment_to_registScheduleFragment"
+            app:destination="@id/scheduleRegisterFragment" />
+    </fragment>
+
+    <!-- MapDetailFragment -->
+
+</navigation>
