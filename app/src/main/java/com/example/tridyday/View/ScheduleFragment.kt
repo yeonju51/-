@@ -50,6 +50,7 @@ class ScheduleFragment : Fragment() {
                     }
                     binding?.buttonContainer?.removeAllViews()
 
+
                     viewModel.bringDay(totalDays)
 
                     for (day in 1..totalDays) {
@@ -78,6 +79,9 @@ class ScheduleFragment : Fragment() {
                             }
                         }
                         binding?.buttonContainer?.addView(dayButton)
+
+                        //일정 1일차가 띄운 상태로 시작하기
+                        if( day == 1) dayButton.callOnClick()
                     }
                 }
 

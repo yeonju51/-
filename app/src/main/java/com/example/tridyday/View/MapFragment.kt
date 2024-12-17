@@ -63,9 +63,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                 newButton[i].setOnClickListener {
                     for(j in schedules.indices){
-                        newButton[j].setBackgroundColor(Color.LTGRAY)
+                        newButton[j].setTextColor(Color.BLACK)
                     }
-                    newButton[i].setBackgroundColor(Color.YELLOW)
+                    newButton[i].setTextColor(Color.MAGENTA)
 
                     moveMap(schedules[i].locate.lat, schedules[i].locate.lng)
                     markerMap(
