@@ -43,8 +43,7 @@ class ScheduleFragment : Fragment() {
                 if (travel != null) {
                     binding?.txtScheduleTitle?.text = travel.title
 
-                    // 여기서 `days` 값 사용
-                    val totalDays = travel.days
+                    val totalDays = travel.days + 1
 
                     binding?.buttonContainer?.removeAllViews()
 
@@ -67,7 +66,6 @@ class ScheduleFragment : Fragment() {
                         }
                         binding?.buttonContainer?.addView(dayButton)
 
-                        //일정 1일차가 띄운 상태로 시작하기
                         if( day == 1) dayButton.callOnClick()
                     }
                 }

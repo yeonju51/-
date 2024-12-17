@@ -46,13 +46,11 @@ class ViewModel : ViewModel() {
     }
 
     fun addSchedule(schedule: Travel.Schedule) {
-        // Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
         id?.let {
             val nonNullId = it
             repository.postSchedule(nonNullId, schedule)
         }
     }
-
 
     fun observeSchedules(travelId: String, day: Int) {
         repository.observeSchedule(travelId, _schedules) { schedule ->
