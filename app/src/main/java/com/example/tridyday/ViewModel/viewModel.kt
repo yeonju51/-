@@ -1,7 +1,6 @@
 package com.example.tridyday.ViewModel
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +37,7 @@ class ViewModel : ViewModel() {
         day = travelDay
     }
 
-    fun retriveId(): String? {
+    fun retriveId(): String {
         return id
     }
 
