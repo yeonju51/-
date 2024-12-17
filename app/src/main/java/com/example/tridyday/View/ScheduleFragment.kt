@@ -40,7 +40,7 @@ class ScheduleFragment : Fragment() {
         val scheduleAdapter = SchedulesAdapter(viewModel.schedules)
         binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
 
-        if (id != null) {
+        if (id != "") {
             viewModel.travels.observe(viewLifecycleOwner) { travels ->
                 val travel = travels.find { it.id == id }
 

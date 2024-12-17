@@ -22,7 +22,7 @@ class ViewModel : ViewModel() {
     private val _schedules = MutableLiveData<MutableList<Travel.Schedule>>()
     val schedules: LiveData<MutableList<Travel.Schedule>> get() = _schedules
 
-    private lateinit var id: String
+    private var id: String = ""
     private var day: Int? = null
 
     init {
