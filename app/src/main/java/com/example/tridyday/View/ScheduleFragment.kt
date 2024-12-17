@@ -57,15 +57,6 @@ class ScheduleFragment : Fragment() {
                         val dayButton = Button(requireContext()).apply {
                             text = "Day $day"
 
-                            currentDay = 1
-
-                            id?.let { travelId ->
-                                viewModel.observeSchedules(id, currentDay)
-                                viewModel.schedules.observe(viewLifecycleOwner) {
-                                    binding?.recSchedule?.adapter?.notifyDataSetChanged()
-                                }
-                            }
-
                             setOnClickListener {
                                 currentDay = day
                                 id?.let { travelId ->
@@ -89,6 +80,10 @@ class ScheduleFragment : Fragment() {
 
             binding?.btnSchedulePlus?.setOnClickListener {
                 findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
+            }
+
+            binding?.btnScheduleBack?.setOnClickListener {
+                findNavController().navigate(R.id.action_scheduleFragment_to_homeFragment)
             }
         }
 
