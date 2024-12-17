@@ -30,7 +30,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == android.app.Activity.RESULT_OK) {
                 photoUri = result.data?.data
-                Toast.makeText(requireContext(), "사진 선택됨", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "사진 선택완료!!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -39,6 +39,7 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTravelRegistrationBinding.bind(view)
 
+        // 시작 날짜 버튼 클릭 -> 날짜 선택 다이얼로그
         binding.startDateButton.setOnClickListener {
             showDatePickerDialog { year, month, dayOfMonth ->
                 val date = "$year-${month + 1}-$dayOfMonth"
@@ -75,25 +76,25 @@ class TravelRegistrationFragment : Fragment(R.layout.fragment_travel_registratio
                 )
 
                 viewModel.addTravel(travel, onSuccess = {
-                    Toast.makeText(requireContext(), "여행 등록 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "여행 등록 성공!!", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_travelRegistrationFragment_to_homeFragment)
                 }, onFailure = {
                     Toast.makeText(requireContext(), "등록 실패: ${it.message}", Toast.LENGTH_SHORT).show()
                 })
             } else {
-                Toast.makeText(requireContext(), "모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "모두 입력해주세요!!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun showDatePickerDialog(onDateSet: (Int, Int, Int) -> Unit) {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance() // 현재 날짜로 초기화된 Calendar 객체 생성
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            onDateSet(selectedYear, selectedMonth, selectedDay)
-        }, year, month, day).show()
+            onDateSet(selectedYear, selectedMonth, selectedDay) // 날짜가 선택되면 onDateSet 호출
+        }, year, month, day).show() // 현재 날짜를 기준으로 DatePickerDialog 표시
     }
 }

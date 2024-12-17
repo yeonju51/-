@@ -20,7 +20,6 @@ class Repository {
         if (travelId != null) {
             travel.id = travelId
 
-            // 여행 일수 계산을 Repository에서 처리
             if (travel.startDate?.isNotEmpty() == true && travel.endDate?.isNotEmpty() == true) {
                 try {
                     val start = LocalDate.parse(travel.startDate)
@@ -31,7 +30,7 @@ class Repository {
                 }
             }
 
-            // Firebase에 여행 데이터 저장
+            // 파베에 여행 데이터 저장
             travelRef.child(travelId).setValue(travel)
                 .addOnSuccessListener { onSuccess() }
                 .addOnFailureListener { onFailure(it) }
@@ -41,7 +40,7 @@ class Repository {
     }
 
 
-    // 여행 목록을 Firebase에서 받아오고, 관찰하는 메서드
+    // 파베에서 여행 받아오기
     fun observeTravels(travelList: MutableLiveData<MutableList<Travel>>) {
         travelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -49,7 +48,7 @@ class Repository {
                 for (data in snapshot.children) {
                     val travel = data.getValue(Travel::class.java)
                     if (travel != null) {
-                        travels.add(travel)
+                        travels.add(travel) // Travel 객체로 변환하고 리스트에 추가
                     }
                 }
                 travelList.value = travels

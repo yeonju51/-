@@ -71,25 +71,19 @@ class ViewModel : ViewModel() {
         }, onFailure)
     }
 
-    // startDate, endDate를 저장할 MutableLiveData
+
     private val _startDate = MutableLiveData<String>()
     val startDate: LiveData<String> get() = _startDate
 
     private val _endDate = MutableLiveData<String>()
     val endDate: LiveData<String> get() = _endDate
 
-    // 날짜를 ViewModel에서 처리하기 위해
+    // 값 변경 가능
     fun setStartDate(date: String) {
         _startDate.value = date
     }
     fun setEndDate(date: String) {
         _endDate.value = date
     }
-
-    /*fun calculateDaysBetween(startDate: String, endDate: String): Int {
-        val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
-        val end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)
-        return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
-    }*/
 
 }
