@@ -22,7 +22,7 @@ class ViewModel : ViewModel() {
     private val _schedules = MutableLiveData<MutableList<Travel.Schedule>>()
     val schedules: LiveData<MutableList<Travel.Schedule>> get() = _schedules
 
-    private var id: String = ""
+    private var id: String? = null
     private var day: Int? = null
 
     init {
@@ -37,7 +37,7 @@ class ViewModel : ViewModel() {
         day = travelDay
     }
 
-    fun retriveId(): String {
+    fun retriveId(): String? {
         return id
     }
 
@@ -47,8 +47,10 @@ class ViewModel : ViewModel() {
 
     fun addSchedule(schedule: Travel.Schedule) {
         // Log.e("ViewModel - addSchedule", "Current Travel ID: ${travel.id}")
-        val nonNullId = id
-        repository.postSchedule(nonNullId, schedule)
+        id?.let {
+            val nonNullId = it
+            repository.postSchedule(nonNullId, schedule)
+        }
     }
 
 

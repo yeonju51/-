@@ -22,7 +22,6 @@ class ScheduleFragment : Fragment() {
 
     private var currentDay = 1
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -31,7 +30,6 @@ class ScheduleFragment : Fragment() {
         return binding?.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
