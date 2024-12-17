@@ -60,7 +60,7 @@ class ViewModel : ViewModel() {
         }
     }
 
-    // 여행 데이터를 추가할 때 여행 일수를 계산하고 저장
+    // 여행 데이터를 추가
     fun addTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         repository.saveTravel(travel, {
             // 성공 시 _travels 업데이트
@@ -78,20 +78,18 @@ class ViewModel : ViewModel() {
     private val _endDate = MutableLiveData<String>()
     val endDate: LiveData<String> get() = _endDate
 
-    // 날짜를 ViewModel에서 처리하기 위해 startDate 값을 설정
+    // 날짜를 ViewModel에서 처리하기 위해
     fun setStartDate(date: String) {
         _startDate.value = date
     }
-
-    // 날짜를 ViewModel에서 처리하기 위해 endDate 값을 설정
     fun setEndDate(date: String) {
         _endDate.value = date
     }
 
-    fun calculateDaysBetween(startDate: String, endDate: String): Int {
+    /*fun calculateDaysBetween(startDate: String, endDate: String): Int {
         val start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE)
         val end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE)
         return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
-    }
+    }*/
 
 }

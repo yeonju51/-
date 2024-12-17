@@ -43,13 +43,10 @@ class ScheduleFragment : Fragment() {
                 if (travel != null) {
                     binding?.txtScheduleTitle?.text = travel.title
 
-                    val totalDays = if (travel.startDate != null && travel.endDate != null) {
-                        viewModel.calculateDaysBetween(travel.startDate!!, travel.endDate!!)
-                    } else {
-                        0
-                    }
-                    binding?.buttonContainer?.removeAllViews()
+                    // 여기서 `days` 값 사용
+                    val totalDays = travel.days
 
+                    binding?.buttonContainer?.removeAllViews()
 
                     viewModel.bringDay(totalDays)
 
@@ -66,7 +63,6 @@ class ScheduleFragment : Fragment() {
                                     }
                                 }
                                 binding?.recSchedule?.adapter = scheduleAdapter
-
                             }
                         }
                         binding?.buttonContainer?.addView(dayButton)
@@ -75,7 +71,6 @@ class ScheduleFragment : Fragment() {
                         if( day == 1) dayButton.callOnClick()
                     }
                 }
-
             }
 
             binding?.btnSchedulePlus?.setOnClickListener {
@@ -86,7 +81,6 @@ class ScheduleFragment : Fragment() {
                 findNavController().navigate(R.id.action_scheduleFragment_to_homeFragment)
             }
         }
-
     }
 
     override fun onDestroyView() {
