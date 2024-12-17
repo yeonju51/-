@@ -99,12 +99,4 @@ class ViewModel : ViewModel() {
         return start.until(end, java.time.temporal.ChronoUnit.DAYS).toInt() + 1 // +1은 시작일부터 포함
     }
 
-    private var selTravel = 0
-
-    fun sendSelTravel(sel: Int){
-        selTravel = sel
-    }
-    fun recvSelTravel():Int {
-        return selTravel
-    }
 }

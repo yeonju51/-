@@ -29,7 +29,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var MygoogleMap: GoogleMap
 
     val viewModel: ViewModel by activityViewModels()
-    private var selTravel: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +41,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
-        selTravel = viewModel.recvSelTravel()
 
         // Inflate the layout for this fragment
         return binding?.root
