@@ -25,6 +25,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentMapBinding?= null
     private lateinit var mapView: MapView
     private lateinit var MygoogleMap: GoogleMap
+    private lateinit var newButton: Array<Button>
 
     val viewModel: ViewModel by activityViewModels()
 
@@ -47,13 +48,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //lateinit var scheduleList: List<Travel.Schedule>
-
         viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
-
             Log.e("확인", " 체크 : $schedules")
 
-            val newButton = Array(schedules.size){Button(context)}
+            newButton = Array(schedules.size){Button(context)}
 
             for (i in schedules.indices) {
                 newButton[i].setPadding(0,0,0,0)
@@ -68,17 +66,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     newButton[i].setTextColor(Color.MAGENTA)
 
                     moveMap(schedules[i].locate.lat, schedules[i].locate.lng)
+                    val putMemo = if(schedules[i].memo == "") "${i+1}번째 장소" else schedules[i].memo!!
                     markerMap(
                         schedules[i].locate.name,
                         schedules[i].locate.lat,
-                        schedules[i].locate.lng
+                        schedules[i].locate.lng,
+                        putMemo
                     )
                 }
-
             }
         }
-
-
     }
 
     override fun onDestroyView() {
@@ -116,17 +113,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         googleMap.addMarker(MarkerOptions().position(marker).title("여기"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+
+        newButton[0].callOnClick()
     }
 
     fun moveMap(lat: Double, lng:Double){
         MygoogleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(lat,lng)))
     }
 
-    fun markerMap(name:String, lat:Double, lng:Double){
+    fun markerMap(name:String, lat:Double, lng:Double, memo:String){
         val markerOptions = MarkerOptions() // 마커 위치
             .position(LatLng(lat, lng))
             .title(name) // 말풍선 주 내용
-            .snippet("Really Great!") // 말풍선 보조내용
+            .snippet(memo) // 말풍선 보조내용
         // 마커를 추가하고 말풍선 표시한 것을 보여주도록 호출
         MygoogleMap.addMarker(markerOptions)?.showInfoWindow()
     }

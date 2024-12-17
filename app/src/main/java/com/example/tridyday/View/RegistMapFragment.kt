@@ -44,9 +44,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     private var placeLng: Double = 0.0
     private var placeLocate =""
 
-    val viewModel: ViewModel by activityViewModels()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,7 +80,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
         // PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place.
 
                 Log.i( tag,"Place: ${place.id} ${place.latLng} ${place.name} ${place.address}")   //, ${place.location}
                 //Place: ChIJ1bj7UAChfDURKL0Z-CBw5ic lat/lng: (37.4956492,127.0281847) DF타워 대한민국 서울특별시 서초구 강남대로 369
@@ -100,6 +96,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
 
                 renewal(placeName,placeLocate) // 데이터로 텍스트 넘어감
                 moveMap(placeLng,placeLat)
+                markerMap(placeName,placeLng,placeLat)
             }
 
             override fun onError(status: Status) {
@@ -178,7 +175,6 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
         val markerOptions = MarkerOptions() // 마커 위치
             .position(LatLng(lat, lng))
             .title(name) // 말풍선 주 내용
-            .snippet("Really Great!") // 말풍선 보조내용
         // 마커를 추가하고 말풍선 표시한 것을 보여주도록 호출
         MygoogleMap.addMarker(markerOptions)?.showInfoWindow()
     }

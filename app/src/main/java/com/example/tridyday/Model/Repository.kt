@@ -17,7 +17,6 @@ class Repository() {
     val travelRef = database.getReference("travel")
 
     // 여행 데이터를 저장할 때 여행 일수도 포함
-    @RequiresApi(Build.VERSION_CODES.O)
     fun saveTravel(travel: Travel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         val travelId = travelRef.push().key
         if (travelId != null) {
