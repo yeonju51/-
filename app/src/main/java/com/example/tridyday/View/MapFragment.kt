@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.tridyday.Model.Travel
 import com.example.tridyday.ViewModel.ViewModel
 import com.example.tridyday.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -66,13 +67,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     newButton[i].setTextColor(Color.MAGENTA)
 
                     moveMap(schedules[i].locate.lat, schedules[i].locate.lng)
-                    val putMemo = if(schedules[i].memo == "") "${i+1}번째 장소" else schedules[i].memo!!
-                    markerMap(
-                        schedules[i].locate.name,
-                        schedules[i].locate.lat,
-                        schedules[i].locate.lng,
-                        putMemo
-                    )
+                    myMarkerMap(schedules[i],i)
                 }
             }
         }
@@ -110,11 +105,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         val marker = LatLng(37.568291,126.997780)
         MygoogleMap = googleMap
-        googleMap.addMarker(MarkerOptions().position(marker).title("여기"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
 
-        newButton[0].callOnClick()
+        for(Btn in newButton.reversed()){
+            Btn.callOnClick()
+        }
+
     }
 
     fun moveMap(lat: Double, lng:Double){
@@ -128,6 +125,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             .snippet(memo) // 말풍선 보조내용
         // 마커를 추가하고 말풍선 표시한 것을 보여주도록 호출
         MygoogleMap.addMarker(markerOptions)?.showInfoWindow()
+    }
+
+    fun myMarkerMap(schedule: Travel.Schedule, i:Int){
+        val putMemo = if(schedule.memo == "") "${i+1}번째 장소" else schedule.memo!!
+        markerMap(
+            schedule.locate.name,
+            schedule.locate.lat,
+            schedule.locate.lng,
+            putMemo
+        )
     }
 
 }

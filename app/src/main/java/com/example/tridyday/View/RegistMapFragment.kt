@@ -157,10 +157,11 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
         googleMap.addMarker(MarkerOptions().position(marker).title("여기"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+
     }
 
     fun moveMap(latitude: Double, longitude:Double){
-        MygoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(longitude,latitude), 16f))
+        MygoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(longitude,latitude), 15f))
     }
 
     fun markerMap(name:String, lat:Double, lng:Double){
@@ -172,9 +173,9 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun renewal(name:String, locate:String){
-        if(binding != null) {
-            binding!!.placeName.text = name
-            binding!!.placeLocation.text = locate
+        binding?.let{
+            it.placeName.text = name
+            it.placeLocation.text = locate
         }
     }
 
