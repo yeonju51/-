@@ -119,6 +119,9 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                 builder.show()
             }
         }
+        binding?.backRe?.setOnClickListener{
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
     }
 
     override fun onDestroyView() {
