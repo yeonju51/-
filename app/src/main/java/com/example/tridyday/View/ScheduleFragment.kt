@@ -43,7 +43,7 @@ class ScheduleFragment : Fragment() {
                 if (travel != null) {
                     binding?.txtScheduleTitle?.text = travel.title
 
-                    val totalDays = travel.days + 1
+                    val totalDays = travel.days
 
                     binding?.buttonContainer?.removeAllViews()
 
