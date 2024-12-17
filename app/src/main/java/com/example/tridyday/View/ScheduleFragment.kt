@@ -50,7 +50,7 @@ class ScheduleFragment : Fragment() {
                     viewModel.bringDay(totalDays)
 
                     for (day in 1..totalDays) {
-                        val dayButton = Button(requireContext()).apply {
+                        val dayButton = Button(context).apply {
                             text = "Day $day"
 
                             setOnClickListener {

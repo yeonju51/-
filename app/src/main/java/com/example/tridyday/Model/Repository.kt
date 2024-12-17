@@ -59,9 +59,8 @@ class Repository {
             }
         })
     }
-        // 일정 저장
+
     fun postSchedule(travelId: String, newValue: Travel.Schedule) {
-        Log.e("SelectedTravel", "Current Travel ID: $travelId")
         val scheduleRef = travelRef.child(travelId).child("schedules")
         val scheduleId = scheduleRef.push().key
         scheduleId?.let { nonNullableIndex ->

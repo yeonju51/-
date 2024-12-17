@@ -40,7 +40,6 @@ class ScheduleRegisterFragment : Fragment(),
 
         val travelDay = viewModel.retriveDay()
 
-        // 완료 버튼 클릭 이벤트
         binding?.btnCompleted?.setOnClickListener {
             val title = binding?.txtTitle?.text.toString()
             val dayInput = binding?.txtDay?.text.toString()
@@ -63,13 +62,20 @@ class ScheduleRegisterFragment : Fragment(),
                 return@setOnClickListener
             }
 
-            // 시간 확인 및 Schedule 객체 생성
-            val startTime = LocalTime.of(binding!!.timePickerStart.hour, binding!!.timePickerStart.minute)
-            val endTime = LocalTime.of(binding!!.timePickerEnd.hour, binding!!.timePickerEnd.minute)
+            val startTime = binding?.timePickerStart?.let {
+                LocalTime.of(it.hour, it.minute)
+            }
+            val endTime = binding?.timePickerEnd?.let {
+                LocalTime.of(it.hour, it.minute)
+            }
 
-            if (endTime <= startTime) {
-                Toast.makeText(requireContext(), "종료 시간이 시작 시간보다 늦어야 합니다.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            if (startTime != null && endTime != null) {
+                if (endTime <= startTime) {
+                    Toast.makeText(requireContext(), "종료 시간이 시작 시간보다 늦어야 합니다.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            } else {
+                Toast.makeText(requireContext(), "시간을 올바르게 설정해주세요.", Toast.LENGTH_SHORT).show()
             }
 
             if(newLocate.checkLocate() == 0){
@@ -88,7 +94,6 @@ class ScheduleRegisterFragment : Fragment(),
 
             viewModel.addSchedule(schedule)
 
-            // 성공 메시지 후 돌아가기
             Toast.makeText(requireContext(), "일정이 등록되었습니다.", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_scheduleRegisterFragment_to_scheduleFragment)
         }
