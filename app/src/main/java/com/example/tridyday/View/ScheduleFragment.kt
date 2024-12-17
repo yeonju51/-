@@ -90,6 +90,10 @@ class ScheduleFragment : Fragment() {
             binding?.btnSchedulePlus?.setOnClickListener {
                 findNavController().navigate(R.id.action_scheduleFragment_to_scheduleRegisterFragment)
             }
+
+            binding?.btnScheduleBack?.setOnClickListener {
+                findNavController().navigate(R.id.action_scheduleFragment_to_homeFragment)
+            }
         }
 
     }
