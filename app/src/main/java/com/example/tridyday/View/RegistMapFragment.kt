@@ -115,7 +115,7 @@ class RegistMapFragment : Fragment(), OnMapReadyCallback {
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("")
                     .setMessage("위치가 지정되지 않았습니다.")
-                    .setPositiveButton("확인") { dialog, id -> }
+                    .setPositiveButton("확인") { _, _ -> }
                 builder.show()
             }
         }
