@@ -52,8 +52,6 @@ class HomeFragment : Fragment() {
 
         binding?.adventureRecyclerView?.adapter = adapter
 
-
-        // TravelRegistrationFragment로 이동
         binding?.addButton?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
         }
