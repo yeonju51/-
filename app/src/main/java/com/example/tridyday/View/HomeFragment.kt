@@ -52,17 +52,6 @@ class HomeFragment : Fragment() {
 
         binding?.adventureRecyclerView?.adapter = adapter
 
-//        // LiveData 관찰하여 RecyclerView 업데이트
-//        viewModel.travels.observe(viewLifecycleOwner) { travels ->
-//            adapter.updateTravels(travels.map { travel ->
-//                // 날짜 포맷팅
-//                travel.copy(
-//                    startDate = formatDate(travel.startDate),
-//                    endDate = formatDate(travel.endDate)
-//                )
-//            })
-//        }
-
         // Add 버튼 클릭 시 TravelRegistrationFragment로 이동
         binding?.addButton?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_travelRegistrationFragment)

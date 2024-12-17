@@ -59,46 +59,43 @@ class Repository() {
                 println("Error observing travels: ${error.message}")
             }
         })
-
+    }
         // 일정 저장
-        fun postSchedule(travelId: String, newValue: Travel.Schedule) {
-            Log.e("SelectedTravel", "Current Travel ID: $travelId")
-            val scheduleRef = travelRef.child(travelId).child("schedules")
-            val scheduleId = scheduleRef.push().key
-            scheduleId?.let { nonNullableIndex ->
-                scheduleRef.child(nonNullableIndex).setValue(newValue)
-            } ?: run {
-                Log.e("Repository", "fail")
-            }
+    fun postSchedule(travelId: String, newValue: Travel.Schedule) {
+        Log.e("SelectedTravel", "Current Travel ID: $travelId")
+        val scheduleRef = travelRef.child(travelId).child("schedules")
+        val scheduleId = scheduleRef.push().key
+        scheduleId?.let { nonNullableIndex ->
+            scheduleRef.child(nonNullableIndex).setValue(newValue)
+        } ?: run {
+            Log.e("Repository", "fail")
         }
-
-        fun observeSchedule(
-            travelId: String,
-            scheduleList: MutableLiveData<MutableList<Travel.Schedule>>,
-            filter: (Travel.Schedule) -> Boolean = { true }
-        ) {
-            val scheduleRef = travelRef.child(travelId).child("schedules")
-            scheduleRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val schedules = mutableListOf<Travel.Schedule>()
-                    for (data in snapshot.children) {
-                        val schedule = data.getValue(Travel.Schedule::class.java)
-                        if (schedule != null && filter(schedule)) { // 필터 적용
-                            schedules.add(schedule)
-                        } else if (schedule == null) {
-                            println("Failed to parse schedule: ${data.value}")
-                        }
-                        scheduleList.value = schedules
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    println("Error observing schedules: ${error.message}")
-                }
-            })
-        }
-
     }
 
+    fun observeSchedule(
+        travelId: String,
+        scheduleList: MutableLiveData<MutableList<Travel.Schedule>>,
+        filter: (Travel.Schedule) -> Boolean = { true }
+    ) {
+        val scheduleRef = travelRef.child(travelId).child("schedules")
+        scheduleRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val schedules = mutableListOf<Travel.Schedule>()
+                for (data in snapshot.children) {
+                    val schedule = data.getValue(Travel.Schedule::class.java)
+                    if (schedule != null && filter(schedule)) { // 필터 적용
+                        schedules.add(schedule)
+                    } else if (schedule == null) {
+                        println("Failed to parse schedule: ${data.value}")
+                    }
+                    scheduleList.value = schedules
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                println("Error observing schedules: ${error.message}")
+            }
+        })
+    }
 
 }
+

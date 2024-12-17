@@ -52,10 +52,4 @@ class TravelAdapter(
     }
 
     override fun getItemCount(): Int = travels.value?.size ?: 0
-
-//    fun updateTravels(newTravels: List<Travel>) {
-//        travels.clear()
-//        travels.addAll(newTravels)
-//        notifyDataSetChanged()
-//    }
 }
